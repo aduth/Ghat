@@ -1,0 +1,35 @@
+{
+  "name": "Ghat",
+  "description": "Relay GitHub events to your favorite chat client",
+  "keywords": [
+    "github",
+    "slack",
+    "webhooks"
+  ],
+  "website": "https://github.com/aduth/ghat",
+  "repository": "https://github.com/aduth/ghat",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "npm install"
+  },
+  "env": {
+    "ORIGIN": {
+      "description": "The origin URL of your hosted application, e.g. https://my-awesome-app.herokuapp.com"
+    },
+    "GITHUB_CLIENT_ID": {
+      "description": "The client ID for your registered GitHub application"
+    },
+    "GITHUB_CLIENT_SECRET": {
+      "description": "The client secret for your registered GitHub application"
+    },
+    "SLACK_CLIENT_ID": {
+      "description": "The client ID for your registered Slack application"
+    },
+    "SLACK_CLIENT_SECRET": {
+      "description": "The client secret for your registered Slack application"
+    }
+  },
+  "addons": [
+    "mongolab"
+  ]
+}
