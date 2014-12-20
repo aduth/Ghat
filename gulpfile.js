@@ -82,7 +82,7 @@ gulp.task( 'watch', function() {
  * Task: `default`
  * Default task optimized for development
  */
-gulp.task( 'default', [ 'less', 'watch' ]);
+gulp.task( 'default', [ 'less', 'browserify', 'watch' ]);
 
 /**
  * Task: `dev`
