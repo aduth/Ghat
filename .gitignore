@@ -1,3 +1,12 @@
+# Dependencies
 node_modules
+
+# User configuration
 .env
+
+# Logs
 *.log
+
+# Generated
+bundle.css
+bundle.js
