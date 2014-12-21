@@ -1,5 +1,5 @@
 {
-  "name": "Ghat",
+  "name": "ghat",
   "version": "0.1.0",
   "description": "Relay GitHub events to your favorite chat client",
   "main": "index.js",
