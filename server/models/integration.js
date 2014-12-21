@@ -1,6 +1,7 @@
 var mongoose = require( 'mongoose' ),
     crypto = require( 'crypto' ),
     config = require( '../../config' ),
+    integrations = require( '../integrations/' ),
     schema;
 
 schema = new mongoose.Schema({
@@ -8,7 +9,9 @@ schema = new mongoose.Schema({
     chat: {
         provider: {
             type: String,
-            enum: [ 'slack' ]
+            enum: Object.keys( integrations ).filter(function( name ) {
+                return 'function' === typeof integrations[ name ].sendMessage;
+            })
         },
         token: String,
         channel: String
