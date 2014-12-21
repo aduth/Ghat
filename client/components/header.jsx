@@ -1,5 +1,5 @@
 var React = require( 'react' ),
-    constants = require( '../constants' );
+    constants = require( '../constants/' );
 
 module.exports = React.createClass({
     displayName: 'Header',
@@ -7,7 +7,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <header className="header-brand">
-                <h1>{ constants.APP_NAME }</h1>
+                <h1>{ constants.app.NAME }</h1>
             </header>
         );
     }
