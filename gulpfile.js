@@ -13,9 +13,10 @@ var gulp = require( 'gulp' ),
 /**
  * Task: `browserify`
  */
-var rebundle = function( bundler ) {
+var bundler, rebundle;
+
+rebundle = function() {
     return bundler
-        .transform( reactify )
         .bundle()
         .on( 'error', gutil.log )
         .on( 'error', gutil.beep )
@@ -24,28 +25,22 @@ var rebundle = function( bundler ) {
 };
 
 gulp.task( 'browserify', function() {
-    var bundler = browserify( './client/index.jsx', { extensions: [ '.jsx' ] });
-    return rebundle( bundler );
-});
-
-/**
- * Task: `watchify`
- */
-gulp.task( 'watchify',  function() {
-    var bundler = watchify( browserify(
+    bundler = watchify( browserify(
         './client/index.jsx',
         assign({}, watchify.args, {
             extensions: [ '.jsx' ]
         })
     ) );
 
-    bundler.transform( 'reactify' );
-
-    bundler
-        .on( 'update', rebundle.bind( this, bundler ) )
-        .on( 'update', gutil.log.bind( gutil, 'Watchify update' ) );
+    bundler.transform( reactify )
 
     return rebundle( bundler );
+});
+
+gulp.task( 'watchify',  function() {
+    return bundler
+        .on( 'update', rebundle )
+        .on( 'update', gutil.log.bind( gutil, 'Watchify update' ) );
 });
 
 /**
@@ -64,10 +59,9 @@ gulp.task( 'less', function() {
  * Task: `watch`
  * Watch files for changes
  */
-gulp.task( 'watch', function() {
+gulp.task( 'watch', [ 'watchify' ], function() {
     // Compilation
     gulp.watch( 'assets/less/**/*.less', [ 'less' ]);
-    gulp.watch([ 'client/**/*.js', 'client/**/*.jsx' ], [ 'browserify' ]);
 
     // LiveReload
     var lr = livereload.listen( 35729 );
