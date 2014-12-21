@@ -4,4 +4,6 @@ var React = require( 'react' ),
 
 container = document.createElement( 'div' );
 document.body.appendChild( container );
-React.render( <App />, container );
+React.render( <App tokens={ require( './stores/token' )() } />, container );
+
+require( './observers/token' ).listen();
