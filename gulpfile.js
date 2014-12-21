@@ -33,6 +33,7 @@ gulp.task( 'browserify', function() {
     bundler = watchify( browserify(
         './client/index.jsx',
         assign({}, watchify.args, {
+            debug: true,
             extensions: [ '.jsx' ]
         })
     ) );
