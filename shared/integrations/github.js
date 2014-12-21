@@ -1,7 +1,9 @@
-var OAuth2 = require( 'oauth' ).OAuth2,
-    config = require( '../../config' );
+var request = require( 'superagent' ),
+    OAuth2 = require( 'oauth' ).OAuth2,
+    config = require( '../../config' ),
+    oauth;
 
-module.exports.oauth = {
+oauth = module.exports.oauth = {
     client: new OAuth2(
         config.github.clientId,
         config.github.clientSecret,
@@ -11,4 +13,19 @@ module.exports.oauth = {
         null
     ),
     scope: [ 'repo', 'user' ]
+};
+
+module.exports.getMyAvatar = function( token, next ) {
+    request.get( 'https://api.github.com/user' )
+        .set({ Authorization: 'token ' + token })
+        .end(function( err, res ) {
+            err = err || res.error;
+
+            var avatar;
+            if ( ! err ) {
+                avatar = res.body.avatar_url;
+            }
+
+            next( err, avatar );
+        });
 };

@@ -6,7 +6,7 @@ var React = require( 'react' ),
 module.exports = {
     home: function() {
         React.render(
-            <Steps tokens={ stores.token } />,
+            <Steps tokens={ stores.token } avatars={ stores.avatar } />,
             document.getElementById( constants.elements.CONTENT )
         );
     }
