@@ -70,9 +70,9 @@ gulp.task( 'watch', function() {
     gulp.watch([ 'client/**/*.js', 'client/**/*.jsx' ], [ 'browserify' ]);
 
     // LiveReload
-    var lr = livereload.listen( 35730 );
+    var lr = livereload.listen( 35729 );
     gulp.watch([
-        'public/css/app.css'
+        'public/css/bundle.css'
     ]).on( 'change', function( file ) {
         livereload.changed( file, lr );
     });
