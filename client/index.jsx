@@ -3,5 +3,5 @@ var React = require( 'react' ),
     container;
 
 container = document.createElement( 'div' );
-document.documentElement.appendChild( container );
+document.body.appendChild( container );
 React.render( <App />, container );
