@@ -1,4 +1,4 @@
-var store = require( '../stores/token' )();
+var store = require( '../stores/token' ).getInstance();
 
 module.exports.listen = function() {
     window.addEventListener( 'message', this.readMessage, false );
