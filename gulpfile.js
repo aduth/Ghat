@@ -4,6 +4,7 @@ var gulp = require( 'gulp' ),
     buffer = require( 'vinyl-buffer' ),
     watchify = require( 'watchify' ),
     reactify = require( 'reactify' ),
+    uglify = require( 'gulp-uglify' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     assign = require( 'lodash-node/modern/objects/assign' ),
     gutil = require( 'gulp-util' ),
@@ -25,6 +26,7 @@ rebundle = function() {
         .pipe( source( 'bundle.js' ) )
         .pipe( buffer() )
         .pipe( sourcemaps.init({ loadMaps: true }) )
+        .pipe( uglify() )
         .pipe( sourcemaps.write( './' ) )
         .pipe( gulp.dest( './public/js' ) );
 };
