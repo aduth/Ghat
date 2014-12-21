@@ -1,18 +1,21 @@
 var React = require( 'react' ),
     some = require( 'lodash-node/modern/collections/some' ),
+    observe = require( '../mixins/observe-store' ),
     TokenStore = require( '../stores/token' );
 
 module.exports = React.createClass({
     displayName: 'Step',
 
-    getInitialState: function() {
-        return { provider: null };
-    },
+    mixins: [ observe( 'tokens' ) ],
 
     propTypes: {
         name: React.PropTypes.string.isRequired,
         tokens: React.PropTypes.instanceOf( TokenStore ).isRequired,
         providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
+    },
+
+    getInitialState: function() {
+        return { provider: null };
     },
 
     authenticate: function( provider ) {
