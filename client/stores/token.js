@@ -1,16 +1,8 @@
 var EventEmitter = require( 'events' ).EventEmitter,
-    TokenStore, _store;
+    TokenStore;
 
 TokenStore = module.exports = function() {
     this.tokens = {};
-};
-
-TokenStore.getInstance = function() {
-    if ( ! _store ) {
-        _store = new TokenStore();
-    }
-
-    return _store;
 };
 
 TokenStore.prototype = Object.create( EventEmitter.prototype );

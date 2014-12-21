@@ -1,11 +1,12 @@
 var React = require( 'react' ),
     Steps = require( './components/steps' ),
-    constants = require( './constants/' );
+    constants = require( './constants/' ),
+    stores = require( './stores/' );
 
 module.exports = {
     home: function() {
         React.render(
-            <Steps tokens={ require( './stores/token' ).getInstance() } />,
+            <Steps tokens={ stores.token } />,
             document.getElementById( constants.elements.CONTENT )
         );
     }
