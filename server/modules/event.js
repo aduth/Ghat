@@ -4,7 +4,7 @@ var router = module.exports = require( 'express' ).Router(),
     errors = require( '../errors/' ),
     responses = require( '../responses/' ),
     messages = require( '../messages/' ),
-    integrations = require( '../integrations/' );
+    integrations = require( '../../shared/integrations/' );
 
 /**
  * POST /event/

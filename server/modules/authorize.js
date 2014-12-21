@@ -2,7 +2,7 @@ var router = module.exports = require( 'express' ).Router(),
     config = require( '../../config' ),
     errors = require( '../errors/' ),
     responses = require( '../responses/' ),
-    integrations = require( '../integrations/' );
+    integrations = require( '../../shared/integrations/' );
 
 /**
  * GET /authorize/:provider

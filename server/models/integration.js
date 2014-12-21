@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' ),
     crypto = require( 'crypto' ),
     config = require( '../../config' ),
-    integrations = require( '../integrations/' ),
+    integrations = require( '../../shared/integrations/' ),
     schema;
 
 schema = new mongoose.Schema({
