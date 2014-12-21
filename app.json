@@ -10,7 +10,7 @@
   "repository": "https://github.com/aduth/ghat",
   "success_url": "/",
   "scripts": {
-    "postdeploy": "npm install && gulp"
+    "postdeploy": "npm install && gulp build"
   },
   "env": {
     "ORIGIN": {

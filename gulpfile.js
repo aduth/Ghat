@@ -79,10 +79,16 @@ gulp.task( 'watch', function() {
 });
 
 /**
+ * Task: `build`
+ * Performs only tasks necessary to build assets
+ */
+gulp.task( 'build', [ 'less', 'browserify' ]);
+
+/**
  * Task: `default`
  * Default task optimized for development
  */
-gulp.task( 'default', [ 'less', 'browserify', 'watch' ]);
+gulp.task( 'default', [ 'build', 'watch' ]);
 
 /**
  * Task: `dev`
