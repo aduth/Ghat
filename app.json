@@ -9,9 +9,6 @@
   "website": "https://github.com/aduth/ghat",
   "repository": "https://github.com/aduth/ghat",
   "success_url": "/",
-  "scripts": {
-    "postdeploy": "npm install && ./node_modules/.bin/bower install && ./node_modules/.bin/gulp build"
-  },
   "env": {
     "ORIGIN": {
       "description": "The origin URL of your hosted application, e.g. https://my-awesome-app.herokuapp.com"
