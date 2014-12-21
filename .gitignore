@@ -11,3 +11,4 @@ assets/components
 # Generated
 bundle.css
 bundle.js
+*.map
