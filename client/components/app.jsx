@@ -23,7 +23,7 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div className="app-container">
                 <button onClick={ this.authenticate }>Authenticate</button>
                 { this.state.accessToken }
             </div>
