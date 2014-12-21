@@ -20,6 +20,10 @@ module.exports = function() {
 
         componentDidUpdate: function( prevProps ) {
             properties.forEach(function( property ) {
+                if ( prevProps[ property ] && this.props[ property ] ) {
+                    return;
+                }
+
                 if ( prevProps[ property ] ) {
                     prevProps[ property ].removeListener( 'change', this.update );
                 }
