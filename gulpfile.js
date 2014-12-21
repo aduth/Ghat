@@ -9,6 +9,7 @@ var gulp = require( 'gulp' ),
     assign = require( 'lodash-node/modern/objects/assign' ),
     gutil = require( 'gulp-util' ),
     less = require( 'gulp-less' ),
+    csso = require( 'gulp-csso' ),
     autoprefixer = require( 'gulp-autoprefixer' ),
     rename = require( 'gulp-rename' ),
     livereload = require( 'gulp-livereload' );
@@ -59,6 +60,7 @@ gulp.task( 'less', function() {
     gulp.src([ 'assets/less/app.less' ])
         .pipe( less().on( 'error', gutil.log ).on( 'error', gutil.beep ) )
         .pipe( autoprefixer() )
+        .pipe( csso() )
         .pipe( rename( 'bundle.css' ) )
         .pipe( gulp.dest( 'public/css' ) );
 });
