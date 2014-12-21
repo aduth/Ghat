@@ -1,4 +1,5 @@
-var React = require( 'react' );
+var React = require( 'react' ),
+    Header = require( './header' );
 
 module.exports = React.createClass({
     displayName: 'App',
@@ -24,6 +25,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="app-container">
+                <Header />
                 <button onClick={ this.authenticate }>Authenticate</button>
                 { this.state.accessToken }
             </div>
