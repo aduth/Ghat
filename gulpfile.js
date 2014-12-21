@@ -20,14 +20,19 @@ var gulp = require( 'gulp' ),
 var bundler, rebundle;
 
 rebundle = function() {
-    return bundler
+    var bundle = bundler
         .bundle()
         .on( 'error', gutil.log )
         .on( 'error', gutil.beep )
         .pipe( source( 'bundle.js' ) )
         .pipe( buffer() )
-        .pipe( sourcemaps.init({ loadMaps: true }) )
-        .pipe( uglify() )
+        .pipe( sourcemaps.init({ loadMaps: true }) );
+
+    if ( 'production' === process.env.NODE_ENV ) {
+        bundle = bundle.pipe( uglify() );
+    }
+
+    return bundle
         .pipe( sourcemaps.write( './' ) )
         .pipe( gulp.dest( './public/js' ) );
 };

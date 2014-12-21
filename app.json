@@ -10,6 +10,7 @@
   "repository": "https://github.com/aduth/ghat",
   "success_url": "/",
   "env": {
+    "NODE_ENV": "production",
     "ORIGIN": {
       "description": "The origin URL of your hosted application, e.g. https://my-awesome-app.herokuapp.com"
     },
