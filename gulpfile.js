@@ -38,13 +38,13 @@ rebundle = function() {
 };
 
 gulp.task( 'browserify', function() {
-    bundler = watchify( browserify(
+    bundler = browserify(
         './client/index.jsx',
         assign({}, watchify.args, {
             debug: true,
             extensions: [ '.jsx' ]
         })
-    ) );
+    );
 
     bundler.transform( reactify )
 
@@ -52,6 +52,8 @@ gulp.task( 'browserify', function() {
 });
 
 gulp.task( 'watchify',  function() {
+    bundler = watchify( bundler );
+
     return bundler
         .on( 'update', rebundle )
         .on( 'update', gutil.log.bind( gutil, 'Watchify update' ) );
