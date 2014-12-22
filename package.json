@@ -49,9 +49,7 @@
     "superagent": "^0.21.0",
     "superagent-oauth": "^0.2.3",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.0.0"
-  },
-  "devDependencies": {
+    "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1",
     "gulp-livereload": "^3.0.2"
   }
