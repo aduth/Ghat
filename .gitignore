@@ -1,7 +1,8 @@
 # Dependencies
 node_modules
 assets/components
-public/fonts/glyphicons-*
+public/fonts/fontawesome-*
+public/fonts/FontAwesome.otf
 
 # User configuration
 .env

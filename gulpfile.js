@@ -64,7 +64,7 @@ gulp.task( 'watchify',  function() {
  * Copies vendor assets to public directory
  */
 gulp.task( 'vendor', function() {
-    gulp.src([ 'assets/components/bootstrap/fonts/*.*' ])
+    gulp.src([ 'assets/components/fontawesome/fonts/*.*' ])
         .pipe( gulp.dest( 'public/fonts' ) );
 });
 
@@ -102,7 +102,7 @@ gulp.task( 'watch', [ 'watchify' ], function() {
  * Task: `build`
  * Performs only tasks necessary to build assets
  */
-gulp.task( 'build', [ 'less', 'browserify' ]);
+gulp.task( 'build', [ 'vendor', 'less', 'browserify' ]);
 
 /**
  * Task: `default`
