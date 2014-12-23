@@ -20,11 +20,6 @@
   "bugs": {
     "url": "https://github.com/auth/ghat/issues"
   },
-  "browserify": {
-    "transform": [
-      "reactify"
-    ]
-  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.10.0",
