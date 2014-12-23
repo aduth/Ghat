@@ -60,6 +60,15 @@ gulp.task( 'watchify',  function() {
 });
 
 /**
+ * Task: `vendor`
+ * Copies vendor assets to public directory
+ */
+gulp.task( 'vendor', function() {
+    gulp.src([ 'assets/components/bootstrap/fonts/*.*' ])
+        .pipe( gulp.dest( 'public/fonts' ) );
+});
+
+/**
  * Task: `less`
  * Convert LESS files to CSS
  */

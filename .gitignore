@@ -1,6 +1,7 @@
 # Dependencies
 node_modules
 assets/components
+public/fonts/glyphicons-*
 
 # User configuration
 .env
