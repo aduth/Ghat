@@ -13,10 +13,10 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <div className="steps">
-                <Step name="github" providers={ [ 'github' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
-                <Step name="chat" providers={ [ 'slack' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
-            </div>
+            <ol className="steps">
+                <Step name="GitHub" providers={ [ 'github' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
+                <Step name="chat" icon="comments" providers={ [ 'slack' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
+            </ol>
         );
     }
 });

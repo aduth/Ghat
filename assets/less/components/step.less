@@ -1,0 +1,47 @@
+.step {
+    position: relative;
+    margin-top: 12px;
+    background-color: white;
+    counter-increment: step-instruction;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    .step-icon {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        display: block;
+        font-size: 40px;
+        margin-top: -20px;
+        color: white;
+    }
+
+    .step-heading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 20%;
+        background-color: @text-color;
+        border: 8px solid #fff;
+        text-align: center;
+    }
+
+    .step-overview {
+        margin-left: 20%;
+        width: 80%;
+        padding: 14px 6px;
+    }
+
+    .step-description {
+        margin-top: 0;
+
+        &:before {
+            content: counter(step-instruction) ". ";
+        }
+    }
+}
