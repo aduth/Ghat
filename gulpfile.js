@@ -12,7 +12,9 @@ var gulp = require( 'gulp' ),
     csso = require( 'gulp-csso' ),
     autoprefixer = require( 'gulp-autoprefixer' ),
     rename = require( 'gulp-rename' ),
-    livereload = require( 'gulp-livereload' );
+    livereload = require( 'gulp-livereload' ),
+    template = require( 'gulp-template' ),
+    React = require( 'react' );
 
 /**
  * Task: `browserify`
@@ -60,6 +62,22 @@ gulp.task( 'watchify',  function() {
 });
 
 /**
+ * Task: `index`
+ * Compiles Lodash templates into static HTML files
+ */
+gulp.task( 'index', function() {
+    require( 'jsx-require-extension' );
+
+    var App = require( './client/components/app' ),
+        content = React.renderToString( React.createElement( App ) );
+
+    gulp.src([ 'assets/index.tpl' ])
+        .pipe( template({ config: require( './config' ), content: content }) )
+        .pipe( rename({ extname: '.html' }) )
+        .pipe( gulp.dest( 'public' ) );
+});
+
+/**
  * Task: `vendor`
  * Copies vendor assets to public directory
  */
@@ -102,7 +120,7 @@ gulp.task( 'watch', [ 'watchify' ], function() {
  * Task: `build`
  * Performs only tasks necessary to build assets
  */
-gulp.task( 'build', [ 'vendor', 'less', 'browserify' ]);
+gulp.task( 'build', [ 'vendor', 'less', 'browserify', 'index' ]);
 
 /**
  * Task: `default`

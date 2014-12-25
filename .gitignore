@@ -14,3 +14,4 @@ public/fonts/FontAwesome.otf
 bundle.css
 bundle.js
 *.map
+public/index.html

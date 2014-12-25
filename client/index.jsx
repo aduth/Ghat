@@ -2,7 +2,7 @@ var React = require( 'react' ),
     App = require( './components/app' ),
     controller = require( './controller' ),
     tokenObserver = require( './observers/token' ),
-    container;
+    constants = require( './constants/' );
 
 /**
  * Bootstrap application
@@ -12,9 +12,7 @@ tokenObserver.listen();
 /**
  * Render base application element
  */
-container = document.createElement( 'div' );
-document.body.appendChild( container );
-React.render( <App />, container );
+React.render( <App />, document.getElementById( constants.elements.CONTAINER ) );
 
 /**
  * Trigger controller action
