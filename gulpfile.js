@@ -69,10 +69,11 @@ gulp.task( 'index', function() {
     require( 'jsx-require-extension' );
 
     var App = require( './client/components/app' ),
-        content = React.renderToString( React.createElement( App ) );
+        content = React.renderToString( React.createElement( App ) ),
+        manifest = require( './app' );
 
     gulp.src([ 'assets/index.tpl' ])
-        .pipe( template({ config: require( './config' ), content: content }) )
+        .pipe( template({ manifest: manifest, content: content }) )
         .pipe( rename({ extname: '.html' }) )
         .pipe( gulp.dest( 'public' ) );
 });
