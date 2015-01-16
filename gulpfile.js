@@ -50,7 +50,7 @@ gulp.task( 'browserify', function() {
         })
     );
 
-    bundler.transform( reactify )
+    bundler.transform( reactify );
 
     return rebundle( bundler );
 });
