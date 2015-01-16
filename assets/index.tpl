@@ -8,6 +8,6 @@
     </head>
     <body>
         <div id="container"><%= content %></div>
-        <script src="/js/bundle.js"></script>
+        <script src="/js/bundle-<%= manifest.version %>.js"></script>
     </body>
 </html>

@@ -14,7 +14,8 @@ var gulp = require( 'gulp' ),
     rename = require( 'gulp-rename' ),
     livereload = require( 'gulp-livereload' ),
     template = require( 'gulp-template' ),
-    React = require( 'react' );
+    React = require( 'react' ),
+    manifest = require( './package' );
 
 /**
  * Task: `browserify`
@@ -35,8 +36,9 @@ rebundle = function() {
     }
 
     return bundle
+        .pipe( rename({ suffix: '-' + manifest.version }) )
         .pipe( sourcemaps.write( './' ) )
-        .pipe( gulp.dest( './public/js' ) );
+        .pipe( gulp.dest( 'public/js' ) );
 };
 
 gulp.task( 'browserify', function() {
@@ -53,7 +55,7 @@ gulp.task( 'browserify', function() {
     return rebundle( bundler );
 });
 
-gulp.task( 'watchify',  function() {
+gulp.task( 'watchify', function() {
     bundler = watchify( bundler );
 
     return bundler
@@ -69,8 +71,7 @@ gulp.task( 'index', function() {
     require( 'jsx-require-extension' );
 
     var App = require( './client/components/app' ),
-        content = React.renderToString( React.createElement( App ) ),
-        manifest = require( './app' );
+        content = React.renderToString( React.createElement( App ) );
 
     gulp.src([ 'assets/index.tpl' ])
         .pipe( template({ manifest: manifest, content: content }) )

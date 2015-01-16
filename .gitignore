@@ -12,6 +12,6 @@ public/fonts/FontAwesome.otf
 
 # Generated
 bundle.css
-bundle.js
+bundle*.js
 *.map
 public/index.html
