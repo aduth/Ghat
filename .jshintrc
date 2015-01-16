@@ -1,0 +1,8 @@
+{
+    "eqeqeq": true,
+    "unused": true,
+    "undef": true,
+    "browser": true,
+    "node": true,
+    "curly": true
+}
