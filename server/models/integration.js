@@ -1,7 +1,7 @@
 var mongoose = require( 'mongoose' ),
     crypto = require( 'crypto' ),
     config = require( '../../config' ),
-    integrations = require( '../../shared/integrations/' ),
+    helpers = require( '../../shared/helpers/' ),
     schema;
 
 schema = new mongoose.Schema({
@@ -9,9 +9,7 @@ schema = new mongoose.Schema({
     chat: {
         provider: {
             type: String,
-            enum: Object.keys( integrations ).filter(function( name ) {
-                return 'function' === typeof integrations[ name ].sendMessage;
-            })
+            enum: helpers.integrations.getChatIntegrations()
         },
         token: String,
         channel: String
