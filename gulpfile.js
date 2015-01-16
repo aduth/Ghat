@@ -116,6 +116,7 @@ gulp.task( 'less', function() {
 gulp.task( 'watch', [ 'watchify' ], function() {
     // Compilation
     gulp.watch( 'assets/less/**/*.less', [ 'less' ]);
+    gulp.watch( 'assets/index.tpl', [ 'index' ]);
 
     // LiveReload
     var lr = livereload.listen( 35729 );
