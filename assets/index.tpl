@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="description" content="<%= manifest.description %>">
         <title><%= manifest.name %></title>
-        <link rel="stylesheet" href="/css/bundle.css">
+        <link rel="stylesheet" href="/css/bundle-<%= manifest.version %>.css">
     </head>
     <body>
         <div id="container"><%= content %></div>

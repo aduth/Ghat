@@ -93,11 +93,19 @@ gulp.task( 'vendor', function() {
  * Convert LESS files to CSS
  */
 gulp.task( 'less', function() {
-    gulp.src([ 'assets/less/app.less' ])
+    var bundle = gulp.src([ 'assets/less/app.less' ])
         .pipe( less().on( 'error', gutil.log ).on( 'error', gutil.beep ) )
         .pipe( autoprefixer() )
-        .pipe( csso() )
-        .pipe( rename( 'bundle.css' ) )
+        .pipe( buffer() )
+        .pipe( sourcemaps.init({ loadMaps: true }) );
+
+    if ( 'production' === process.env.NODE_ENV ) {
+        bundle = bundle.pipe( csso() );
+    }
+
+    return bundle
+        .pipe( rename({ basename: 'bundle-' + manifest.version }) )
+        .pipe( sourcemaps.write( './' ) )
         .pipe( gulp.dest( 'public/css' ) );
 });
 
