@@ -121,7 +121,7 @@ gulp.task( 'watch', [ 'watchify' ], function() {
     // LiveReload
     var lr = livereload.listen( 35729 );
     gulp.watch([
-        'public/css/bundle.css'
+        'public/css/*.css'
     ]).on( 'change', function( file ) {
         livereload.changed( file, lr );
     });
