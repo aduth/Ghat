@@ -1,47 +1,49 @@
 .step {
+    .one-half;
+}
+
+.step__content {
     position: relative;
-    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 270px;
+    padding: 30px;
     background-color: white;
-    counter-increment: step-instruction;
     box-shadow: 0 2px 0 0 rgba( 0, 0, 0, 0.1 );
+    text-align: center;
+}
 
-    &:first-child {
-        margin-top: 0;
-    }
+.step__name {
+    .visually-hidden;
+}
 
-    .step-icon {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        left: 0;
-        display: block;
-        font-size: 40px;
-        margin-top: -20px;
-        color: white;
-    }
+.step__icon {
+    font-size: 48px;
+}
 
-    .step-heading {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 20%;
-        background-color: @text-color;
-        border: 8px solid #fff;
-        text-align: center;
-    }
+.step__description {
+    margin: 0;
+}
 
-    .step-overview {
-        margin-left: 20%;
-        width: 80%;
-        padding: 14px 6px;
-    }
+.step__authorized-account {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba( 0, 0, 0, 0.8 );
+    display: none;
+}
 
-    .step-description {
-        margin-top: 0;
+.step.connected .step__authorized-account {
+    display: block;
+}
 
-        &:before {
-            content: counter( step-instruction ) ". ";
-        }
-    }
+.step__user-avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    border-radius: 50%;
 }

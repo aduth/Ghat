@@ -1,4 +1,4 @@
-var React = require( 'react' ),
+var React = require( 'react/addons' ),
     some = require( 'lodash-node/modern/collections/some' ),
     observe = require( '../mixins/observe-store' ),
     TokenStore = require( '../stores/token' ),
@@ -11,10 +11,10 @@ module.exports = React.createClass({
 
     propTypes: {
         name: React.PropTypes.string.isRequired,
+        icon: React.PropTypes.string,
         tokens: React.PropTypes.instanceOf( TokenStore ).isRequired,
         avatars: React.PropTypes.instanceOf( AvatarStore ).isRequired,
-        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired,
-        icon: React.PropTypes.string
+        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
     },
 
     getInitialState: function() {
@@ -39,7 +39,7 @@ module.exports = React.createClass({
     getAuthenticationButton: function() {
         var provider = this.props.providers[0];
 
-        return ( <button onClick={ this.authenticate.bind( null, provider ) } className="btn btn-primary">Authenticate</button> );
+        return ( <button onClick={ this.authenticate.bind( null, provider ) } className="button">Authenticate</button> );
     },
 
     getAvatarImage: function() {
@@ -47,22 +47,35 @@ module.exports = React.createClass({
         if ( this.state.provider ) {
             avatar = this.props.avatars.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
             if ( avatar ) {
-                return ( <img width="30" height="30" src={ avatar } className="user-avatar" /> );
+                return ( <img width="100" height="100" src={ avatar } className="step__user-avatar" /> );
             }
         }
     },
 
+    getIcon: function() {
+        if ( this.props.icon ) {
+            return <span className={ 'step__icon fa fa-' + this.props.icon } />;
+        }
+    },
+
     render: function() {
+        var classes = React.addons.classSet({
+            step: true,
+            connected: !! this.props.tokens.get( this.state.provider )
+        });
+
         return (
-            <li className={ 'step ' + this.props.name.toLowerCase() }>
-                <header className="step-heading">
-                    <span className={ 'step-icon fa fa-' + ( this.props.icon || this.props.name.toLowerCase() ) } />
-                </header>
-                <div className="step-overview">
-                    <h2 className="step-description">Connect your { this.props.name } account</h2>
+            <li className={ classes }>
+                <div className="step__content">
+                    <header className="step__heading">
+                        <h1 className="step__name">{ 'Connect ' + this.props.name }</h1>
+                        { this.getIcon() }
+                    </header>
+                    <p className="step__description">{ this.props.description }</p>
                     { this.getAuthenticationButton() }
-                    { this.getAvatarImage() }
-                    { this.props.tokens.get( this.state.provider ) }
+                    <aside className="step__authorized-account">
+                        { this.getAvatarImage() }
+                    </aside>
                 </div>
             </li>
         );

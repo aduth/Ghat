@@ -1,0 +1,53 @@
+@grid-gutter: @grid-gutter-width * 0.5;
+@grid-padding: @grid-gutter-width * 0.5;
+
+.column( @x, @padding: @grid-padding, @columns: @grid-columns ) {
+    display: inline;
+    float: left;
+    width: 100% * ( @x / @columns );
+    padding: 0 @padding;
+    min-height: 1px;
+}
+
+.push( @offset: 1, @columns: @grid-columns ) {
+    margin-left: 100% * ( @offset / @columns );
+}
+
+.pull( @offset: 1, @columns: @grid-columns ) {
+    margin-right: 100% * ( @offset / @columns );
+}
+
+.container {
+    .clearfix;
+    max-width: @grid-max-width;
+    margin: 0 auto;
+}
+
+.row {
+    margin-left: ( -1 * @grid-padding );
+    margin-right: ( -1 * @grid-padding );
+}
+
+.one-half {
+  .column( 6 );
+}
+
+.one-fourth {
+  .column( 3 );
+}
+
+.three-fourth {
+  .column( 9 );
+}
+
+.one-third {
+  .column( 4 );
+}
+
+.two-third {
+  .column( 8 );
+}
+
+.full-width {
+  .column( 12 );
+}

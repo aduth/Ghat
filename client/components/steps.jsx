@@ -15,8 +15,22 @@ module.exports = React.createClass({
     render: function() {
         return (
             <ol className="steps">
-                <Step name="GitHub" providers={ [ 'github' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
-                <Step name="chat" icon="comments" providers={ helpers.integrations.getChatIntegrations() } tokens={ this.props.tokens } avatars={ this.props.avatars } />
+                <Step
+                    name="github"
+                    icon="github"
+                    providers={ [ 'github' ] }
+                    tokens={ this.props.tokens }
+                    avatars={ this.props.avatars }
+                    title="Connect to GitHub"
+                    description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account." />
+                <Step
+                    name="chat"
+                    icon="comments"
+                    providers={ helpers.integrations.getChatIntegrations() }
+                    tokens={ this.props.tokens }
+                    avatars={ this.props.avatars }
+                    title="Connect to Chat"
+                    description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
             </ol>
         );
     }
