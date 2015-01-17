@@ -7,7 +7,7 @@ module.exports = React.createClass({
         name: React.PropTypes.string.isRequired,
         contacts: React.PropTypes.arrayOf( React.PropTypes.shape({
             name: React.PropTypes.string,
-            id: React.PropTypes.string,
+            id: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
             type: React.PropTypes.string
         }) ),
         onValueChanged: React.PropTypes.func
