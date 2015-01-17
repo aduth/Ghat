@@ -1,5 +1,5 @@
 var React = require( 'react/addons' ),
-    some = require( 'lodash-node/modern/collections/some' ),
+    find = require( 'lodash-node/modern/collections/find' ),
     observe = require( '../mixins/observe-store' ),
     TokenStore = require( '../stores/token' ),
     AvatarStore = require( '../stores/avatar' );
@@ -18,7 +18,7 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        return { provider: null };
+        return { provider: this.getConnectedProvider() };
     },
 
     authenticate: function( provider ) {
@@ -27,11 +27,11 @@ module.exports = React.createClass({
     },
 
     isConnected: function() {
-        if ( this.state.provider ) {
-            return !! this.props.tokens.get( this.state.provider );
-        }
+        return this.state.provider && !! this.props.tokens.get( this.state.provider );
+    },
 
-        return some( this.props.providers, function( provider ) {
+    getConnectedProvider: function() {
+        return find( this.props.providers, function( provider ) {
             return !! this.props.tokens.get( provider );
         }.bind( this ) );
     },

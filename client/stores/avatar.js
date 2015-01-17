@@ -1,20 +1,22 @@
-var EventEmitter = require( 'events' ).EventEmitter,
+var LocalStore = require( './local' ),
     integrations = require( '../../shared/integrations/' ),
     AvatarStore;
 
 AvatarStore = module.exports = function() {
-    this.avatars = {};
+    LocalStore.call( this, 'avatars' );
     this.fetching = {};
 };
 
-AvatarStore.prototype = Object.create( EventEmitter.prototype );
+AvatarStore.prototype = Object.create( LocalStore.prototype );
 
 AvatarStore.prototype.get = function( provider, token ) {
-    if ( ! this.avatars[ provider ] ) {
+    var avatar = LocalStore.prototype.get.call( this, provider );
+
+    if ( ! avatar ) {
         this.fetch( provider, token );
     }
 
-    return this.avatars[ provider ];
+    return avatar;
 };
 
 AvatarStore.prototype.fetch = function( provider, token ) {
@@ -27,8 +29,7 @@ AvatarStore.prototype.fetch = function( provider, token ) {
 
     integrations[ provider ].getMyAvatar( token, function( err, avatar ) {
         if ( ! err ) {
-            this.avatars[ provider ] = avatar;
-            this.emit( 'change' );
+            this.set( provider, avatar );
         }
 
         this.fetching[ provider ] = false;
