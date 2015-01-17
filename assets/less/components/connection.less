@@ -41,10 +41,38 @@
     display: block;
 }
 
-.connection__user-avatar {
+.connection__disconnect {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate( -50%, -50% );
+    display: block;
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    outline: none;
+    -webkit-appearance: none;
+    background: none;
+    border-width: 0;
     border-radius: 50%;
+    text-align: center;
+}
+
+.connection__disconnect-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    border-radius: 50%;
+    background-color: #D2616B;
+    opacity: 0.85;
+    font-size: 50px;
+    line-height: 100px;
+    color: white;
+}
+
+.connection__disconnect:hover .connection__disconnect-icon {
+    display: block;
 }

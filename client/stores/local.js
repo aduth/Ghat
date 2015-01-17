@@ -31,3 +31,17 @@ LocalStore.prototype.set = function( key, value ) {
     store.set( this.name, data );
     this.emit( 'change' );
 };
+
+LocalStore.prototype.remove = function( key ) {
+    var data = store.get( this.name );
+
+    delete data[ key ];
+
+    if ( Object.keys( data ).length ) {
+        store.set( this.name, data );
+    } else {
+        store.remove( this.name );
+    }
+
+    this.emit( 'change' );
+};

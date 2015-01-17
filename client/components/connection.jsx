@@ -26,6 +26,13 @@ module.exports = React.createClass({
         window.open( '/authorize/' + provider );
     },
 
+    disconnect: function() {
+        if ( this.state.provider ) {
+            this.props.tokens.remove( this.state.provider );
+            this.props.avatars.remove( this.state.provider );
+        }
+    },
+
     isConnected: function() {
         return this.state.provider && !! this.props.tokens.get( this.state.provider );
     },
@@ -47,7 +54,13 @@ module.exports = React.createClass({
         if ( this.state.provider ) {
             avatar = this.props.avatars.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
             if ( avatar ) {
-                return ( <img width="100" height="100" src={ avatar } className="connection__user-avatar" /> );
+                return (
+                    <button className="connection__disconnect" onClick={ this.disconnect }>
+                        <span className="fa fa-remove connection__disconnect-icon"></span>
+                        <span className="visually-hidden">Disconnect</span>
+                        <img width="100" height="100" src={ avatar } className="connection__user-avatar" />
+                    </button>
+                );
             }
         }
     },
