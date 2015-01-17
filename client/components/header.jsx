@@ -1,5 +1,5 @@
 var React = require( 'react' ),
-    constants = require( '../constants/' );
+    constants = require( '../../shared/constants/' );
 
 module.exports = React.createClass({
     displayName: 'Header',

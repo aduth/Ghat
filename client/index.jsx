@@ -1,7 +1,7 @@
 var React = require( 'react' ),
     App = require( './components/app' ),
     tokenObserver = require( './observers/token' ),
-    constants = require( './constants/' ),
+    constants = require( '../shared/constants/' ),
     stores = require( './stores/' );
 
 /**
