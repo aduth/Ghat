@@ -20,7 +20,7 @@ ContactStore.prototype.get = function( provider, token ) {
 
 ContactStore.prototype.fetch = function( provider, token ) {
     if ( this.fetching[ provider ] || ! token || ! ( provider in integrations ) ||
-            'function' !== typeof integrations[ provider ].getMyAvatar ) {
+            'function' !== typeof integrations[ provider ].getContacts ) {
         return;
     }
 
