@@ -99,9 +99,7 @@ gulp.task( 'vendor', function() {
 gulp.task( 'less', function() {
     var bundle = gulp.src([ 'assets/less/app.less' ])
         .pipe( less().on( 'error', gutil.log ).on( 'error', gutil.beep ) )
-        .pipe( autoprefixer() )
-        .pipe( buffer() )
-        .pipe( sourcemaps.init({ loadMaps: true }) );
+        .pipe( autoprefixer() );
 
     if ( 'production' === process.env.NODE_ENV ) {
         bundle = bundle.pipe( csso() );
@@ -109,7 +107,6 @@ gulp.task( 'less', function() {
 
     return bundle
         .pipe( rename({ basename: 'bundle-' + manifest.version }) )
-        .pipe( sourcemaps.write( './' ) )
         .pipe( gulp.dest( 'public/css' ) );
 });
 
