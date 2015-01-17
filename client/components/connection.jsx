@@ -1,8 +1,7 @@
 var React = require( 'react/addons' ),
     find = require( 'lodash-node/modern/collections/find' ),
     observe = require( '../mixins/observe-store' ),
-    TokenStore = require( '../stores/token' ),
-    AvatarStore = require( '../stores/avatar' );
+    stores = require( '../stores/' );
 
 module.exports = React.createClass({
     displayName: 'Connection',
@@ -12,8 +11,8 @@ module.exports = React.createClass({
     propTypes: {
         name: React.PropTypes.string.isRequired,
         icon: React.PropTypes.string,
-        tokens: React.PropTypes.instanceOf( TokenStore ).isRequired,
-        avatars: React.PropTypes.instanceOf( AvatarStore ).isRequired,
+        tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
+        avatars: React.PropTypes.instanceOf( stores.Avatar ).isRequired,
         providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
     },
 
