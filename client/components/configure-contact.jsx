@@ -30,8 +30,8 @@ module.exports = React.createClass({
         });
     },
 
-    onSelectedOptionChanged: function( event ) {
-        this.props.onValueChanged( this.props.name, event.target.value );
+    onSelectedOptionChanged: function( domEvent ) {
+        this.props.onValueChanged( this.props.name, domEvent.target.value );
     },
 
     render: function() {
