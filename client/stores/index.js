@@ -1,5 +1,6 @@
 module.exports = {
-    token: new ( require( './token' ) )(),
-    avatar: new ( require( './avatar' ) )(),
-    contact: new ( require( './contact' ) )()
+    Token: require( './token' ),
+    Avatar: require( './avatar' ),
+    Contact: require( './contact' ),
+    Repository: require( './repository' )
 };
