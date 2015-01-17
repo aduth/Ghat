@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "./node_modules/.bin/bower install && ./node_modules/.bin/gulp build"
+    "postinstall": "bower install && gulp build"
   },
   "author": {
     "name": "Andrew Duthie",
