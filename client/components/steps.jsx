@@ -2,7 +2,7 @@ var React = require( 'react' ),
     TokenStore = require( '../stores/token' ),
     AvatarStore = require( '../stores/avatar' ),
     helpers = require( '../../shared/helpers/' ),
-    Step = require( './step' );
+    Prerequisite = require( './prerequisite' );
 
 module.exports = React.createClass({
     displayName: 'Steps',
@@ -15,7 +15,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <ol className="steps">
-                <Step
+                <Prerequisite
                     name="github"
                     icon="github"
                     providers={ [ 'github' ] }
@@ -23,7 +23,7 @@ module.exports = React.createClass({
                     avatars={ this.props.avatars }
                     title="Connect to GitHub"
                     description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account." />
-                <Step
+                <Prerequisite
                     name="chat"
                     icon="comments"
                     providers={ helpers.integrations.getChatIntegrations() }
