@@ -2,19 +2,20 @@ var React = require( 'react' ),
     App = require( './components/app' ),
     tokenObserver = require( './observers/token' ),
     constants = require( '../shared/constants/' ),
-    stores = require( './stores/' );
+    stores = require( './stores/' ),
+    tokenStore = new stores.Token();
 
 /**
  * Bootstrap application
  */
-tokenObserver.listen();
+tokenObserver.listen( tokenStore );
 
 /**
  * Render base application element
  */
 React.render(
     <App stores={ {
-        token: new stores.Token(),
+        token: tokenStore,
         avatar: new stores.Avatar(),
         contact: new stores.Contact(),
         repository: new stores.Repository()

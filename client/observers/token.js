@@ -1,6 +1,7 @@
-var store = require( '../stores/' ).token;
+var _store;
 
-module.exports.listen = function() {
+module.exports.listen = function( store ) {
+    _store = store;
     window.addEventListener( 'message', this.readMessage, false );
 };
 
@@ -12,8 +13,8 @@ module.exports.readMessage = function( event ) {
     if ( event.origin === window.location.protocol + '//' + window.location.host ) {
         try {
             var data = JSON.parse( event.data );
-            if ( data.provider && data.accessToken ) {
-                store.set( data.provider, data.accessToken );
+            if ( _store && data.provider && data.accessToken ) {
+                _store.set( data.provider, data.accessToken );
             }
         } catch ( e ) {}
     }
