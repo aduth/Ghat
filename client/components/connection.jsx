@@ -58,7 +58,7 @@ module.exports = React.createClass({
                     <button className="connection__disconnect" onClick={ this.disconnect }>
                         <span className="fa fa-remove connection__disconnect-icon"></span>
                         <span className="visually-hidden">Disconnect</span>
-                        <img width="100" height="100" src={ avatar } className="connection__user-avatar" />
+                        <img width="100" height="100" src={ avatar } alt="User avatar" className="connection__user-avatar" />
                     </button>
                 );
             }
