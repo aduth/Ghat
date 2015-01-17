@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="<%= manifest.description %>">
-        <title><%= manifest.name %></title>
+        <title>Ghat &mdash; <%= manifest.description %></title>
         <link rel="stylesheet" href="/css/bundle-<%= manifest.version %>.css">
     </head>
     <body>
