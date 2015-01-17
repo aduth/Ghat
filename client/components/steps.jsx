@@ -1,11 +1,15 @@
 var React = require( 'react' ),
+    observe = require( '../mixins/observe-store' ),
     TokenStore = require( '../stores/token' ),
     AvatarStore = require( '../stores/avatar' ),
     helpers = require( '../../shared/helpers/' ),
-    Prerequisite = require( './prerequisite' );
+    Prerequisite = require( './prerequisite' ),
+    Configure = require( './configure' );
 
 module.exports = React.createClass({
     displayName: 'Steps',
+
+    mixins: [ observe( 'tokens' ) ],
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( TokenStore ).isRequired,
@@ -31,6 +35,7 @@ module.exports = React.createClass({
                     avatars={ this.props.avatars }
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
+                <Configure disabled={ ! this.props.tokens.isConnected() } />
             </ol>
         );
     }
