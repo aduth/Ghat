@@ -5,7 +5,7 @@ var React = require( 'react/addons' ),
     AvatarStore = require( '../stores/avatar' );
 
 module.exports = React.createClass({
-    displayName: 'Prerequisite',
+    displayName: 'Connection',
 
     mixins: [ observe( 'tokens', 'avatars' ) ],
 
@@ -47,33 +47,33 @@ module.exports = React.createClass({
         if ( this.state.provider ) {
             avatar = this.props.avatars.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
             if ( avatar ) {
-                return ( <img width="100" height="100" src={ avatar } className="prerequisite__user-avatar" /> );
+                return ( <img width="100" height="100" src={ avatar } className="connection__user-avatar" /> );
             }
         }
     },
 
     getIcon: function() {
         if ( this.props.icon ) {
-            return <span className={ 'prerequisite__icon fa fa-' + this.props.icon } />;
+            return <span className={ 'connection__icon fa fa-' + this.props.icon } />;
         }
     },
 
     render: function() {
         var classes = React.addons.classSet({
-            prerequisite: true,
+            connection: true,
             connected: !! this.props.tokens.get( this.state.provider )
         });
 
         return (
             <li className={ classes }>
-                <div className="prerequisite__content">
-                    <header className="prerequisite__heading">
-                        <h1 className="prerequisite__name">{ 'Connect ' + this.props.name }</h1>
+                <div className="connection__content">
+                    <header className="connection__heading">
+                        <h1 className="connection__name">{ 'Connect ' + this.props.name }</h1>
                         { this.getIcon() }
                     </header>
-                    <p className="prerequisite__description">{ this.props.description }</p>
+                    <p className="connection__description">{ this.props.description }</p>
                     { this.getAuthenticationButton() }
-                    <aside className="prerequisite__authorized-account">
+                    <aside className="connection__authorized-account">
                         { this.getAvatarImage() }
                     </aside>
                 </div>
