@@ -30,6 +30,21 @@ module.exports.getMyAvatar = function( token, next ) {
         });
 };
 
+module.exports.getRepositories = function( token, next ) {
+    request.get( 'https://api.github.com/user/repos' )
+        .set({ Authorization: 'token ' + token })
+        .end(function( err, res ) {
+            err = err || res.error;
+
+            var repositories;
+            if ( ! err ) {
+                repositories = res.body;
+            }
+
+            next( err, repositories );
+        });
+};
+
 module.exports.getAvailableEvents = function() {
     return [
         { event: "*", description: "Any time any event is triggered (wildcard)" },
