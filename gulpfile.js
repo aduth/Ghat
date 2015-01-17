@@ -71,7 +71,15 @@ gulp.task( 'index', function() {
     require( 'jsx-require-extension' );
 
     var App = require( './client/components/app' ),
-        content = React.renderToString( React.createElement( App ) );
+        stores = require( './client/stores/' ),
+        content = React.renderToString( React.createElement( App, {
+            stores: {
+                token: new stores.Token(),
+                avatar: new stores.Avatar(),
+                contact: new stores.Contact(),
+                repository: new stores.Repository()
+            }
+        } ) );
 
     gulp.src([ 'assets/index.tpl' ])
         .pipe( template({
