@@ -32,6 +32,7 @@ module.exports = React.createClass({
                 <Configure
                     tokens={ this.props.stores.token }
                     contacts={ this.props.stores.contact }
+                    repositories={ this.props.stores.repository }
                     disabled={ ! this.props.stores.token.isConnected() } />
             </ol>
         );

@@ -1,15 +1,15 @@
 var React = require( 'react/addons' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
+    ConfigureRepository = require( './configure-repository' ),
     ConfigureContact = require( './configure-contact' ),
-    TokenStore = require( '../stores/token' ),
-    ContactStore = require( '../stores/contact' ),
+    stores = require( '../stores/' ),
     integrations = require( '../../shared/integrations/' );
 
 module.exports = React.createClass({
     displayName: 'Configure',
 
-    mixins: [ observe( 'tokens', 'contacts' ) ],
+    mixins: [ observe( 'tokens', 'contacts', 'repositories' ) ],
 
     getInitialState: function() {
         return { values: {} };
@@ -17,8 +17,9 @@ module.exports = React.createClass({
 
     propTypes: {
         disabled: React.PropTypes.bool,
-        tokens: React.PropTypes.instanceOf( TokenStore ).isRequired,
-        contacts: React.PropTypes.instanceOf( ContactStore ).isRequired
+        tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
+        contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
+        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
     },
 
     getDefaultProps: function() {
@@ -54,6 +55,7 @@ module.exports = React.createClass({
                     </header>
                     <form onSubmit={ this.onSubmit } className="configure__form">
                         <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } onValueChanged={ this.onValueChanged } />
+                        <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
                         <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
                     </form>
                     <aside className="configure__disabled-content">
