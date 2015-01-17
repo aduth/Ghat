@@ -11,7 +11,7 @@ module.exports = React.createClass({
             <div className="app__container">
                 <Header />
                 <main className="app__content">
-                    <Steps tokens={ stores.token } avatars={ stores.avatar } />
+                    <Steps stores={ stores } />
                 </main>
             </div>
         );

@@ -14,14 +14,25 @@ TokenStore.prototype.isConnectedToGitHub = function() {
 };
 
 TokenStore.prototype.isConnectedToChat = function() {
-    var connections = this.getAll();
-
-    return connections && intersection(
-        Object.keys( connections ),
-        helpers.integrations.getChatIntegrations()
-    ).length > 0;
+    return !! this.getConnectedChatToken();
 };
 
 TokenStore.prototype.isConnected = function() {
     return this.isConnectedToGitHub() && this.isConnectedToChat();
+};
+
+TokenStore.prototype.getConnectedChatToken = function() {
+    var connections = this.getAll(),
+        chatTokens;
+
+    if ( connections ) {
+        chatTokens = intersection(
+            Object.keys( connections ),
+            helpers.integrations.getChatIntegrations()
+        );
+
+        if ( chatTokens.length ) {
+            return chatTokens[0];
+        }
+    }
 };
