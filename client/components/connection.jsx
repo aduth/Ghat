@@ -46,7 +46,7 @@ module.exports = React.createClass({
     getAuthenticationButton: function() {
         var provider = this.props.providers[0];
 
-        return ( <button onClick={ this.authenticate.bind( null, provider ) } className="button">Authenticate</button> );
+        return <button onClick={ this.authenticate.bind( null, provider ) } className="button">Authenticate</button>;
     },
 
     getAvatarImage: function() {
