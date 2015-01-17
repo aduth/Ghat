@@ -14,11 +14,10 @@ tokenObserver.listen( tokenStore );
  * Render base application element
  */
 React.render(
-    <App stores={ {
-        token: tokenStore,
-        avatar: new stores.Avatar(),
-        contact: new stores.Contact(),
-        repository: new stores.Repository()
-    } } />,
+    <App
+        tokens={ tokenStore }
+        avatars={ new stores.Avatar() }
+        contacts={ new stores.Contact() }
+        repositories={ new stores.Repository() } />,
     document.getElementById( constants.elements.CONTAINER )
 );

@@ -73,12 +73,10 @@ gulp.task( 'index', function() {
     var App = require( './client/components/app' ),
         stores = require( './client/stores/' ),
         content = React.renderToString( React.createElement( App, {
-            stores: {
-                token: new stores.Token(),
-                avatar: new stores.Avatar(),
-                contact: new stores.Contact(),
-                repository: new stores.Repository()
-            }
+            tokens: new stores.Token(),
+            avatars: new stores.Avatar(),
+            contacts: new stores.Contact(),
+            repositories: new stores.Repository()
         } ) );
 
     gulp.src([ 'assets/index.tpl' ])

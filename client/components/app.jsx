@@ -1,4 +1,5 @@
 var React = require( 'react' ),
+    stores = require( '../stores/' ),
     Header = require( './header' ),
     Steps = require( './steps' );
 
@@ -6,7 +7,10 @@ module.exports = React.createClass({
     displayName: 'App',
 
     propTypes: {
-        stores: React.PropTypes.object.isRequired
+        tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
+        avatars: React.PropTypes.instanceOf( stores.Avatar ).isRequired,
+        contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
+        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
     },
 
     render: function() {
@@ -14,7 +18,7 @@ module.exports = React.createClass({
             <div className="app__container">
                 <Header />
                 <main className="app__content">
-                    <Steps stores={ this.props.stores } />
+                    <Steps { ...this.props } />
                 </main>
             </div>
         );
