@@ -17,7 +17,7 @@ React.render(
         token: new stores.Token(),
         avatar: new stores.Avatar(),
         contact: new stores.Contact(),
-        repository: new stores.Repository(),
+        repository: new stores.Repository()
     } } />,
     document.getElementById( constants.elements.CONTAINER )
 );
