@@ -26,7 +26,7 @@ module.exports = React.createClass({
 
     getOptions: function() {
         return [ this.getDefaultOption() ].concat( this.props.contacts ).map(function( contact ) {
-            return <option key={ contact.id } value={ contact.id }>{ contact.name }</option>;
+            return <option key={ contact.id || contact.name } value={ contact.id }>{ contact.name }</option>;
         });
     },
 
