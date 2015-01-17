@@ -1,5 +1,7 @@
 var request = require( 'superagent' ),
+    async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
+    flatten = require( 'lodash-node/modern/arrays/flatten' ),
     config = require( '../../config' ),
     getUserAvatar;
 
@@ -35,10 +37,7 @@ module.exports.sendMessage = function( message, channel, token, next ) {
 
 getUserAvatar = module.exports.getUserAvatar = function( userId, token, next ) {
     request.get( 'https://slack.com/api/users.info' )
-        .query({
-            token: token,
-            user: userId
-        })
+        .query({ token: token, user: userId })
         .end(function( err, res ) {
             err = err || res.error;
 
@@ -53,9 +52,7 @@ getUserAvatar = module.exports.getUserAvatar = function( userId, token, next ) {
 
 module.exports.getMyAvatar = function( token, next ) {
     request.get( 'https://slack.com/api/auth.test' )
-        .query({
-            token: token
-        })
+        .query({ token: token })
         .end(function( err, res ) {
             err = err || res.error;
 
@@ -65,4 +62,47 @@ module.exports.getMyAvatar = function( token, next ) {
 
             getUserAvatar( res.body.user_id, token, next );
         });
+};
+
+module.exports.getContacts = function( token, next ) {
+    async.parallel([
+        function( asyncNext ) {
+            request.get( 'https://slack.com/api/users.list' )
+                .query({ token: token })
+                .end(function( err, res ) {
+                    var contacts;
+                    if ( ! err && res.body.ok ) {
+                        contacts = res.body.members.map(function( member ) {
+                            return {
+                                id: member.id,
+                                name: '@' + member.name,
+                                type: 'user'
+                            };
+                        });
+                    }
+
+                    asyncNext( err, contacts );
+                });
+        },
+        function( asyncNext ) {
+            request.get( 'https://slack.com/api/channels.list' )
+                .query({ token: token })
+                .end(function( err, res ) {
+                    var contacts;
+                    if ( ! err && res.body.ok ) {
+                        contacts = res.body.channels.map(function( channel ) {
+                            return {
+                                id: channel.id,
+                                name: '#' + channel.name,
+                                type: 'channel'
+                            };
+                        });
+                    }
+
+                    asyncNext( err, contacts );
+                });
+        }
+    ], function( err, contacts ) {
+        next( err, flatten( contacts ) );
+    });
 };
