@@ -1,6 +1,7 @@
 var React = require( 'react' ),
     TokenStore = require( '../stores/token' ),
     AvatarStore = require( '../stores/avatar' ),
+    helpers = require( '../../shared/helpers/' ),
     Step = require( './step' );
 
 module.exports = React.createClass({
@@ -15,7 +16,7 @@ module.exports = React.createClass({
         return (
             <ol className="steps">
                 <Step name="GitHub" providers={ [ 'github' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
-                <Step name="chat" icon="comments" providers={ [ 'slack' ] } tokens={ this.props.tokens } avatars={ this.props.avatars } />
+                <Step name="chat" icon="comments" providers={ helpers.integrations.getChatIntegrations() } tokens={ this.props.tokens } avatars={ this.props.avatars } />
             </ol>
         );
     }
