@@ -74,7 +74,11 @@ gulp.task( 'index', function() {
         content = React.renderToString( React.createElement( App ) );
 
     gulp.src([ 'assets/index.tpl' ])
-        .pipe( template({ manifest: manifest, content: content }) )
+        .pipe( template({
+            manifest: manifest,
+            constants: require( './shared/constants/' ),
+            content: content
+        }) )
         .pipe( rename({ extname: '.html' }) )
         .pipe( gulp.dest( 'public' ) );
 });
