@@ -61,7 +61,7 @@ module.exports = React.createClass({
     render: function() {
         var classes = React.addons.classSet({
             connection: true,
-            connected: !! this.props.tokens.get( this.state.provider )
+            connected: this.isConnected()
         });
 
         return (
