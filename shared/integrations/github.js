@@ -12,7 +12,7 @@ oauth = module.exports.oauth = {
         'login/oauth/access_token',
         null
     ),
-    scope: [ 'repo', 'user' ]
+    scope: [ 'write:repo_hook' ]
 };
 
 module.exports.getMyAvatar = function( token, next ) {
