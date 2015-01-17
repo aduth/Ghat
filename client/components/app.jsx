@@ -1,5 +1,7 @@
 var React = require( 'react' ),
-    Header = require( './header' );
+    Header = require( './header' ),
+    Steps = require( './steps' ),
+    stores = require( '../stores/' );
 
 module.exports = React.createClass({
     displayName: 'App',
@@ -8,7 +10,9 @@ module.exports = React.createClass({
         return (
             <div className="app__container">
                 <Header />
-                <main id="primary-content" className="app__content" />
+                <main className="app__content">
+                    <Steps tokens={ stores.token } avatars={ stores.avatar } />
+                </main>
             </div>
         );
     }
