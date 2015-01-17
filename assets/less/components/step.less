@@ -3,7 +3,7 @@
     margin-top: 12px;
     background-color: white;
     counter-increment: step-instruction;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 0 0 rgba( 0, 0, 0, 0.1 );
 
     &:first-child {
         margin-top: 0;
@@ -41,7 +41,7 @@
         margin-top: 0;
 
         &:before {
-            content: counter(step-instruction) ". ";
+            content: counter( step-instruction ) ". ";
         }
     }
 }

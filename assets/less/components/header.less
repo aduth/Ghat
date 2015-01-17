@@ -1,4 +1,26 @@
-.header-brand {
-    padding: 2em 0;
+.header {
+    background-color: @color-purple;
+    margin-bottom: 20px;
+    padding: 50px 0;
     text-align: center;
+}
+
+.header__brand {
+    display: inline-block;
+    margin: 0;
+    padding: 8px 20px;
+    border: 6px solid white;
+    font-size: 34px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &,
+    &:hover {
+        color: white;
+    }
+
+    &:hover {
+        opacity: 0.9;
+        text-decoration: none;
+    }
 }

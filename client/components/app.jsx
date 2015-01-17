@@ -6,9 +6,9 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <div className="app-container">
+            <div className="app__container">
                 <Header />
-                <main id="primary-content" />
+                <main id="primary-content" className="app__content" />
             </div>
         );
     }

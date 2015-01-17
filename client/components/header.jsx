@@ -6,8 +6,8 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <header className="header-brand">
-                <h1>{ constants.app.NAME }</h1>
+            <header className="header">
+                <a href="/" className="header__brand">{ constants.app.NAME }</a>
             </header>
         );
     }
