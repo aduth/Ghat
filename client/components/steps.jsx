@@ -7,7 +7,7 @@ module.exports = React.createClass({
     displayName: 'Steps',
 
     propTypes: {
-        stores: React.PropTypes.object
+        stores: React.PropTypes.object.isRequired
     },
 
     render: function() {
