@@ -23,7 +23,11 @@ module.exports = React.createClass({
 
         return (
             <form onSubmit={ this.onSubmit } className={ classes }>
-                <div className="configure__content" />
+                <div className="configure__content">
+                    <aside className="configure__disabled-content">
+                        You must complete the authorization steps above before creating an integration.
+                    </aside>
+                </div>
             </form>
         );
     }
