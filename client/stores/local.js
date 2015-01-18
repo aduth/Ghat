@@ -1,8 +1,9 @@
-var EventEmitter = require( 'events' ).EventEmitter,
+var ObjectStore = require( './object' ),
     supportsLocalStorage = 'undefined' !== typeof window && window.localStorage,
     LocalStore;
 
 LocalStore = module.exports = function( name ) {
+    ObjectStore.call( this );
     this.name = name;
 
     if ( supportsLocalStorage ) {
@@ -13,28 +14,18 @@ LocalStore = module.exports = function( name ) {
     this.store = this.store || {};
 };
 
-LocalStore.prototype = Object.create( EventEmitter.prototype );
-
-LocalStore.prototype.getAll = function() {
-    return this.store;
-};
-
-LocalStore.prototype.get = function( key ) {
-    return this.store[ key ];
-};
+LocalStore.prototype = Object.create( ObjectStore.prototype );
 
 LocalStore.prototype.set = function( key, value ) {
-    this.store[ key ] = value;
+    ObjectStore.prototype.set.call( this, key, value );
 
     if ( supportsLocalStorage ) {
         window.localStorage.setItem( this.name, JSON.stringify( this.store ) );
     }
-
-    this.emit( 'change' );
 };
 
 LocalStore.prototype.remove = function( key ) {
-    delete this.store[ key ];
+    ObjectStore.prototype.remove.call( this, key );
 
     if ( supportsLocalStorage ) {
         if ( Object.keys( this.store ).length ) {
@@ -43,6 +34,4 @@ LocalStore.prototype.remove = function( key ) {
             window.localStorage.removeItem( this.name );
         }
     }
-
-    this.emit( 'change' );
 };
