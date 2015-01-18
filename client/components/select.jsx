@@ -36,6 +36,7 @@ module.exports = React.createClass({
         return (
             <div className="select">
                 <select className="select__input" onChange={ this.props.onChange }>{ this.getOptions() }</select>
+                <span className="fa fa-caret-down select__expand" />
             </div>
         );
     }
