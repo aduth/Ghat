@@ -1,4 +1,4 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
     Select = require( './select' );
 
 module.exports = React.createClass({
