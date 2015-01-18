@@ -12,6 +12,7 @@
 .configure.disabled .configure__content:before {
     content: '';
     position: absolute;
+    z-index: 10;
     top: 0;
     right: 0;
     bottom: 0;
@@ -25,6 +26,7 @@
 
 .configure.disabled .configure__disabled-content {
     position: absolute;
+    z-index: 10;
     top: 50%;
     left: 0;
     right: 0;
@@ -35,8 +37,39 @@
 }
 
 .configure__heading {
-    margin: 0;
-    font-size: 18px;
-    text-transform: uppercase;
+    margin: 0 0 30px;
+    font-size: @text-size;
     text-align: center;
+    text-transform: uppercase;
+}
+
+.configure__steps {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.configure__steps > li {
+    position: relative;
+    margin: 40px 0;
+    padding-left: 70px;
+    counter-increment: configure-step;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.configure__steps > li:before {
+    content: counter( configure-step );
+    position: absolute;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: @color-purple;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
 }

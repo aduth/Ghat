@@ -33,14 +33,15 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <label className="form-option">
-                <p className="form-option__description">
-                    Finally, choose who is to be notified from the list of available contacts for your chat provider.
-                </p>
-                <span className="form-option__label">Choose a contact:</span>
-                <select onChange={ this.onSelectedOptionChanged }>{ this.getOptions() }</select>
-            </label>
-                <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
+            <li className="configure-contact">
+                <label className="form-option">
+                    <p className="form-option__description">
+                        Finally, choose who is to be notified from the list of available contacts for your chat provider.
+                    </p>
+                    <span className="form-option__label">Choose a contact:</span>
+                    <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
+                </label>
+            </li>
         );
     }
 });

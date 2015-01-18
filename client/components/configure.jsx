@@ -54,9 +54,11 @@ module.exports = React.createClass({
                         <h1 className="configure__heading">Configure an Integration</h1>
                     </header>
                     <form onSubmit={ this.onSubmit } className="configure__form">
-                        <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } onValueChanged={ this.onValueChanged } />
-                        <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
-                        <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
+                        <ol className="configure__steps">
+                            <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } onValueChanged={ this.onValueChanged } />
+                            <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
+                            <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
+                        </ol>
                     </form>
                     <aside className="configure__disabled-content">
                         You must complete the authorization steps above before creating an integration.

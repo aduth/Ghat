@@ -32,11 +32,13 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <label className="form-option">
-                <p className="form-option__description">To configure an integration, you must first choose a GitHub event to monitor.</p>
-                <span className="form-option__label">Choose an event:</span>
-            </label>
-                <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } includeDefault={ false } />
+            <li className="configure-event">
+                <label className="form-option">
+                    <p className="form-option__description">To configure an integration, you must first choose a GitHub event to monitor.</p>
+                    <span className="form-option__label">Choose an event:</span>
+                    <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } includeDefault={ false } />
+                </label>
+            </li>
         );
     }
 });
