@@ -59,6 +59,7 @@ module.exports = React.createClass({
                             <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
                             <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
                         </ol>
+                        <button type="submit" className="button configure__submit">Create</button>
                     </form>
                     <aside className="configure__disabled-content">
                         You must complete the authorization steps above before creating an integration.
