@@ -1,16 +1,16 @@
-var LocalStore = require( './local' ),
+var ObjectStore = require( './object' ),
     integrations = require( '../../shared/integrations/' ),
     AvatarStore;
 
 AvatarStore = module.exports = function() {
-    LocalStore.call( this, 'avatars' );
+    ObjectStore.call( this );
     this.fetching = {};
 };
 
-AvatarStore.prototype = Object.create( LocalStore.prototype );
+AvatarStore.prototype = Object.create( ObjectStore.prototype );
 
 AvatarStore.prototype.get = function( provider, token ) {
-    var avatar = LocalStore.prototype.get.call( this, provider );
+    var avatar = ObjectStore.prototype.get.call( this, provider );
 
     if ( ! avatar ) {
         this.fetch( provider, token );
