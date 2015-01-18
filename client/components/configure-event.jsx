@@ -1,4 +1,5 @@
-var React = require( 'react/addons' );
+var React = require( 'react/addons' ),
+    Select = require( './select' );
 
 module.exports = React.createClass({
     displayName: 'ConfigureEvent',
@@ -21,7 +22,7 @@ module.exports = React.createClass({
 
     getOptions: function() {
         return this.props.events.map(function( event ) {
-            return <option key={ event.event } value={ event.event }>{ event.description }</option>;
+            return { value: event.event, label: event.description };
         });
     },
 
@@ -34,8 +35,8 @@ module.exports = React.createClass({
             <label className="form-option">
                 <p className="form-option__description">To configure an integration, you must first choose a GitHub event to monitor.</p>
                 <span className="form-option__label">Choose an event:</span>
-                <select onChange={ this.onSelectedOptionChanged }>{ this.getOptions() }</select>
             </label>
+                <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } includeDefault={ false } />
         );
     }
 });

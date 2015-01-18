@@ -1,4 +1,5 @@
-var React = require( 'react/addons' );
+var React = require( 'react/addons' ),
+    Select = require( './select' );
 
 module.exports = React.createClass({
     displayName: 'ConfigureEvent',
@@ -20,13 +21,9 @@ module.exports = React.createClass({
         };
     },
 
-    getDefaultOption: function() {
-        return { name: '' };
-    },
-
     getOptions: function() {
-        return [ this.getDefaultOption() ].concat( this.props.contacts ).map(function( contact ) {
-            return <option key={ contact.id || contact.name } value={ contact.id }>{ contact.name }</option>;
+        return this.props.contacts.map(function( contact ) {
+            return { value: contact.id, label: contact.name };
         });
     },
 
@@ -43,6 +40,7 @@ module.exports = React.createClass({
                 <span className="form-option__label">Choose a contact:</span>
                 <select onChange={ this.onSelectedOptionChanged }>{ this.getOptions() }</select>
             </label>
+                <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
         );
     }
 });

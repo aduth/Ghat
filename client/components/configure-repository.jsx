@@ -1,4 +1,5 @@
-var React = require( 'react/addons' );
+var React = require( 'react/addons' ),
+    Select = require( './select' );
 
 module.exports = React.createClass({
     displayName: 'ConfigureRepository',
@@ -19,13 +20,9 @@ module.exports = React.createClass({
         };
     },
 
-    getDefaultOption: function() {
-        return { name: '' };
-    },
-
     getOptions: function() {
-        return [ this.getDefaultOption() ].concat( this.props.repositories ).map(function( repository ) {
-            return <option key={ repository.id || repository.name } value={ repository.id }>{ repository.name }</option>;
+        return this.props.repositories.map(function( repository ) {
+            return { value: repository.id, label: repository.name };
         });
     },
 
@@ -38,8 +35,8 @@ module.exports = React.createClass({
             <label className="form-option">
                 <p className="form-option__description">Next, choose the GitHub repository to monitor.</p>
                 <span className="form-option__label">Choose a repository:</span>
-                <select onChange={ this.onSelectedOptionChanged }>{ this.getOptions() }</select>
             </label>
+                <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
         );
     }
 });
