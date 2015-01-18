@@ -25,7 +25,7 @@ module.exports = React.createClass({
 
     getOptions: function() {
         return [ this.getDefaultOption() ].concat( this.props.repositories ).map(function( repository ) {
-            return <option key={ repository.id } value={ repository.id }>{ repository.name }</option>;
+            return <option key={ repository.id || repository.name } value={ repository.id }>{ repository.name }</option>;
         });
     },
 
