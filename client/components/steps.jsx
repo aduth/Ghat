@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
-        avatars: React.PropTypes.instanceOf( stores.Avatar ).isRequired,
+        profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
     },
@@ -25,7 +25,7 @@ module.exports = React.createClass({
                     icon="github"
                     providers={ [ 'github' ] }
                     tokens={ this.props.tokens }
-                    avatars={ this.props.avatars }
+                    profiles={ this.props.profiles }
                     title="Connect to GitHub"
                     description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account." />
                 <Connection
@@ -33,7 +33,7 @@ module.exports = React.createClass({
                     icon="comments"
                     providers={ helpers.integrations.getChatIntegrations() }
                     tokens={ this.props.tokens }
-                    avatars={ this.props.avatars }
+                    profiles={ this.props.profiles }
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
                 <Configure

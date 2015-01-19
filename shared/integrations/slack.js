@@ -3,7 +3,7 @@ var request = require( 'superagent' ),
     OAuth2 = require( 'oauth' ).OAuth2,
     flatten = require( 'lodash-node/modern/arrays/flatten' ),
     config = require( '../../config' ),
-    getUserAvatar;
+    getUserProfile;
 
 module.exports.oauth = {
     client: new OAuth2(
@@ -35,22 +35,25 @@ module.exports.sendMessage = function( message, channel, token, next ) {
         });
 };
 
-getUserAvatar = module.exports.getUserAvatar = function( userId, token, next ) {
+getUserProfile = module.exports.getUserProfile = function( userId, token, next ) {
     request.get( 'https://slack.com/api/users.info' )
         .query({ token: token, user: userId })
         .end(function( err, res ) {
             err = err || res.error;
 
-            var avatar;
+            var profile;
             if ( ! err && res.body.ok ) {
-                avatar = res.body.user.profile.image_192;
+                profile = {
+                    username: res.body.user.name,
+                    avatar: res.body.user.profile.image_192
+                };
             }
 
-            next( err, avatar );
+            next( err, profile );
         });
 };
 
-module.exports.getMyAvatar = function( token, next ) {
+module.exports.getMyProfile = function( token, next ) {
     request.get( 'https://slack.com/api/auth.test' )
         .query({ token: token })
         .end(function( err, res ) {
@@ -60,7 +63,7 @@ module.exports.getMyAvatar = function( token, next ) {
                 return next( err );
             }
 
-            getUserAvatar( res.body.user_id, token, next );
+            getUserProfile( res.body.user_id, token, next );
         });
 };
 

@@ -74,7 +74,7 @@ gulp.task( 'index', function() {
         stores = require( './client/stores/' ),
         content = React.renderToString( React.createElement( App, {
             tokens: new stores.Token(),
-            avatars: new stores.Avatar(),
+            profiles: new stores.Profile(),
             contacts: new stores.Contact(),
             repositories: new stores.Repository()
         } ) );

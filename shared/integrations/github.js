@@ -14,18 +14,21 @@ module.exports.oauth = {
     scope: [ 'write:repo_hook' ]
 };
 
-module.exports.getMyAvatar = function( token, next ) {
+module.exports.getMyProfile = function( token, next ) {
     request.get( 'https://api.github.com/user' )
         .set({ Authorization: 'token ' + token })
         .end(function( err, res ) {
             err = err || res.error;
 
-            var avatar;
+            var profile;
             if ( ! err ) {
-                avatar = res.body.avatar_url;
+                profile = {
+                    username: res.body.login,
+                    avatar: res.body.avatar_url
+                };
             }
 
-            next( err, avatar );
+            next( err, profile );
         });
 };
 

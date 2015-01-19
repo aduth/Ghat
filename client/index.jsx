@@ -16,7 +16,7 @@ tokenObserver.listen( tokenStore );
 React.render(
     <App
         tokens={ tokenStore }
-        avatars={ new stores.Avatar() }
+        profiles={ new stores.Profile() }
         contacts={ new stores.Contact() }
         repositories={ new stores.Repository() } />,
     document.getElementById( constants.elements.CONTAINER )

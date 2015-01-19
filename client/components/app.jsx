@@ -8,7 +8,7 @@ module.exports = React.createClass({
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
-        avatars: React.PropTypes.instanceOf( stores.Avatar ).isRequired,
+        profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
     },

@@ -6,13 +6,13 @@ var React = require( 'react/addons' ),
 module.exports = React.createClass({
     displayName: 'Connection',
 
-    mixins: [ observe( 'tokens', 'avatars' ) ],
+    mixins: [ observe( 'tokens', 'profiles' ) ],
 
     propTypes: {
         name: React.PropTypes.string.isRequired,
         icon: React.PropTypes.string,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
-        avatars: React.PropTypes.instanceOf( stores.Avatar ).isRequired,
+        profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
     },
 
@@ -28,7 +28,7 @@ module.exports = React.createClass({
     disconnect: function() {
         if ( this.state.provider ) {
             this.props.tokens.remove( this.state.provider );
-            this.props.avatars.remove( this.state.provider );
+            this.props.profiles.remove( this.state.provider );
         }
     },
 
@@ -49,15 +49,15 @@ module.exports = React.createClass({
     },
 
     getAvatarImage: function() {
-        var avatar;
+        var profile;
         if ( this.state.provider ) {
-            avatar = this.props.avatars.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
-            if ( avatar ) {
+            profile = this.props.profiles.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
+            if ( profile ) {
                 return (
                     <button className="connection__disconnect" onClick={ this.disconnect }>
                         <span className="fa fa-remove connection__disconnect-icon"></span>
                         <span className="visually-hidden">Disconnect</span>
-                        <img width="100" height="100" src={ avatar } alt="User avatar" className="connection__user-avatar" />
+                        <img width="100" height="100" src={ profile.avatar } alt="User avatar" className="connection__user-avatar" />
                     </button>
                 );
             }
