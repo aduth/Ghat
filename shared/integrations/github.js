@@ -1,9 +1,8 @@
 var request = require( 'superagent' ),
     OAuth2 = require( 'oauth' ).OAuth2,
-    config = require( '../../config' ),
-    oauth;
+    config = require( '../../config' );
 
-oauth = module.exports.oauth = {
+module.exports.oauth = {
     client: new OAuth2(
         config.github.clientId,
         config.github.clientSecret,
