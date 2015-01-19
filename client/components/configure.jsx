@@ -27,6 +27,7 @@ module.exports = React.createClass({
     },
 
     onSubmit: function() {
+        this.setState({ saving: true });
         return false;
     },
 
@@ -44,7 +45,8 @@ module.exports = React.createClass({
     render: function() {
         var classes = React.addons.classSet({
             configure: true,
-            disabled: this.props.disabled
+            disabled: this.props.disabled,
+            saving: this.state.saving
         });
 
         return (
@@ -59,7 +61,9 @@ module.exports = React.createClass({
                             <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
                             <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
                         </ol>
-                        <button type="submit" className="button configure__submit">Create</button>
+                        <button type="submit" className="button configure__submit" disabled={ this.state.saving }>
+                            { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
+                        </button>
                     </form>
                     <aside className="configure__disabled-content">
                         You must complete the authorization steps above before creating an integration.
