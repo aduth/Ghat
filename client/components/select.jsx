@@ -12,6 +12,12 @@ module.exports = React.createClass({
         }) )
     },
 
+    componentWillMount: function() {
+        if ( ! this.includeDefault && this.props.options.length ) {
+            this.props.onChange( this.props.options[0].value );
+        }
+    },
+
     getDefaultProps: function() {
         return {
             onChange: function() {},
