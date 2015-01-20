@@ -7,7 +7,7 @@ module.exports = React.createClass({
     propTypes: {
         name: React.PropTypes.string.isRequired,
         repositories: React.PropTypes.arrayOf( React.PropTypes.shape({
-            id: React.PropTypes.number,
+            full_name: React.PropTypes.string,
             name: React.PropTypes.string
         }) ),
         onValueChanged: React.PropTypes.func
@@ -22,7 +22,7 @@ module.exports = React.createClass({
 
     getOptions: function() {
         return this.props.repositories.map(function( repository ) {
-            return { value: repository.id, label: repository.name };
+            return { value: repository.full_name, label: repository.name };
         });
     },
 
