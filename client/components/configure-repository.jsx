@@ -26,17 +26,13 @@ module.exports = React.createClass({
         });
     },
 
-    onSelectedOptionChanged: function( domEvent ) {
-        this.props.onValueChanged( this.props.name, domEvent.target.value );
-    },
-
     render: function() {
         return (
             <li className="configure-repository">
                 <label className="form-option">
                     <p className="form-option__description">Next, choose the GitHub repository to monitor.</p>
                     <span className="form-option__label">Choose a repository:</span>
-                    <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
+                    <Select onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
                 </label>
             </li>
         );

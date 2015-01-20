@@ -32,10 +32,14 @@ module.exports = React.createClass({
         });
     },
 
+    onSelectedValueChanged: function( domEvent ) {
+        this.props.onChange( domEvent.target.value );
+    },
+
     render: function() {
         return (
             <div className="select">
-                <select className="select__input" onChange={ this.props.onChange }>{ this.getOptions() }</select>
+                <select className="select__input" onChange={ this.onSelectedValueChanged }>{ this.getOptions() }</select>
                 <span className="fa fa-caret-down select__expand" />
             </div>
         );

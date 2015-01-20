@@ -27,10 +27,6 @@ module.exports = React.createClass({
         });
     },
 
-    onSelectedOptionChanged: function( domEvent ) {
-        this.props.onValueChanged( this.props.name, domEvent.target.value );
-    },
-
     render: function() {
         return (
             <li className="configure-contact">
@@ -39,7 +35,7 @@ module.exports = React.createClass({
                         Finally, choose who is to be notified from the list of available contacts for your chat provider.
                     </p>
                     <span className="form-option__label">Choose a contact:</span>
-                    <Select onChange={ this.onSelectedOptionChanged } options={ this.getOptions() } />
+                    <Select onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
                 </label>
             </li>
         );
