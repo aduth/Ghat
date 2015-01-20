@@ -47,6 +47,30 @@ module.exports.getRepositories = function( token, next ) {
         });
 };
 
+module.exports.createWebhook = function( token, repository, event, integration, next ) {
+    request.post( 'https://api.github.com/repos/' + repository + '/hooks' )
+        .set({ Authorization: 'token ' + token })
+        .send({
+            name: 'web',
+            config: {
+                url: config.origin + '/event/?integration_id=' + integration._id,
+                secret: integration.secret,
+                content_type: 'json'
+            },
+            events: [ event ]
+        })
+        .end(function( err, res ) {
+            err = err || res.error;
+
+            var hook;
+            if ( ! err ) {
+                hook = res.body;
+            }
+
+            next( err, hook );
+        });
+};
+
 module.exports.getAvailableEvents = function() {
     return [
         { event: "*", description: "Any time any event is triggered (wildcard)" },
