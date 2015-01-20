@@ -1,20 +1,16 @@
-var EventEmitter = require( 'events' ).EventEmitter,
-    request = require( 'superagent' ),
+var request = require( 'superagent' ),
     crypto = require( 'crypto' ),
     shortId = require( 'shortid' ),
     assign = require( 'lodash-node/modern/objects/assign' ),
+    ArrayStore = require( './array' ),
     config = require( '../../config' ),
     IntegrationStore;
 
-IntegrationStore = module.exports = function() {
-    this.data = [];
+IntegrationStore = module.exports = function( initial ) {
+    ArrayStore.call( this, initial );
 };
 
-IntegrationStore.prototype = Object.create( EventEmitter.prototype );
-
-IntegrationStore.prototype.get = function() {
-    return this.data;
-};
+IntegrationStore.prototype = Object.create( ArrayStore.prototype );
 
 IntegrationStore.prototype.create = function( integration ) {
     integration = assign( {}, integration, {
@@ -26,8 +22,7 @@ IntegrationStore.prototype.create = function( integration ) {
         .send( integration )
         .end(function( err, res ) {
             if ( ! err && res.ok ) {
-                this.data.push( res.body );
-                this.emit( 'change' );
+                this.add( res.body );
             }
         }.bind( this ) );
 
