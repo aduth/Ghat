@@ -12,7 +12,10 @@ module.exports = React.createClass({
     mixins: [ observe( 'tokens', 'contacts', 'repositories' ) ],
 
     getInitialState: function() {
-        return { values: {} };
+        return {
+            values: {},
+            saving: false
+        };
     },
 
     propTypes: {
