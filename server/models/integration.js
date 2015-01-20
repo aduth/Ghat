@@ -14,12 +14,6 @@ schema = new mongoose.Schema({
         token: String,
         channel: String
     },
-    github: {
-        event: {
-            type: String,
-            default: '*'
-        }
-    },
     secret: {
         type: String,
         default: function() {
