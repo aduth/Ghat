@@ -14,7 +14,9 @@ module.exports = React.createClass({
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
-        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
+        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
     },
 
     render: function() {
@@ -40,6 +42,8 @@ module.exports = React.createClass({
                     tokens={ this.props.tokens }
                     contacts={ this.props.contacts }
                     repositories={ this.props.repositories }
+                    hooks={ this.props.hooks }
+                    integrations={ this.props.integrations }
                     disabled={ ! this.props.tokens.isConnected() } />
             </ol>
         );

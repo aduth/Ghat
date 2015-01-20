@@ -76,7 +76,9 @@ gulp.task( 'index', function() {
             tokens: new stores.Token(),
             profiles: new stores.Profile(),
             contacts: new stores.Contact(),
-            repositories: new stores.Repository()
+            repositories: new stores.Repository(),
+            hooks: new stores.Hook(),
+            integrations: new stores.Integration()
         } ) );
 
     gulp.src([ 'assets/index.tpl' ])

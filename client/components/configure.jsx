@@ -1,4 +1,5 @@
 var React = require( 'react/addons' ),
+    async = require( 'async' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
@@ -9,7 +10,7 @@ var React = require( 'react/addons' ),
 module.exports = React.createClass({
     displayName: 'Configure',
 
-    mixins: [ observe( 'tokens', 'contacts', 'repositories' ) ],
+    mixins: [ observe( 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ) ],
 
     getInitialState: function() {
         return {
@@ -22,16 +23,46 @@ module.exports = React.createClass({
         disabled: React.PropTypes.bool,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
-        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
+        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
     },
 
     getDefaultProps: function() {
         return { disabled: true };
     },
 
-    onSubmit: function() {
+    onSubmit: function( event ) {
+        var githubToken = this.props.tokens.get( 'github' ),
+            chatIntegration = this.props.tokens.getConnectedChatToken(),
+            chatToken = this.props.tokens.get( chatIntegration );
+
+        this.props.hooks.create(
+            githubToken,
+            this.state.values.repository,
+            this.state.values.event,
+            this.props.integrations.create({
+                chat: {
+                    provider: chatIntegration,
+                    token: chatToken,
+                    contact: this.state.values.contact
+                }
+            })
+        );
+
+        async.parallel([
+            function( next ) {
+                this.props.integrations.once( 'change', next );
+            }.bind( this ),
+            function( next ) {
+                this.props.hooks.once( 'change', next );
+            }.bind( this )
+        ], function() {
+            this.setState({ saving: false });
+        }.bind( this ) );
+
         this.setState({ saving: true });
-        return false;
+        event.preventDefault();
     },
 
     onValueChanged: function( name, value ) {

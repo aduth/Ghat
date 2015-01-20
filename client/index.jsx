@@ -18,6 +18,8 @@ React.render(
         tokens={ tokenStore }
         profiles={ new stores.Profile() }
         contacts={ new stores.Contact() }
-        repositories={ new stores.Repository() } />,
+        repositories={ new stores.Repository() }
+        hooks={ new stores.Hook() }
+        integrations={ new stores.Integration() } />,
     document.getElementById( constants.elements.CONTAINER )
 );

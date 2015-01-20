@@ -4,5 +4,7 @@ module.exports = {
     Token: require( './token' ),
     Profile: require( './profile' ),
     Contact: require( './contact' ),
-    Repository: require( './repository' )
+    Repository: require( './repository' ),
+    Hook: require( './hook' ),
+    Integration: require( './integration' )
 };

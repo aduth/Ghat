@@ -12,7 +12,7 @@ schema = new mongoose.Schema({
             enum: helpers.integrations.getChatIntegrations()
         },
         token: String,
-        channel: String
+        contact: String
     },
     secret: {
         type: String,

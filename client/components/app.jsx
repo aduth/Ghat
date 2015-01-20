@@ -10,7 +10,9 @@ module.exports = React.createClass({
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
-        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired
+        repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
     },
 
     render: function() {
