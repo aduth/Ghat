@@ -23,6 +23,17 @@ var gulp = require( 'gulp' ),
 var bundler, rebundle;
 
 rebundle = function() {
+    if ( ! bundler ) {
+        bundler = browserify(
+            './client/index.jsx',
+            assign({}, watchify.args, {
+                debug: true,
+                extensions: [ '.jsx' ],
+                transform: [ reactify ]
+            })
+        );
+    }
+
     var bundle = bundler
         .bundle()
         .on( 'error', gutil.log )
@@ -42,20 +53,12 @@ rebundle = function() {
 };
 
 gulp.task( 'browserify', function() {
-    bundler = browserify(
-        './client/index.jsx',
-        assign({}, watchify.args, {
-            debug: true,
-            extensions: [ '.jsx' ]
-        })
-    );
-
-    bundler.transform( reactify );
-
-    return rebundle( bundler );
+    return rebundle();
 });
 
 gulp.task( 'watchify', function() {
+    rebundle();
+
     bundler = watchify( bundler );
 
     return bundler
