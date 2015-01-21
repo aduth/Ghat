@@ -4,6 +4,7 @@ var gulp = require( 'gulp' ),
     buffer = require( 'vinyl-buffer' ),
     watchify = require( 'watchify' ),
     reactify = require( 'reactify' ),
+    envify = require( 'envify/custom' ),
     uglify = require( 'gulp-uglify' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     assign = require( 'lodash-node/modern/objects/assign' ),
@@ -15,7 +16,8 @@ var gulp = require( 'gulp' ),
     livereload = require( 'gulp-livereload' ),
     template = require( 'gulp-template' ),
     React = require( 'react' ),
-    manifest = require( './package' );
+    manifest = require( './package' ),
+    config = require( './config' );
 
 /**
  * Task: `browserify`
@@ -28,10 +30,14 @@ rebundle = function() {
             './client/index.jsx',
             assign({}, watchify.args, {
                 debug: true,
-                extensions: [ '.jsx' ],
-                transform: [ reactify ]
+                extensions: [ '.jsx' ]
             })
         );
+
+        bundler.transform( reactify );
+        bundler.transform( envify({
+            ORIGIN: config.origin
+        }) );
     }
 
     var bundle = bundler
