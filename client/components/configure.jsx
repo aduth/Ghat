@@ -1,5 +1,6 @@
 var React = require( 'react/addons' ),
     async = require( 'async' ),
+    assign = require( 'lodash-node/modern/objects/assign' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
@@ -66,7 +67,12 @@ module.exports = React.createClass({
     },
 
     onValueChanged: function( name, value ) {
-        this.state.values[ name ] = value;
+        var pair = {};
+        pair[ name ] = value;
+
+        this.setState({
+            values: assign( {}, this.state.values, pair )
+        });
     },
 
     getContacts: function() {
