@@ -1,4 +1,5 @@
-var errors = require( '../errors' );
+var errors = require( '../errors' ),
+    helpers = require( '../helpers/' );
 
 module.exports.success = function( req, res, next ) {
     res.sendStatus( 200 );
@@ -6,6 +7,7 @@ module.exports.success = function( req, res, next ) {
 
 module.exports.failure = function( err, req, res, next ) {
     if ( ! ( err instanceof errors.Base ) ) {
+        helpers.log.error( 'An unknown error occurred: %s (%s:%d)', err.message, err.fileName, err.lineNumber );
         err = new errors.Base();
     }
 

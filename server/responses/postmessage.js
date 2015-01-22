@@ -1,6 +1,7 @@
 var format = require( 'util' ).format,
     config = require( '../../config' ),
     errors = require( '../errors/' ),
+    helpers = require( '../helpers/' ),
     buildResponse;
 
 buildResponse = function( data ) {
@@ -17,6 +18,7 @@ module.exports.success = function( req, res, next ) {
 
 module.exports.failure = function( err, req, res, next ) {
     if ( ! ( err instanceof errors.Base ) ) {
+        helpers.log.error( 'An unknown error occurred: %s (%s:%d)', err.message, err.fileName, err.lineNumber );
         err = new errors.Base();
     }
 
