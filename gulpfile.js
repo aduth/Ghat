@@ -1,5 +1,16 @@
 var gulp = require( 'gulp' ),
-    browserify = require( 'browserify' ),
+    gutil = require( 'gulp-util' ),
+    rename = require( 'gulp-rename' ),
+    manifest = require( './package' );
+
+/**
+ * Browserify
+ *
+ * Compiles JavaScript source into a single bundle file using Browserify and
+ * related transforms. Includes sourcemaps and minification if compiled in a
+ * production environment.
+ */
+var browserify = require( 'browserify' ),
     source = require( 'vinyl-source-stream' ),
     buffer = require( 'vinyl-buffer' ),
     watchify = require( 'watchify' ),
@@ -8,21 +19,8 @@ var gulp = require( 'gulp' ),
     uglify = require( 'gulp-uglify' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     assign = require( 'lodash-node/modern/objects/assign' ),
-    gutil = require( 'gulp-util' ),
-    less = require( 'gulp-less' ),
-    csso = require( 'gulp-csso' ),
-    autoprefixer = require( 'gulp-autoprefixer' ),
-    rename = require( 'gulp-rename' ),
-    livereload = require( 'gulp-livereload' ),
-    template = require( 'gulp-template' ),
-    React = require( 'react' ),
-    manifest = require( './package' ),
-    config = require( './config' );
-
-/**
- * Task: `browserify`
- */
-var bundler, rebundle;
+    config = require( './config' ),
+    bundler, rebundle;
 
 rebundle = function() {
     if ( ! bundler ) {
@@ -73,36 +71,46 @@ gulp.task( 'watchify', function() {
 });
 
 /**
- * Task: `index`
- * Compiles Lodash templates into static HTML files
+ * Templates
+ *
+ * Compiles Lodash templates into static HTML files, injecting content from the
+ * React app rendered as a string.
  */
-gulp.task( 'index', function() {
+var template = require( 'gulp-template' ),
+    React = require( 'react' ),
+    getAppContent;
+
+getAppContent = function() {
     require( 'jsx-require-extension' );
 
     var App = require( './client/components/app' ),
-        stores = require( './client/stores/' ),
-        content = React.renderToString( React.createElement( App, {
-            tokens: new stores.Token(),
-            profiles: new stores.Profile(),
-            contacts: new stores.Contact(),
-            repositories: new stores.Repository(),
-            hooks: new stores.Hook(),
-            integrations: new stores.Integration()
-        } ) );
+        stores = require( './client/stores/' );
 
+    return React.renderToString( React.createElement( App, {
+        tokens: new stores.Token(),
+        profiles: new stores.Profile(),
+        contacts: new stores.Contact(),
+        repositories: new stores.Repository(),
+        hooks: new stores.Hook(),
+        integrations: new stores.Integration()
+    } ) );
+};
+
+gulp.task( 'templates', function() {
     gulp.src([ 'assets/index.tpl' ])
         .pipe( template({
             manifest: manifest,
             constants: require( './shared/constants/' ),
-            content: content
+            content: getAppContent()
         }) )
         .pipe( rename({ extname: '.html' }) )
         .pipe( gulp.dest( 'public' ) );
 });
 
 /**
- * Task: `vendor`
- * Copies vendor assets to public directory
+ * Vendor
+ *
+ * Copies vendor assets to public directory.
  */
 gulp.task( 'vendor', function() {
     gulp.src([ 'assets/components/fontawesome/fonts/*.*' ])
@@ -110,9 +118,15 @@ gulp.task( 'vendor', function() {
 });
 
 /**
- * Task: `less`
- * Convert LESS files to CSS
+ * LESS
+ *
+ * Converts LESS files to a single CSS bundle, minifying the bundle if compiled
+ * in a production environment.
  */
+var less = require( 'gulp-less' ),
+    csso = require( 'gulp-csso' ),
+    autoprefixer = require( 'gulp-autoprefixer' );
+
 gulp.task( 'less', function() {
     var bundle = gulp.src([ 'assets/less/app.less' ])
         .pipe( less().on( 'error', gutil.log ).on( 'error', gutil.beep ) )
@@ -128,13 +142,16 @@ gulp.task( 'less', function() {
 });
 
 /**
- * Task: `watch`
- * Watch files for changes
+ * Watch
+ *
+ * Watches files for changes, triggering build tasks when files are changed.
  */
+var livereload = require( 'gulp-livereload' );
+
 gulp.task( 'watch', [ 'watchify' ], function() {
     // Compilation
     gulp.watch( 'assets/less/**/*.less', [ 'less' ]);
-    gulp.watch( 'assets/index.tpl', [ 'index' ]);
+    gulp.watch( 'assets/index.tpl', [ 'templates' ]);
 
     // LiveReload
     var lr = livereload.listen( 35729 );
@@ -146,19 +163,16 @@ gulp.task( 'watch', [ 'watchify' ], function() {
 });
 
 /**
- * Task: `build`
- * Performs only tasks necessary to build assets
+ * Build
+ *
+ * Performs tasks necessary to build all application assets.
  */
-gulp.task( 'build', [ 'vendor', 'less', 'browserify', 'index' ]);
+gulp.task( 'build', [ 'vendor', 'less', 'browserify', 'templates' ]);
 
 /**
- * Task: `default`
- * Default task optimized for development
+ * Default, Development
+ *
+ * Development task, trigger a build then immediately watching for changes.
  */
 gulp.task( 'default', [ 'build', 'watch' ]);
-
-/**
- * Task: `dev`
- * Alias for task `default`
- */
 gulp.task( 'dev', [ 'default' ] );
