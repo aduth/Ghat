@@ -2,24 +2,17 @@ var React = require( 'react' ),
     App = require( './components/app' ),
     tokenObserver = require( './observers/token' ),
     constants = require( '../shared/constants/' ),
-    stores = require( './stores/' ),
-    tokenStore = new stores.Token();
+    storesInstances = require( '../shared/helpers/stores' ).getInstances();
 
 /**
  * Bootstrap application
  */
-tokenObserver.listen( tokenStore );
+tokenObserver.listen( storesInstances.tokens );
 
 /**
  * Render base application element
  */
 React.render(
-    <App
-        tokens={ tokenStore }
-        profiles={ new stores.Profile() }
-        contacts={ new stores.Contact() }
-        repositories={ new stores.Repository() }
-        hooks={ new stores.Hook() }
-        integrations={ new stores.Integration() } />,
+    <App { ...storesInstances } />,
     document.getElementById( constants.elements.CONTAINER )
 );

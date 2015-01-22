@@ -84,16 +84,9 @@ getAppContent = function() {
     require( 'jsx-require-extension' );
 
     var App = require( './client/components/app' ),
-        stores = require( './client/stores/' );
+        storesHelper = require( './shared/helpers/stores' );
 
-    return React.renderToString( React.createElement( App, {
-        tokens: new stores.Token(),
-        profiles: new stores.Profile(),
-        contacts: new stores.Contact(),
-        repositories: new stores.Repository(),
-        hooks: new stores.Hook(),
-        integrations: new stores.Integration()
-    } ) );
+    return React.renderToString( React.createElement( App, storesHelper.getInstances() ) );
 };
 
 gulp.task( 'templates', function() {
