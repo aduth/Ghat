@@ -2,15 +2,15 @@ var format = require( 'util' ).format;
 
 module.exports = {
     info: function( message ) {
-        this._log( message, 'info', Array.prototype.slice( arguments, 1 ) );
+        this._log( message, 'info', Array.prototype.slice.call( arguments, 1 ) );
     },
 
     error: function( message ) {
-        this._log( message, 'error', Array.prototype.slice( arguments, 1 ) );
+        this._log( message, 'error', Array.prototype.slice.call( arguments, 1 ) );
     },
 
     warn: function( message ) {
-        this._log( message, 'warn', Array.prototype.slice( arguments, 1 ) );
+        this._log( message, 'warn', Array.prototype.slice.call( arguments, 1 ) );
     },
 
     _log: function( message, type ) {
