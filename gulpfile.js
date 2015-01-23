@@ -156,6 +156,20 @@ gulp.task( 'watch', [ 'watchify' ], function() {
 });
 
 /**
+ * Lint
+ *
+ * Detects JSHint style and usage issues in the JavaScript source.
+ */
+var jshint = require( 'gulp-jshint' );
+
+gulp.task( 'lint', function() {
+    return gulp.src( './{client,shared,server}/**/*.js' )
+        .pipe( jshint() )
+        .pipe( jshint.reporter( 'default' ) )
+        .pipe( jshint.reporter( 'fail' ) );
+});
+
+/**
  * Build
  *
  * Performs tasks necessary to build all application assets.
