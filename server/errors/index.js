@@ -4,5 +4,6 @@ module.exports = {
     InvalidRequest: require( './invalid-request' ),
     UnknownProvider: require( './unknown-provider' ),
     NotFound: require( './not-found' ),
-    Forbidden: require( './forbidden' )
+    Forbidden: require( './forbidden' ),
+    NotImplemented: require( './not-implemented' )
 };
