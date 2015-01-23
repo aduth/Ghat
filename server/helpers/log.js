@@ -13,10 +13,8 @@ module.exports = {
         this._log( message, 'warn', Array.prototype.slice.call( arguments, 1 ) );
     },
 
-    _log: function( message, type ) {
-        var args = Array.prototype.slice.call( arguments, 2 ),
-            output = format.apply( format, [ message ].concat( args ) );
-
+    _log: function( message, type, args ) {
+        var output = format.apply( format, [ message ].concat( args ) );
         console[ type ]( output );
     }
 };
