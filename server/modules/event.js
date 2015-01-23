@@ -37,6 +37,10 @@ router.post( '/', function( req, res, next ) {
 
         message = messages[ eventName ]( req.body );
 
+        if ( ! message ) {
+            return next();
+        }
+
         integrations[ integration.chat.provider ].sendMessage(
             message,
             integration.chat.channel,
