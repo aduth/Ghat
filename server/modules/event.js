@@ -43,7 +43,7 @@ router.post( '/', function( req, res, next ) {
 
         integrations[ integration.chat.provider ].sendMessage(
             message,
-            integration.chat.channel,
+            integration.chat.contact,
             integration.chat.token,
             next
         );
