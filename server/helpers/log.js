@@ -1,3 +1,5 @@
+var format = require( 'util' ).format;
+
 module.exports = {
     info: function( message ) {
         this._log( message, 'info', Array.prototype.slice( arguments, 1 ) );
@@ -12,7 +14,9 @@ module.exports = {
     },
 
     _log: function( message, type ) {
-        var args = Array.prototype.slice( arguments, 2 );
-        console[ type ].apply( console, [ message ].concat( args ) );
+        var args = Array.prototype.slice.call( arguments, 2 ),
+            output = format.apply( format, [ message ].concat( args ) );
+
+        console[ type ]( output );
     }
 };
