@@ -18,15 +18,10 @@ module.exports.oauth = {
 };
 
 module.exports.sendMessage = function( message, channel, token, next ) {
-    var text = message.text;
-    if ( message.url ) {
-        text += ' ' + message.url;
-    }
-
     request.get( 'https://slack.com/api/chat.postMessage' )
         .query({
             channel: channel,
-            text: text,
+            attachments: JSON.stringify([ message ]),
             username: config.chat.username,
             token: token
         })
