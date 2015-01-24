@@ -23,7 +23,8 @@ module.exports.sendMessage = function( message, channel, token, next ) {
             channel: channel,
             attachments: JSON.stringify([ message ]),
             username: config.chat.username,
-            token: token
+            token: token,
+            icon_url: config.origin + '/images/logo-128-small.png'
         })
         .end(function( err, res ) {
             next( err, res );
