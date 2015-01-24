@@ -5,6 +5,7 @@
     "browser": true,
     "node": true,
     "curly": true,
+    "expr": true,
     "globals": {
         "describe": false,
         "it": false,
