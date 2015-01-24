@@ -1,4 +1,5 @@
 module.exports = {
+    ping: require( './ping' ),
     gollum: require( './gollum' ),
-    ping: require( './ping' )
+    issues: require( './issues' )
 };
