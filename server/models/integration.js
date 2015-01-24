@@ -21,10 +21,7 @@ schema = new mongoose.Schema({
         }
     },
     filters: [{
-        field: {
-            type: String,
-            enum: [ 'issue.labels' ]
-        },
+        field: String,
         operator: {
             type: String,
             enum: [ '!=', '<', '<=', '=', '>=', '>', 'in', 'contains' ],
