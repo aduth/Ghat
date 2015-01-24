@@ -36,6 +36,7 @@
     "gulp-jshint": "^1.9.0",
     "gulp-less": "^2.0.1",
     "gulp-livereload": "^3.0.2",
+    "gulp-react": "^2.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.2.8",
     "gulp-template": "^1.1.1",
