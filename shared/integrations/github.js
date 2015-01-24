@@ -97,3 +97,9 @@ module.exports.getAvailableEvents = function() {
         { event: "watch", description: " Any time a User watches a repository" },
     ];
 };
+
+module.exports.getPredefinedFilters = function() {
+    return [
+        { field: 'issue.labels.name', description: 'Label', comparison: 'contains' }
+    ];
+};
