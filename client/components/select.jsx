@@ -6,7 +6,8 @@ module.exports = React.createClass({
     propTypes: {
         onChange: React.PropTypes.func,
         includeDefault: React.PropTypes.bool,
-        options: React.PropTypes.array
+        options: React.PropTypes.array,
+        disabled: React.PropTypes.bool
     },
 
     componentDidMount: function() {
@@ -19,7 +20,8 @@ module.exports = React.createClass({
         return {
             onChange: function() {},
             includeDefault: true,
-            options: Object.freeze([])
+            options: Object.freeze([]),
+            disabled: false
         };
     },
 
@@ -46,7 +48,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="select">
-                <select className="select__input" onChange={ this.onSelectedValueChanged }>{ this.getOptions() }</select>
+                <select className="select__input" onChange={ this.onSelectedValueChanged } disabled={ this.props.disabled }>{ this.getOptions() }</select>
                 <span className="fa fa-caret-down select__expand" />
             </div>
         );
