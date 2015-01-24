@@ -4,6 +4,7 @@ var bodyParser = require( 'body-parser' ),
 module.exports = function( app ) {
     app.use( bodyParser.json({
         verify: function( req, res, buf, next ) {
+            /* jshint unused:vars */
             req.rawBody = buf.toString();
         }
     }) );
