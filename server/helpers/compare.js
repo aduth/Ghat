@@ -5,8 +5,8 @@ module.exports.isMatch = function( source, operator, target ) {
         case '<=': return source <= target;
         case '>=': return source >= target;
         case '>': return source > target;
-        case 'in': return -1 !== target.indexOf( source );
-        case 'contains': return -1 !== source.indexOf( target );
+        case 'in': return ( Array.isArray( target ) || 'string' === typeof target ) && -1 !== target.indexOf( source );
+        case 'contains': return ( Array.isArray( source ) || 'string' === typeof source ) && -1 !== source.indexOf( target );
         default: return source === target;
     }
 };
