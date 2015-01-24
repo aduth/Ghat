@@ -1,10 +1,14 @@
-var format = require( 'util' ).format;
+var format = require( 'util' ).format,
+    constants = require( '../../shared/constants/' );
 
 module.exports = function( body ) {
     var page = body.pages[ 0 ] || {};
 
     return {
-        text: format( 'The page %s was %s', page.title, page.action ),
-        url: page.html_url
+        fallback: format( '[%s] Wiki page %s - %s', body.repository.full_name, page.action, page.title ),
+        pretext: format( '[%s] Wiki page %s', body.repository.full_name, page.action ),
+        title: format( '%s: %s', body.repository.name, page.title ),
+        title_link: page.html_url,
+        color: constants.app.COLOR_SECONDARY
     };
 };
