@@ -4,5 +4,13 @@
     "undef": true,
     "browser": true,
     "node": true,
-    "curly": true
+    "curly": true,
+    "globals": {
+        "describe": false,
+        "it": false,
+        "before": false,
+        "beforeEach": false,
+        "after": false,
+        "afterEach": false
+    }
 }
