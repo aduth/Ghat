@@ -4,6 +4,7 @@ var router = module.exports = require( 'express' ).Router(),
     errors = require( '../errors/' ),
     responses = require( '../responses/' ),
     messages = require( '../messages/' ),
+    helpers = require( '../helpers/' ),
     integrations = require( '../../shared/integrations/' );
 
 /**
@@ -24,7 +25,7 @@ router.post( '/', function( req, res, next ) {
     }
 
     Integration.findById( integrationId, function( err, integration ) {
-        var bodyDigest, message;
+        var bodyDigest, message, isFilterMatch;
 
         if ( ! integration ) {
             return next( new errors.NotFound() );
@@ -35,9 +36,14 @@ router.post( '/', function( req, res, next ) {
             return next( new errors.Forbidden() );
         }
 
+        isFilterMatch = integration.filters.every(function( filter ) {
+            var bodyValue = helpers.field.getValue( req.body, filter.field );
+            return helpers.compare.isMatch( bodyValue, filter.operator, filter.value );
+        });
+
         message = messages[ eventName ]( req.body );
 
-        if ( ! message ) {
+        if ( ! isFilterMatch || ! message ) {
             return next();
         }
 

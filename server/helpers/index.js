@@ -1,3 +1,5 @@
 module.exports = {
-    log: require( './log' )
+    log: require( './log' ),
+    compare: require( './compare' ),
+    field: require( './field' )
 };
