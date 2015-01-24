@@ -19,7 +19,19 @@ schema = new mongoose.Schema({
         default: function() {
             return crypto.randomBytes( config.security.secretLength ).toString( 'hex' );
         }
-    }
+    },
+    filters: [{
+        field: {
+            type: String,
+            enum: [ 'issue.labels' ]
+        },
+        operator: {
+            type: String,
+            enum: [ '!=', '<', '<=', '=', '>=', '>', 'in', 'contains' ],
+            default: '='
+        },
+        value: String
+    }]
 }, { versionKey: false });
 
 module.exports = mongoose.model( 'Integration', schema );
