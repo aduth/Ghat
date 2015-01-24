@@ -1,7 +1,7 @@
 var BaseError = module.exports = function( message ) {
     Error.call( this, message );
     this.message = message;
-}
+};
 
 BaseError.prototype = Object.create( Error.prototype );
 
