@@ -6,10 +6,7 @@ module.exports = React.createClass({
     propTypes: {
         onChange: React.PropTypes.func,
         includeDefault: React.PropTypes.bool,
-        options: React.PropTypes.arrayOf( React.PropTypes.shape({
-            value: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
-            label: React.PropTypes.string
-        }) )
+        options: React.PropTypes.array
     },
 
     componentDidMount: function() {
@@ -22,7 +19,7 @@ module.exports = React.createClass({
         return {
             onChange: function() {},
             includeDefault: true,
-            options: Object.freeze( [] )
+            options: Object.freeze([])
         };
     },
 
@@ -34,7 +31,11 @@ module.exports = React.createClass({
         }
 
         return options.map(function( option ) {
-            return <option key={ option.value } value={ option.value }>{ option.label }</option>;
+            if ( 'object' === typeof option ) {
+                return <option key={ option.value } value={ option.value }>{ option.label }</option>;
+            } else {
+                return <option key={ option } value={ option }>{ option }</option>;
+            }
         });
     },
 
