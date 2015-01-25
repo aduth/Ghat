@@ -4,15 +4,16 @@ module.exports = React.createClass({
     displayName: 'Select',
 
     propTypes: {
+        value: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
         onChange: React.PropTypes.func,
         includeDefault: React.PropTypes.bool,
         options: React.PropTypes.array,
         disabled: React.PropTypes.bool
     },
 
-    componentDidMount: function() {
-        if ( ! this.props.includeDefault && this.props.options.length ) {
-            this.props.onChange( this.props.options[0].value );
+    componentWillUpdate: function( nextProps ) {
+        if ( ! nextProps.includeDefault && nextProps.options.length && ! nextProps.value ) {
+            nextProps.onChange( 'object' === typeof option ? nextProps.options[0].value : nextProps.options[0] );
         }
     },
 
@@ -48,7 +49,9 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="select">
-                <select className="select__input" onChange={ this.onSelectedValueChanged } disabled={ this.props.disabled }>{ this.getOptions() }</select>
+                <select className="select__input" value={ this.props.value } onChange={ this.onSelectedValueChanged } disabled={ this.props.disabled }>
+                    { this.getOptions() }
+                </select>
                 <span className="fa fa-caret-down select__expand" />
             </div>
         );

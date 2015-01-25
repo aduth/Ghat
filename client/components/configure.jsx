@@ -97,9 +97,9 @@ module.exports = React.createClass({
                     </header>
                     <form onSubmit={ this.onSubmit } className="configure__form">
                         <ol className="configure__steps">
-                            <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } onValueChanged={ this.onValueChanged } />
-                            <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } onValueChanged={ this.onValueChanged } />
-                            <ConfigureContact name="contact" contacts={ this.getContacts() } onValueChanged={ this.onValueChanged } />
+                            <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } value={ this.state.values.event } onValueChanged={ this.onValueChanged } />
+                            <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged } />
+                            <ConfigureContact name="contact" contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged } />
                         </ol>
                         <button type="submit" className="button configure__submit" disabled={ this.state.saving }>
                             { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }

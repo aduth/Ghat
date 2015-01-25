@@ -11,6 +11,7 @@ module.exports = React.createClass({
             id: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
             type: React.PropTypes.string
         }) ),
+        value: React.PropTypes.string,
         onValueChanged: React.PropTypes.func
     },
 
@@ -35,7 +36,7 @@ module.exports = React.createClass({
                         Finally, choose who is to be notified from the list of available contacts for your chat provider.
                     </p>
                     <span className="form-option__label">Choose a contact:</span>
-                    <Select onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
+                    <Select value={ this.props.value } onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
                 </label>
             </li>
         );
