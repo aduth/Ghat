@@ -100,6 +100,6 @@ module.exports.getAvailableEvents = function() {
 
 module.exports.getPredefinedFilters = function() {
     return [
-        { field: 'issue.labels.name', description: 'Label', comparison: 'contains' }
+        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ] }
     ];
 };

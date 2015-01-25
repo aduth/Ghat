@@ -14,6 +14,16 @@
     }
 }
 
+.button > .fa:first-child {
+    position: relative;
+    left: -8px;
+}
+
+.button > .fa:last-child {
+    position: relative;
+    right: -8px;
+}
+
 .form-option__description {
     margin: 18px 0;
 }
@@ -24,4 +34,17 @@
     margin: 6px 12px;
     font-size: @text-size * 0.8;
     text-transform: uppercase;
+}
+
+.input {
+    width: 100%;
+    padding: 6px 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: @text-size * 0.9;
+
+    &:disabled {
+        background-color: #f7f7f7;
+        cursor: not-allowed;
+    }
 }

@@ -4,6 +4,7 @@ var React = require( 'react/addons' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
+    ConfigureFilters = require( './configure-filters' ),
     ConfigureContact = require( './configure-contact' ),
     stores = require( '../stores/' ),
     integrations = require( '../../shared/integrations/' );
@@ -47,7 +48,8 @@ module.exports = React.createClass({
                     provider: chatIntegration,
                     token: chatToken,
                     contact: this.state.values.contact
-                }
+                },
+                filters: this.state.values.filters
             })
         );
 
@@ -99,6 +101,7 @@ module.exports = React.createClass({
                         <ol className="configure__steps">
                             <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } value={ this.state.values.event } onValueChanged={ this.onValueChanged } />
                             <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged } />
+                            <ConfigureFilters name="filters" filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged } />
                             <ConfigureContact name="contact" contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged } />
                         </ol>
                         <button type="submit" className="button configure__submit" disabled={ this.state.saving }>
