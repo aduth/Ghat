@@ -13,7 +13,8 @@ module.exports = React.createClass({
 
     componentWillUpdate: function( nextProps ) {
         if ( ! nextProps.includeDefault && nextProps.options.length && ! nextProps.value ) {
-            nextProps.onChange( 'object' === typeof option ? nextProps.options[0].value : nextProps.options[0] );
+            nextProps.onChange( 'object' === typeof nextProps.options[0] ?
+                nextProps.options[0].value : nextProps.options[0] );
         }
     },
 
