@@ -156,9 +156,23 @@ gulp.task( 'watch', [ 'watchify' ], function() {
 });
 
 /**
+ * Mocha
+ *
+ * Runs the Mocha test suite and ends the process with a failing exit status if
+ * an error is encountered.
+ */
+var mocha = require( 'gulp-mocha' );
+
+gulp.task( 'mocha', function() {
+    return gulp.src( 'test/index.js' )
+        .pipe( mocha() );
+});
+
+/**
  * Lint
  *
- * Detects JSHint style and usage issues in the JavaScript source.
+ * Detects JSHint style and usage issues in the JavaScript source, ending the
+ * process with a failing exit status if an error is encountered.
  */
 var jshint = require( 'gulp-jshint' ),
     react = require( 'gulp-react' );
@@ -170,6 +184,14 @@ gulp.task( 'lint', function() {
         .pipe( jshint.reporter( 'default' ) )
         .pipe( jshint.reporter( 'fail' ) );
 });
+
+/**
+ * Test
+ *
+ * Runs both the `lint` and `mocha` tasks, exiting with a failing status if an
+ * error is encountered.
+ */
+gulp.task( 'test', [ 'lint', 'mocha' ]);
 
 /**
  * Build
