@@ -1,5 +1,8 @@
 var request = require( 'superagent' ),
+    async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
+    flatten = require( 'lodash-node/modern/arrays/flatten' ),
+    sortBy = require( 'lodash-node/modern/collections/sortBy' ),
     config = require( '../../config' );
 
 module.exports.oauth = {
@@ -11,7 +14,7 @@ module.exports.oauth = {
         'login/oauth/access_token',
         null
     ),
-    scope: [ 'write:repo_hook' ]
+    scope: [ 'write:repo_hook', 'read:org' ]
 };
 
 module.exports.getMyProfile = function( token, next ) {
@@ -33,18 +36,30 @@ module.exports.getMyProfile = function( token, next ) {
 };
 
 module.exports.getRepositories = function( token, next ) {
-    request.get( 'https://api.github.com/user/repos' )
-        .set({ Authorization: 'token ' + token })
-        .end(function( err, res ) {
-            err = err || res.error;
+    var fetchArray = function( url ) {
+        return function( asyncNext ) {
+            request.get( url )
+                .set({ Authorization: 'token ' + token })
+                .end(function( err, res ) {
+                    asyncNext( err || res.error, res.body || [] );
+                });
+        };
+    };
 
-            var repositories;
-            if ( ! err ) {
-                repositories = res.body;
-            }
+    async.parallel([
+        fetchArray( 'https://api.github.com/user/repos' ),
+        function( asyncNext ) {
+            fetchArray( 'https://api.github.com/user/teams' )(function( err, teams ) {
+                async.series( teams.map(function( team ) {
+                    return fetchArray( team.repositories_url );
+                }), asyncNext );
+            });
+        }
+    ], function( err, repositories ) {
+        var sortedRepositories = sortBy( flatten( repositories ), 'full_name' );
+        next( err, sortedRepositories );
 
-            next( err, repositories );
-        });
+    });
 };
 
 module.exports.createWebhook = function( token, repository, event, integration, next ) {
