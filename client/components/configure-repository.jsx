@@ -1,4 +1,5 @@
 var React = require( 'react' ),
+    pluck = require( 'lodash-node/modern/collections/pluck' ),
     Select = require( './select' );
 
 module.exports = React.createClass({
@@ -22,9 +23,7 @@ module.exports = React.createClass({
     },
 
     getOptions: function() {
-        return this.props.repositories.map(function( repository ) {
-            return { value: repository.full_name, label: repository.name };
-        });
+        return pluck( this.props.repositories, 'full_name' );
     },
 
     render: function() {
