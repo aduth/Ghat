@@ -17,6 +17,7 @@ module.exports = {
         secretLength: process.env.SECRET_LENGTH || 32
     },
     chat: {
-        username: process.env.CHAT_USERNAME || 'Ghat Bot'
+        username: process.env.CHAT_USERNAME || 'Ghat Bot',
+        avatar: ( process.env.ORIGIN || 'http://localhost:3000' ) + '/images/logo-128-small.png'
     }
 };

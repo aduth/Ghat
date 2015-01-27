@@ -24,7 +24,7 @@ module.exports.sendMessage = function( message, channel, token, next ) {
             attachments: JSON.stringify([ message ]),
             username: config.chat.username,
             token: token,
-            icon_url: config.origin + '/images/logo-128-small.png'
+            icon_url: config.chat.avatar
         })
         .end(function( err, res ) {
             next( err, res );
