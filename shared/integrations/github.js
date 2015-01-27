@@ -39,6 +39,7 @@ module.exports.getRepositories = function( token, next ) {
     var fetchArray = function( url ) {
         return function( asyncNext ) {
             request.get( url )
+                .set({ Accept: 'application/vnd.github.moondragon+json' })
                 .set({ Authorization: 'token ' + token })
                 .end(function( err, res ) {
                     asyncNext( err || res.error, res.body || [] );
