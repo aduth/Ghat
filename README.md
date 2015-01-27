@@ -1,4 +1,4 @@
-# Ghat
+![Ghat](./public/images/logo.png)
 
 Relay GitHub events to your favorite chat client
 
