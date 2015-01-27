@@ -1,5 +1,7 @@
 ![Ghat](./public/images/logo.png)
 
+[![Build Status](https://travis-ci.org/aduth/Ghat.svg?branch=master)](https://travis-ci.org/aduth/Ghat)
+
 Relay GitHub events to your favorite chat client
 
 # Try it now!
