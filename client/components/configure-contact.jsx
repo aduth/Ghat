@@ -5,7 +5,6 @@ module.exports = React.createClass({
     displayName: 'ConfigureEvent',
 
     propTypes: {
-        name: React.PropTypes.string.isRequired,
         contacts: React.PropTypes.arrayOf( React.PropTypes.shape({
             name: React.PropTypes.string,
             id: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
@@ -36,7 +35,7 @@ module.exports = React.createClass({
                         Finally, choose who is to be notified from the list of available contacts for your chat provider.
                     </p>
                     <span className="form-option__label">Choose a contact:</span>
-                    <Select value={ this.props.value } onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
+                    <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>
             </li>
         );

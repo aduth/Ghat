@@ -6,7 +6,6 @@ module.exports = React.createClass({
     displayName: 'ConfigureRepository',
 
     propTypes: {
-        name: React.PropTypes.string.isRequired,
         repositories: React.PropTypes.arrayOf( React.PropTypes.shape({
             full_name: React.PropTypes.string,
             name: React.PropTypes.string
@@ -32,7 +31,7 @@ module.exports = React.createClass({
                 <label className="form-option">
                     <p className="form-option__description">Next, choose the GitHub repository to monitor.</p>
                     <span className="form-option__label">Choose a repository:</span>
-                    <Select value={ this.props.value } onChange={ this.props.onValueChanged.bind( null, this.props.name ) } options={ this.getOptions() } />
+                    <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>
             </li>
         );

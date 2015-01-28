@@ -99,10 +99,10 @@ module.exports = React.createClass({
                     </header>
                     <form onSubmit={ this.onSubmit } className="configure__form">
                         <ol className="configure__steps">
-                            <ConfigureEvent name="event" events={ integrations.github.getAvailableEvents() } value={ this.state.values.event } onValueChanged={ this.onValueChanged } />
-                            <ConfigureRepository name="repository" repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged } />
-                            <ConfigureFilters name="filters" filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged } />
-                            <ConfigureContact name="contact" contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged } />
+                            <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.event } onValueChanged={ this.onValueChanged.bind( null, 'event' ) } />
+                            <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
+                            <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
+                            <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                         </ol>
                         <button type="submit" className="button configure__submit" disabled={ this.state.saving }>
                             { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }

@@ -5,7 +5,6 @@ module.exports = React.createClass({
     displayName: 'ConfigureFilters',
 
     propTypes: {
-        name: React.PropTypes.string.isRequired,
         filters: React.PropTypes.arrayOf( React.PropTypes.shape({
             field: React.PropTypes.string,
             description: React.PropTypes.string,
@@ -41,19 +40,20 @@ module.exports = React.createClass({
     },
 
     addRow: function() {
-        this.props.onValueChanged( this.props.name, this.props.value.concat([{}]) );
+        var newValue = this.props.value.concat([{}]);
+        this.props.onValueChanged( newValue );
     },
 
     onFilterChanged: function( rowIndex, value ) {
         var newValue = this.props.value.slice( 0 );
         newValue.splice( rowIndex, 1, value );
-        this.props.onValueChanged( this.props.name, newValue );
+        this.props.onValueChanged( newValue );
     },
 
     onFilterRemoved: function( rowIndex ) {
         var newValue = this.props.value.slice( 0 );
         newValue.splice( rowIndex, 1 );
-        this.props.onValueChanged( this.props.name, newValue );
+        this.props.onValueChanged( newValue );
     },
 
     render: function() {
