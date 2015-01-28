@@ -1,6 +1,7 @@
 var React = require( 'react' ),
     stores = require( '../stores/' ),
     Header = require( './header' ),
+    Description = require( './description' ),
     Steps = require( './steps' );
 
 module.exports = React.createClass({
@@ -20,6 +21,7 @@ module.exports = React.createClass({
             <div className="app__container">
                 <Header />
                 <main className="app__content">
+                    <Description />
                     <Steps { ...this.props } />
                 </main>
             </div>
