@@ -57,7 +57,7 @@ module.exports.getRepositories = function( token, next ) {
             });
         }
     ], function( err, repositories ) {
-        var sortedRepositories = sortBy( flatten( repositories ), 'full_name' );
+        var sortedRepositories = sortBy( flatten( repositories, true ), 'full_name' );
         next( err, sortedRepositories );
 
     });
