@@ -23,6 +23,8 @@ var browserify = require( 'browserify' ),
     bundler, rebundle;
 
 rebundle = function() {
+    var bundle;
+
     if ( ! bundler ) {
         bundler = browserify(
             './client/index.jsx',
@@ -38,22 +40,22 @@ rebundle = function() {
         }) );
     }
 
-    var bundle = bundler
-        .bundle()
+    bundle = bundler.bundle()
         .on( 'error', gutil.log )
         .on( 'error', gutil.beep )
         .pipe( source( 'bundle.js' ) )
         .pipe( buffer() )
-        .pipe( sourcemaps.init({ loadMaps: true }) );
+        .pipe( rename({ suffix: '-' + manifest.version }) );
 
     if ( 'production' === process.env.NODE_ENV ) {
         bundle = bundle.pipe( uglify() );
+    } else {
+        bundle = bundle
+            .pipe( sourcemaps.init({ loadMaps: true }) )
+            .pipe( sourcemaps.write( './' ) );
     }
 
-    return bundle
-        .pipe( rename({ suffix: '-' + manifest.version }) )
-        .pipe( sourcemaps.write( './' ) )
-        .pipe( gulp.dest( 'public/js' ) );
+    return bundle.pipe( gulp.dest( 'public/js' ) );
 };
 
 gulp.task( 'browserify', function() {
