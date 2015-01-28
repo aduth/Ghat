@@ -1,6 +1,6 @@
 var React = require( 'react' ),
-    assign = require( 'lodash-node/modern/objects/assign' ),
-    find = require( 'lodash-node/modern/collections/find' ),
+    assign = require( 'lodash/object/assign' ),
+    find = require( 'lodash/collection/find' ),
     Select = require( './select' );
 
 module.exports = React.createClass({

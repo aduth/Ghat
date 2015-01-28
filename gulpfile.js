@@ -18,7 +18,7 @@ var browserify = require( 'browserify' ),
     envify = require( 'envify/custom' ),
     uglify = require( 'gulp-uglify' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
-    assign = require( 'lodash-node/modern/objects/assign' ),
+    assign = require( 'lodash/object/assign' ),
     config = require( './config' ),
     bundler, rebundle;
 

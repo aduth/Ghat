@@ -1,5 +1,5 @@
 var React = require( 'react' ),
-    pluck = require( 'lodash-node/modern/collections/pluck' ),
+    pluck = require( 'lodash/collection/pluck' ),
     Select = require( './select' );
 
 module.exports = React.createClass({

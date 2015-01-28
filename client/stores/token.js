@@ -1,4 +1,4 @@
-var intersection = require( 'lodash-node/modern/arrays/intersection' ),
+var intersection = require( 'lodash/array/intersection' ),
     LocalStore = require( './local' ),
     helpers = require( '../../shared/helpers/' ),
     TokenStore;

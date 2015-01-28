@@ -1,6 +1,6 @@
 var React = require( 'react/addons' ),
     async = require( 'async' ),
-    assign = require( 'lodash-node/modern/objects/assign' ),
+    assign = require( 'lodash/object/assign' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),

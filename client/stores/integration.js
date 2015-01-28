@@ -1,7 +1,7 @@
 var request = require( 'superagent' ),
     crypto = require( 'crypto' ),
     shortId = require( 'shortid' ),
-    assign = require( 'lodash-node/modern/objects/assign' ),
+    assign = require( 'lodash/object/assign' ),
     ArrayStore = require( './array' ),
     config = require( '../../config' ),
     IntegrationStore;

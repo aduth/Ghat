@@ -1,8 +1,8 @@
 var request = require( 'superagent' ),
     async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
-    flatten = require( 'lodash-node/modern/arrays/flatten' ),
-    sortBy = require( 'lodash-node/modern/collections/sortBy' ),
+    flatten = require( 'lodash/array/flatten' ),
+    sortBy = require( 'lodash/collection/sortBy' ),
     config = require( '../../config' );
 
 module.exports.oauth = {

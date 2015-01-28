@@ -1,4 +1,4 @@
-var pluck = require( 'lodash-node/modern/collections/pluck' );
+var pluck = require( 'lodash/collection/pluck' );
 
 module.exports.getValue = function( object, field ) {
     var parts = field.split( '.' );

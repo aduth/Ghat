@@ -1,5 +1,5 @@
 var React = require( 'react/addons' ),
-    find = require( 'lodash-node/modern/collections/find' ),
+    find = require( 'lodash/collection/find' ),
     observe = require( '../mixins/observe-store' ),
     stores = require( '../stores/' );
 
