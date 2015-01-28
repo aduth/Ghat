@@ -21,10 +21,12 @@ module.exports = React.createClass({
         onRemove: React.PropTypes.func
     },
 
+    getInitialState: function() {
+        return { isCustom: false };
+    },
+
     getDefaultProps: function() {
-        return {
-            value: Object.freeze({})
-        };
+        return { value: Object.freeze({}) };
     },
 
     getFieldOptions: function() {
@@ -34,10 +36,16 @@ module.exports = React.createClass({
     },
 
     getOperatorOptions: function() {
-        var filter;
+        var field, filter;
 
-        if ( this.props.value ) {
-            filter = find( this.props.filters, { field: this.props.value.field });
+        if ( this.state.isCustom ) {
+            field = 'custom';
+        } else {
+            field = this.props.value.field;
+        }
+
+        if ( field ) {
+            filter = find( this.props.filters, { field: field });
 
             if ( filter ) {
                 return filter.operators || [ '=' ];
@@ -59,12 +67,27 @@ module.exports = React.createClass({
         this.props.onValueChanged( newValue );
     },
 
+    onFieldChange: function( value ) {
+        if ( 'custom' === value ) {
+            value = '';
+            this.setState({ isCustom: true });
+        }
+
+        this.onChange( 'field', value );
+    },
+
+    getFieldInput: function() {
+        if ( this.state.isCustom ) {
+            return <input type="text" value={ this.props.value.field } onChange={ this.onChange.bind( null, 'field' ) } placeholder="e.g. user.login" className="input" />;
+        } else {
+            return <Select options={ this.getFieldOptions() } value={ this.props.value.field } onChange={ this.onFieldChange } />;
+        }
+    },
+
     render: function() {
         return (
             <tr className="configure-filter">
-                <td width="40%">
-                    <Select options={ this.getFieldOptions() } value={ this.props.value.field } onChange={ this.onChange.bind( this, 'field' ) } />
-                </td>
+                <td width="40%">{ this.getFieldInput() }</td>
                 <td width="20%">
                     <Select options={ this.getOperatorOptions() } includeDefault={ false } disabled={ ! this.props.value.field } value={ this.props.value.operator } onChange={ this.onChange.bind( this, 'operator' ) } />
                 </td>
