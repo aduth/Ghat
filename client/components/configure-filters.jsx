@@ -20,7 +20,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            events: [],
+            filters: [],
             onValueChanged: function() {},
             value: []
         };
