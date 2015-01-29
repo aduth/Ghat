@@ -48,7 +48,7 @@ module.exports = React.createClass({
 
     onFilterChanged: function( rowIndex, value ) {
         var newValue = this.props.value.slice( 0 );
-        newValue.splice( rowIndex, 1, value );
+        newValue[ rowIndex ] = value;
         this.props.onValueChanged( newValue );
     },
 
