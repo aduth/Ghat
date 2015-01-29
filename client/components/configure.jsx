@@ -49,7 +49,7 @@ module.exports = React.createClass({
                     token: chatToken,
                     contact: this.state.values.contact
                 },
-                filters: this.state.values.filters
+                filters: this.state.values.filters.filter( Boolean )
             })
         );
 

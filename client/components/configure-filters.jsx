@@ -28,14 +28,16 @@ module.exports = React.createClass({
 
     getRows: function() {
         return this.props.value.map(function( filter, i ) {
-            return (
-                <ConfigureFilter
-                    key={ i }
-                    filters={ this.props.filters }
-                    value={ filter }
-                    onValueChanged={ this.onFilterChanged.bind( this, i ) }
-                    onRemove={ this.onFilterRemoved.bind( this, i ) } />
-            );
+            if ( filter ) {
+                return (
+                    <ConfigureFilter
+                        key={ i }
+                        filters={ this.props.filters }
+                        value={ filter }
+                        onValueChanged={ this.onFilterChanged.bind( this, i ) }
+                        onRemove={ this.onFilterRemoved.bind( this, i ) } />
+                );
+            }
         }, this );
     },
 
@@ -52,7 +54,7 @@ module.exports = React.createClass({
 
     onFilterRemoved: function( rowIndex ) {
         var newValue = this.props.value.slice( 0 );
-        newValue.splice( rowIndex, 1 );
+        newValue[ rowIndex ] = null;
         this.props.onValueChanged( newValue );
     },
 
