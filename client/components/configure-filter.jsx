@@ -26,7 +26,12 @@ module.exports = React.createClass({
     },
 
     getDefaultProps: function() {
-        return { value: Object.freeze({}) };
+        return {
+            filters: Object.freeze([]),
+            value: Object.freeze({}),
+            onValueChanged: function() {},
+            onRemove: function() {}
+        };
     },
 
     getFieldOptions: function() {
