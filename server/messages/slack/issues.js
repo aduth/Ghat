@@ -1,5 +1,5 @@
 var format = require( 'util' ).format,
-    constants = require( '../../shared/constants/' );
+    constants = require( '../../../shared/constants/' );
 
 module.exports = function( body ) {
     return {

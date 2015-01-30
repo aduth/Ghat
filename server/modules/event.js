@@ -20,15 +20,18 @@ router.post( '/', function( req, res, next ) {
         return next( new errors.Unauthorized() );
     } else if ( ! eventName || 'object' !== typeof req.body ) {
         return next( new errors.InvalidRequest() );
-    } else if ( ! ( eventName in messages ) ) {
-        return next( new errors.NotImplemented() );
     }
 
     Integration.findById( integrationId, function( err, integration ) {
-        var bodyDigest, message, isFilterMatch;
+        var generateMessage, bodyDigest, message, isFilterMatch;
 
         if ( ! integration ) {
             return next( new errors.NotFound() );
+        }
+
+        generateMessage = messages[ integration.chat.provider ][ eventName ] || messages.common[ eventName ];
+        if ( ! generateMessage ) {
+            return next( new errors.NotImplemented() );
         }
 
         bodyDigest = crypto.createHmac( 'sha1', integration.secret ).update( req.rawBody ).digest( 'hex' );
@@ -41,7 +44,7 @@ router.post( '/', function( req, res, next ) {
             return helpers.compare.isMatch( bodyValue, filter.operator, filter.value );
         });
 
-        message = messages[ eventName ]( req.body );
+        message = generateMessage( req.body );
 
         if ( ! isFilterMatch || ! message ) {
             return next();
