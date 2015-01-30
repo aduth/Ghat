@@ -9,8 +9,12 @@
     text-transform: uppercase;
     color: #fff;
 
-    &:hover {
+    &:not(:disabled):hover {
         background-color: lighten( @color-purple, 6% );
+    }
+
+    &:disabled {
+        cursor: not-allowed;
     }
 }
 
