@@ -1,6 +1,7 @@
 var React = require( 'react/addons' ),
     async = require( 'async' ),
     assign = require( 'lodash/object/assign' ),
+    difference = require( 'lodash/array/difference' ),
     observe = require( '../mixins/observe-store' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
@@ -87,11 +88,12 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var classes = React.addons.classSet({
-            configure: true,
-            disabled: this.props.disabled,
-            saving: this.state.saving
-        });
+        var canSubmit = ! difference([ 'event', 'repository', 'contact' ], Object.keys( this.state.values ) ).length,
+            classes = React.addons.classSet({
+                configure: true,
+                disabled: this.props.disabled,
+                saving: this.state.saving
+            });
 
         return (
             <div className={ classes }>
@@ -106,7 +108,7 @@ module.exports = React.createClass({
                             <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
                             <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                         </ol>
-                        <button type="submit" className="button configure__submit" disabled={ this.state.saving }>
+                        <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
                             { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
                         </button>
                     </form>
