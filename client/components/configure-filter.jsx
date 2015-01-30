@@ -59,17 +59,13 @@ module.exports = React.createClass({
     },
 
     onChange: function( field, value ) {
-        var fieldValuePair = {},
-            newValue;
-
-        if ( value && value.constructor && 'SyntheticEvent' === value.constructor.name ) {
-            value = value.target.value;
-        }
-
+        var fieldValuePair = {};
         fieldValuePair[ field ] = value;
-        newValue = assign({}, this.props.value, fieldValuePair );
+        this.props.onValueChanged( assign({}, this.props.value, fieldValuePair ) );
+    },
 
-        this.props.onValueChanged( newValue );
+    onInputChange: function( field, event ) {
+        this.onChange( field, event.target.value );
     },
 
     onFieldChange: function( value ) {
@@ -83,7 +79,7 @@ module.exports = React.createClass({
 
     getFieldInput: function() {
         if ( this.state.isCustom ) {
-            return <input type="text" value={ this.props.value.field } onChange={ this.onChange.bind( null, 'field' ) } placeholder="e.g. user.login" className="input" />;
+            return <input type="text" value={ this.props.value.field } onChange={ this.onInputChange.bind( null, 'field' ) } placeholder="e.g. user.login" className="input" />;
         } else {
             return <Select options={ this.getFieldOptions() } value={ this.props.value.field } onChange={ this.onFieldChange } />;
         }
@@ -97,7 +93,7 @@ module.exports = React.createClass({
                     <Select options={ this.getOperatorOptions() } includeDefault={ false } disabled={ ! this.props.value.field } value={ this.props.value.operator } onChange={ this.onChange.bind( this, 'operator' ) } />
                 </td>
                 <td width="35%">
-                    <input type="text" value={ this.props.value.value } disabled={ ! this.props.value.field } onChange={ this.onChange.bind( this, 'value' ) } className="input" />
+                    <input type="text" value={ this.props.value.value } disabled={ ! this.props.value.field } onChange={ this.onInputChange.bind( this, 'value' ) } className="input" />
                 </td>
                 <td width="15%">
                     <button type="button" onClick={ this.props.onRemove } className="configure-filter__remove">
