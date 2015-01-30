@@ -16,7 +16,7 @@ oauth = module.exports.oauth = {
         'login/oauth/access_token',
         null
     ),
-    scope: [ 'read:org' ]
+    scope: [ 'repo' ]
 };
 
 module.exports.verify = function( token, next ) {
