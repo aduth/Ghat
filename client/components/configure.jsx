@@ -16,7 +16,9 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            values: {},
+            values: {
+                filters: []
+            },
             saving: false
         };
     },
