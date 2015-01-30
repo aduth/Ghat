@@ -20,9 +20,9 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            filters: [],
+            filters: Object.freeze([]),
             onValueChanged: function() {},
-            value: []
+            value: Object.freeze([])
         };
     },
 

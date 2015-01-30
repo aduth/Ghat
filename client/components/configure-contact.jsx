@@ -16,7 +16,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            contacts: [],
+            contacts: Object.freeze([]),
             onValueChanged: function() {}
         };
     },

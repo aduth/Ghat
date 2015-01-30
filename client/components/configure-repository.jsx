@@ -16,7 +16,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            repositories: [],
+            repositories: Object.freeze([]),
             onValueChanged: function() {}
         };
     },

@@ -15,7 +15,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            events: [],
+            events: Object.freeze([]),
             onValueChanged: function() {}
         };
     },
