@@ -36,7 +36,8 @@ rebundle = function() {
 
         bundler.transform( reactify );
         bundler.transform( envify({
-            ORIGIN: config.origin
+            ORIGIN: config.origin,
+            GITHUB_CLIENT_ID: config.github.clientId
         }) );
     }
 

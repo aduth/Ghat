@@ -17,6 +17,15 @@ module.exports.oauth = {
     scope: [ 'post' ]
 };
 
+module.exports.verify = function( token, next ) {
+    request.get( 'https://slack.com/api/auth.test' )
+        .query({ token: token })
+        .end(function( err, res ) {
+            var isInvalid = ! err && ( 200 !== res.status || ! res.body.ok );
+            next( err || isInvalid );
+        });
+};
+
 module.exports.sendMessage = function( message, channel, token, next ) {
     request.get( 'https://slack.com/api/chat.postMessage' )
         .query({

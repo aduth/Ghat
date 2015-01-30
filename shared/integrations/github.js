@@ -2,10 +2,12 @@ var request = require( 'superagent' ),
     async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
     flatten = require( 'lodash/array/flatten' ),
+    difference = require( 'lodash/array/difference' ),
     sortBy = require( 'lodash/collection/sortBy' ),
-    config = require( '../../config' );
+    config = require( '../../config' ),
+    oauth;
 
-module.exports.oauth = {
+oauth = module.exports.oauth = {
     client: new OAuth2(
         config.github.clientId,
         config.github.clientSecret,
@@ -14,7 +16,18 @@ module.exports.oauth = {
         'login/oauth/access_token',
         null
     ),
-    scope: [ 'write:repo_hook', 'read:org' ]
+    scope: [ 'read:org' ]
+};
+
+module.exports.verify = function( token, next ) {
+    request.get( 'https://api.github.com/user' )
+        .set({ Authorization: 'token ' + token })
+        .end(function( err, res ) {
+            var headerScopes = ( res.headers['x-oauth-scopes'] || '' ).split( ',' ),
+                isInvalid = ! err && ( 200 !== res.status || difference( oauth.scope, headerScopes ).length );
+
+            next( err || isInvalid );
+        });
 };
 
 module.exports.getMyProfile = function( token, next ) {

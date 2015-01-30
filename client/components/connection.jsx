@@ -1,12 +1,16 @@
 var React = require( 'react/addons' ),
     find = require( 'lodash/collection/find' ),
     observe = require( '../mixins/observe-store' ),
+    monitor = require( '../mixins/event-monitor' ),
     stores = require( '../stores/' );
 
 module.exports = React.createClass({
     displayName: 'Connection',
 
-    mixins: [ observe( 'tokens', 'profiles' ) ],
+    mixins: [
+        observe( 'tokens', 'profiles' ),
+        monitor( 'tokens', 'verify', 'setProvider' )
+    ],
 
     propTypes: {
         name: React.PropTypes.string.isRequired,
@@ -17,7 +21,11 @@ module.exports = React.createClass({
     },
 
     getInitialState: function() {
-        return { provider: this.getConnectedProvider() };
+        return {};
+    },
+
+    setProvider: function() {
+        this.setState({ provider: this.getConnectedProvider() });
     },
 
     authenticate: function( provider ) {
