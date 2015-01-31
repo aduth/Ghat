@@ -1,4 +1,5 @@
-var _store;
+var config = require( '../../config' ),
+    _store;
 
 module.exports.listen = function( store ) {
     _store = store;
@@ -10,7 +11,7 @@ module.exports.stopListening = function() {
 };
 
 module.exports.readMessage = function( event ) {
-    if ( event.origin === window.location.protocol + '//' + window.location.host ) {
+    if ( event.origin === config.origin ) {
         try {
             var data = JSON.parse( event.data );
             if ( _store && data.provider && data.accessToken ) {
