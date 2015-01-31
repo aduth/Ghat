@@ -7,6 +7,7 @@ module.exports.isMatch = function( source, operator, target ) {
         case '>': return source > target;
         case 'in': return ( Array.isArray( target ) || 'string' === typeof target ) && -1 !== target.indexOf( source );
         case 'contains': return ( Array.isArray( source ) || 'string' === typeof source ) && -1 !== source.indexOf( target );
+        case 'matches': return new RegExp( source ).test( target );
         default: return source == target; /* jshint ignore:line */
     }
 };
