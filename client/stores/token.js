@@ -48,6 +48,19 @@ TokenStore.prototype.get = function( provider ) {
 };
 
 /**
+ * Saves a token to the store using the specified provider. Emits a `change`
+ * event. Automatically assumes that the token is valid and thus future
+ * retrievals will be returned without verification.
+ *
+ * @param {mixed} provider The key to be used for later retrieval
+ * @param {mixed} token    A token value to save to the store
+ */
+TokenStore.prototype.set = function( provider, token ) {
+    LocalStore.prototype.set.call( this, provider, token );
+    this.verified[ provider ] = true;
+};
+
+/**
  * Returns true if the store contains a valid token for GitHub, or false
  * otherwise.
  *
