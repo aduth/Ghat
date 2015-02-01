@@ -16,32 +16,33 @@ TokenStore = module.exports = function() {
 TokenStore.prototype = Object.create( LocalStore.prototype );
 
 /**
- * Retrieves a token by the specified key. If the key hasn't yet been verified,
- * an undefined value is returned and the token is verified to be valid. Once
- * verification is complete, a `verify` event is emitted. If the token is
- * invalid, it is removed from the store.
+ * Retrieves a token by the specified provider. If the token hasn't yet been
+ * verified, an undefined value is returned and the token is verified to be
+ * valid. Once verification is complete, a `verify` event is emitted. If the
+ * token is invalid, it is removed from the store.
  *
- * @param  {mixed}  key The key for the token to be retrieved
- * @return {string}     A verified token, or undefined if verification pending
+ * @param  {mixed}  provider The provider for the token to be retrieved
+ * @return {string}          A verified token, or undefined if verification
+ *                           is pending
  */
-TokenStore.prototype.get = function( key ) {
-    var token = LocalStore.prototype.get.call( this, key );
+TokenStore.prototype.get = function( provider ) {
+    var token = LocalStore.prototype.get.call( this, provider );
 
-    if ( this.verified[ key ] ) {
+    if ( this.verified[ provider ] ) {
         return token;
-    } else if ( token && ! this.isVerifying[ key ] && key in integrations ) {
-        this.isVerifying[ key ] = true;
+    } else if ( token && ! this.isVerifying[ provider ] && provider in integrations ) {
+        this.isVerifying[ provider ] = true;
 
-        integrations[ key ].verify( token, function( err ) {
+        integrations[ provider ].verify( token, function( err ) {
             if ( err ) {
-                this.remove( key );
+                this.remove( provider );
             } else {
-                this.verified[ key ] = true;
+                this.verified[ provider ] = true;
                 this.emit( 'change' );
                 this.emit( 'verify' );
             }
 
-            this.isVerifying[ key ] = false;
+            this.isVerifying[ provider ] = false;
         }.bind( this ) );
     }
 };
