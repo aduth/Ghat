@@ -17,7 +17,7 @@ ArrayStore.prototype.add = function( value ) {
 };
 
 ArrayStore.prototype.remove = function( index ) {
-    this.store = this.store.splice( index, 1 );
+    this.store.splice( index, 1 );
     this.emit( 'change' );
 };
 
