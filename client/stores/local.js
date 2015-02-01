@@ -1,7 +1,7 @@
 var ObjectStore = require( './object' ),
     LocalStore;
 
-if ( 'undefined' === typeof window || window.localStorage ) {
+if ( 'undefined' === typeof window || ! window.localStorage ) {
     module.exports = ObjectStore;
 } else {
     /**
