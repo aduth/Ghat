@@ -1,6 +1,6 @@
-var app = require( './server' ),
-    port = process.env.PORT || 3000;
+var app = require( './server/' ),
+    config = require( './config' );
 
-app.listen( port, function() {
-    console.log( 'Listening on port %d...', port );
+app.listen( config.port, function() {
+    console.log( 'Listening on port %d...', config.port );
 });
