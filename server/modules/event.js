@@ -29,16 +29,29 @@ router.post( '/', function( req, res, next ) {
             return next( new errors.NotFound() );
         }
 
+        /**
+         * Attempt to find a message handler for either the chat provider or
+         * find a common handler. If none exists, respond with an unsupported
+         * status code.
+         */
         generateMessage = messages[ integration.chat.provider ][ eventName ] || messages.common[ eventName ];
         if ( ! generateMessage ) {
             return next( new errors.NotImplemented() );
         }
 
+        /**
+         * Verify that the SHA1 hex digest of the body matches what we'd expect
+         * based on the secret of the integration.
+         */
         bodyDigest = crypto.createHmac( 'sha1', integration.secret ).update( req.rawBody ).digest( 'hex' );
         if ( signature !== 'sha1=' + bodyDigest ) {
             return next( new errors.Forbidden() );
         }
 
+        /**
+         * If the integration includes filters, verify that each filter matches
+         * the current event before allowing the message to be sent.
+         */
         isFilterMatch = integration.filters.every(function( filter ) {
             var bodyValue = helpers.field.getValue( req.body, filter.field );
             return helpers.compare.isMatch( bodyValue, filter.operator, filter.value );

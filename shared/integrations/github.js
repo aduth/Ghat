@@ -30,6 +30,13 @@ module.exports.verify = function( token, next ) {
         });
 };
 
+/**
+ * Given an OAuth token and callback, invokes a network request to GitHub to
+ * request the profile information for the user associated with the token.
+ *
+ * @param {string}   token A valid GitHub OAuth2 token
+ * @param {Function} next  A callback to trigger when the request finishes
+ */
 module.exports.getMyProfile = function( token, next ) {
     request.get( 'https://api.github.com/user' )
         .set({ Authorization: 'token ' + token })
@@ -48,6 +55,13 @@ module.exports.getMyProfile = function( token, next ) {
         });
 };
 
+/**
+ * Given an OAuth token and callback, invokes a network request to GitHub to
+ * request the available repositories for the user associated with the token.
+ *
+ * @param {string}   token A valid GitHub OAuth2 token
+ * @param {Function} next  A callback to trigger when the request finishes
+ */
 module.exports.getRepositories = function( token, next ) {
     var fetchArray = function( url ) {
         return function( asyncNext ) {
@@ -76,6 +90,16 @@ module.exports.getRepositories = function( token, next ) {
     });
 };
 
+/**
+ * Given an OAuth token, webhook details, and callback, invokes a network
+ * request to GitHub to create the desired webhook at the repository.
+ *
+ * @param {string}   token      A valid GitHub OAuth2 token
+ * @param {string}   repository A GitHub repository full name
+ * @param {Array}    event      An array of event names for which the webhook
+ *                              will be invoked
+ * @param {Function} next       A callback to trigger when the request finishes
+ */
 module.exports.createWebhook = function( token, repository, event, integration, next ) {
     request.post( 'https://api.github.com/repos/' + repository + '/hooks' )
         .set({ Authorization: 'token ' + token })
@@ -100,6 +124,12 @@ module.exports.createWebhook = function( token, repository, event, integration, 
         });
 };
 
+/**
+ * Returns an array of all GitHub webhook events. Each element in the array is
+ * an object containing the `event` name and a human-readable `description`.
+ *
+ * @return {Array} An array of available GitHub events
+ */
 module.exports.getAvailableEvents = function() {
     return [
         { event: '*', description: 'Any time any event is triggered (wildcard)' },
@@ -127,6 +157,14 @@ module.exports.getAvailableEvents = function() {
     ];
 };
 
+/**
+ * Returns an array of predefined filters. Each element in the array is an
+ * object containing the `field` name, a human-readable `description`, the
+ * available `operators`, and a boolean `isCustom` if the filter is used to
+ * enable custom user input.
+ *
+ * @return {Array} An array of predefined filters
+ */
 module.exports.getPredefinedFilters = function() {
     return [
         { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ] },

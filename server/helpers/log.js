@@ -1,5 +1,8 @@
 var format = require( 'util' ).format;
 
+/**
+ * An implementation-agnostic generic logging utility
+ */
 module.exports = {
     info: function( message ) {
         this._log( message, 'info', Array.prototype.slice.call( arguments, 1 ) );

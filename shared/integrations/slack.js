@@ -17,6 +17,13 @@ module.exports.oauth = {
     scope: [ 'post' ]
 };
 
+/**
+ * Given an OAuth token and callback, invokes a network request to Slack to
+ * verify that the token is still valid.
+ *
+ * @param {string}   token A Slack OAuth2 token
+ * @param {Function} next  A callback to trigger when the request finishes
+ */
 module.exports.verify = function( token, next ) {
     request.get( 'https://slack.com/api/auth.test' )
         .query({ token: token })
@@ -26,6 +33,15 @@ module.exports.verify = function( token, next ) {
         });
 };
 
+/**
+ * Given an OAuth token, message, channel, and callback, invokes a network
+ * request to Slack to send the desired message.
+ *
+ * @param {string}   token   A valid Slack OAuth2 token
+ * @param {object}   message A Slack attachment object to use for the message
+ * @param {string}   channel A Slack channel ID
+ * @param {Function} next    A callback to trigger when the request finishes
+ */
 module.exports.sendMessage = function( message, channel, token, next ) {
     request.get( 'https://slack.com/api/chat.postMessage' )
         .query({
@@ -40,6 +56,14 @@ module.exports.sendMessage = function( message, channel, token, next ) {
         });
 };
 
+/**
+ * Given an OAuth token, user ID, and callback, invokes a network request to
+ * Slack to request the profile information for the specified user.
+ *
+ * @param {string}   token  A valid Slack OAuth2 token
+ * @param {string}   userId A Slack user ID
+ * @param {Function} next   A callback to trigger when the request finishes
+ */
 getUserProfile = module.exports.getUserProfile = function( userId, token, next ) {
     request.get( 'https://slack.com/api/users.info' )
         .query({ token: token, user: userId })
@@ -58,6 +82,13 @@ getUserProfile = module.exports.getUserProfile = function( userId, token, next )
         });
 };
 
+/**
+ * Given an OAuth token and callback, invokes a network request to Slack to
+ * request the profile information for the user associated with the token.
+ *
+ * @param {string}   token  A valid Slack OAuth2 token
+ * @param {Function} next   A callback to trigger when the request finishes
+ */
 module.exports.getMyProfile = function( token, next ) {
     request.get( 'https://slack.com/api/auth.test' )
         .query({ token: token })
@@ -72,6 +103,13 @@ module.exports.getMyProfile = function( token, next ) {
         });
 };
 
+/**
+ * Given an OAuth token and callback, invokes a network request to Slack to
+ * request the available contacts associated with the token.
+ *
+ * @param {string}   token  A valid Slack OAuth2 token
+ * @param {Function} next   A callback to trigger when the request finishes
+ */
 module.exports.getContacts = function( token, next ) {
     async.parallel([
         function( asyncNext ) {
