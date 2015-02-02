@@ -19,8 +19,7 @@ module.exports = React.createClass({
         icon: React.PropTypes.string,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
-        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired,
-        showSelect: React.PropTypes.bool
+        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
     },
 
     getInitialState: function() {
@@ -74,10 +73,6 @@ module.exports = React.createClass({
     },
 
     getProviderSelect: function() {
-        if ( ! this.props.showSelect ) {
-            return;
-        }
-
         var options = this.props.providers.map(function( provider ) {
             return { value: provider, label: integrations[ provider ].name };
         });
@@ -96,10 +91,13 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var classes = React.addons.classSet({
-            connection: true,
-            connected: this.isConnected()
-        });
+        var classes = [
+            'connection',
+            this.props.name,
+            React.addons.classSet({
+                connected: this.isConnected()
+            })
+        ].join( ' ' );
 
         return (
             <li className={ classes }>
