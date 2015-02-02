@@ -11,11 +11,20 @@ module.exports = React.createClass({
         disabled: React.PropTypes.bool
     },
 
+    componentDidMount: function() {
+        if ( ! this.props.includeDefault && this.props.options.length && ! this.props.value ) {
+            this.setDefaultValue( this.props );
+        }
+    },
+
     componentWillUpdate: function( nextProps ) {
         if ( ! nextProps.includeDefault && nextProps.options.length && ! nextProps.value ) {
-            nextProps.onChange( 'object' === typeof nextProps.options[0] ?
-                nextProps.options[0].value : nextProps.options[0] );
+            this.setDefaultValue( nextProps );
         }
+    },
+
+    setDefaultValue: function( props ) {
+        props.onChange( 'object' === typeof props.options[0] ? props.options[0].value : props.options[0] );
     },
 
     getDefaultProps: function() {
