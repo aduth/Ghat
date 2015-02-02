@@ -1,8 +1,8 @@
 var EventEmitter = require( 'events' ).EventEmitter,
     ObjectStore;
 
-ObjectStore = module.exports = function() {
-    this.store = {};
+ObjectStore = module.exports = function( initial ) {
+    this.store = initial || {};
 };
 
 ObjectStore.prototype = Object.create( EventEmitter.prototype );

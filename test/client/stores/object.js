@@ -7,6 +7,14 @@ describe( 'ObjectStore', function() {
         store = new ObjectStore();
     });
 
+    describe( 'constructor', function() {
+        it( 'should accept an optional initial value', function() {
+            expect( store.getAll() ).to.eql({});
+            store = new ObjectStore({ a: 1 });
+            expect( store.getAll() ).to.eql({ a: 1 });
+        });
+    });
+
     describe( '#getAll()', function() {
         it( 'should return an object of all set values', function() {
             store.set( 'a', 1 );
