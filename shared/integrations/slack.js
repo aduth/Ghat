@@ -17,6 +17,8 @@ module.exports.oauth = {
     scope: [ 'post' ]
 };
 
+module.exports.name = 'Slack';
+
 /**
  * Given an OAuth token and callback, invokes a network request to Slack to
  * verify that the token is still valid.

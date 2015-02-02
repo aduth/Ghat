@@ -29,7 +29,8 @@ module.exports = React.createClass({
                     tokens={ this.props.tokens }
                     profiles={ this.props.profiles }
                     title="Connect to GitHub"
-                    description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account." />
+                    description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account."
+                    showSelect={ false } />
                 <Connection
                     name="chat"
                     icon="comments"

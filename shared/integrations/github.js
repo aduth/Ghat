@@ -19,6 +19,8 @@ oauth = module.exports.oauth = {
     scope: [ 'repo' ]
 };
 
+module.exports.name = 'GitHub';
+
 module.exports.verify = function( token, next ) {
     request.get( 'https://api.github.com/user' )
         .set({ Authorization: 'token ' + token })

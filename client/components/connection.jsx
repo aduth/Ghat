@@ -2,7 +2,9 @@ var React = require( 'react/addons' ),
     find = require( 'lodash/collection/find' ),
     observe = require( '../mixins/observe-store' ),
     monitor = require( '../mixins/event-monitor' ),
-    stores = require( '../stores/' );
+    integrations = require( '../../shared/integrations/' ),
+    stores = require( '../stores/' ),
+    Select = require( './select' );
 
 module.exports = React.createClass({
     displayName: 'Connection',
@@ -17,11 +19,16 @@ module.exports = React.createClass({
         icon: React.PropTypes.string,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
-        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
+        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired,
+        showSelect: React.PropTypes.bool
     },
 
     getInitialState: function() {
         return {};
+    },
+
+    getDefaultProps: function() {
+        return { showSelect: true };
     },
 
     setProvider: function() {
@@ -50,12 +57,6 @@ module.exports = React.createClass({
         }.bind( this ) );
     },
 
-    getAuthenticationButton: function() {
-        var provider = this.props.providers[0];
-
-        return <button onClick={ this.authenticate.bind( null, provider ) } className="button">Authenticate</button>;
-    },
-
     getAvatarImage: function() {
         var profile;
         if ( this.state.provider ) {
@@ -72,10 +73,26 @@ module.exports = React.createClass({
         }
     },
 
+    getProviderSelect: function() {
+        if ( ! this.props.showSelect ) {
+            return;
+        }
+
+        var options = this.props.providers.map(function( provider ) {
+            return { value: provider, label: integrations[ provider ].name };
+        });
+
+        return <Select options={ options } value={ this.state.provider } onChange={ this.onProviderChange } includeDefault={ false } />;
+    },
+
     getIcon: function() {
         if ( this.props.icon ) {
             return <span className={ 'connection__icon fa fa-' + this.props.icon } />;
         }
+    },
+
+    onProviderChange: function( provider ) {
+        this.setState({ provider: provider });
     },
 
     render: function() {
@@ -92,7 +109,10 @@ module.exports = React.createClass({
                         { this.getIcon() }
                     </header>
                     <p className="connection__description">{ this.props.description }</p>
-                    { this.getAuthenticationButton() }
+                    <div className="connection__actions">
+                        { this.getProviderSelect() }
+                        <button onClick={ this.authenticate.bind( null, this.state.provider ) } className="button" disabled={ ! this.state.provider }>Authenticate</button>
+                    </div>
                     <aside className="connection__authorized-account">
                         { this.getAvatarImage() }
                     </aside>
