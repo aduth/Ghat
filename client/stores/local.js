@@ -9,15 +9,14 @@ module.exports = 'undefined' === typeof window || ! window.localStorage ? Object
  *
  * @param {string} name A name to be used as a key in the brower's localStorage
  */
-LocalStore = module.exports = function( name ) {
-    ObjectStore.call( this );
-    this.name = name;
-
+LocalStore = module.exports = function( name, initial ) {
+    var store;
     try {
         this.store = JSON.parse( window.localStorage.getItem( name ) );
-    } catch ( e ) {
-        this.store = {};
-    }
+    } catch ( e ) {}
+
+    ObjectStore.call( this, store || initial );
+    this.name = name;
 };
 
 LocalStore.prototype = Object.create( ObjectStore.prototype );
