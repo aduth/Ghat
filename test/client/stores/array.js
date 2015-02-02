@@ -7,6 +7,14 @@ describe( 'ArrayStore', function() {
         store = new ArrayStore();
     });
 
+    describe( 'constructor', function() {
+        it( 'should accept an optional initial value', function() {
+            expect( store.get() ).to.eql([]);
+            store = new ArrayStore([ 1 ]);
+            expect( store.get() ).to.eql([ 1 ]);
+        });
+    });
+
     describe( '#get()', function() {
         it( 'should return an array of all added values', function() {
             store.add( 1 );
