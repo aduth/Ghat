@@ -1,5 +1,5 @@
 var intersection = require( 'lodash/array/intersection' ),
-    LocalStore = require( './local' ),
+    LocalStorageStore = require( './local-storage' ),
     helpers = require( '../../shared/helpers/' ),
     integrations = require( '../../shared/integrations/' ),
     TokenStore;
@@ -8,12 +8,12 @@ var intersection = require( 'lodash/array/intersection' ),
  * The store constructor, which invokes the inherited store's constructor.
  */
 TokenStore = module.exports = function() {
-    LocalStore.call( this, 'tokens' );
+    LocalStorageStore.call( this, 'tokens' );
     this.verified = {};
     this.isVerifying = {};
 };
 
-TokenStore.prototype = Object.create( LocalStore.prototype );
+TokenStore.prototype = Object.create( LocalStorageStore.prototype );
 
 /**
  * Retrieves a token by the specified provider. If the token hasn't yet been
@@ -26,7 +26,7 @@ TokenStore.prototype = Object.create( LocalStore.prototype );
  *                           is pending
  */
 TokenStore.prototype.get = function( provider ) {
-    var token = LocalStore.prototype.get.call( this, provider );
+    var token = LocalStorageStore.prototype.get.call( this, provider );
 
     if ( this.verified[ provider ] ) {
         return token;
@@ -56,7 +56,7 @@ TokenStore.prototype.get = function( provider ) {
  * @param {mixed} token    A token value to save to the store
  */
 TokenStore.prototype.set = function( provider, token ) {
-    LocalStore.prototype.set.call( this, provider, token );
+    LocalStorageStore.prototype.set.call( this, provider, token );
     this.verified[ provider ] = true;
 };
 

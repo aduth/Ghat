@@ -1,7 +1,7 @@
 var ObjectStore = require( './object' ),
-    LocalStore;
+    LocalStorageStore;
 
-module.exports = 'undefined' === typeof window || ! window.localStorage ? ObjectStore : LocalStore;
+module.exports = 'undefined' === typeof window || ! window.localStorage ? ObjectStore : LocalStorageStore;
 
 /**
  * The store constructor. Accepts a name to be used as the key in the browser's
@@ -9,7 +9,7 @@ module.exports = 'undefined' === typeof window || ! window.localStorage ? Object
  *
  * @param {string} name A name to be used as a key in the brower's localStorage
  */
-LocalStore = module.exports = function( name, initial ) {
+LocalStorageStore = module.exports = function( name, initial ) {
     var store;
     try {
         this.store = JSON.parse( window.localStorage.getItem( name ) );
@@ -19,7 +19,7 @@ LocalStore = module.exports = function( name, initial ) {
     this.name = name;
 };
 
-LocalStore.prototype = Object.create( ObjectStore.prototype );
+LocalStorageStore.prototype = Object.create( ObjectStore.prototype );
 
 /**
  * Saves a value to the store using the specified key. The saved value is
@@ -28,7 +28,7 @@ LocalStore.prototype = Object.create( ObjectStore.prototype );
  * @param {mixed} key   The key to be used for later retrieval
  * @param {mixed} value A value to save to the store
  */
-LocalStore.prototype.set = function( key, value ) {
+LocalStorageStore.prototype.set = function( key, value ) {
     ObjectStore.prototype.set.call( this, key, value );
     window.localStorage.setItem( this.name, JSON.stringify( this.store ) );
 };
@@ -40,7 +40,7 @@ LocalStore.prototype.set = function( key, value ) {
  *
  * @param {mixed} key The key of the value to be removed
  */
-LocalStore.prototype.remove = function( key ) {
+LocalStorageStore.prototype.remove = function( key ) {
     ObjectStore.prototype.remove.call( this, key );
 
     if ( Object.keys( this.store ).length ) {

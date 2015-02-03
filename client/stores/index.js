@@ -1,6 +1,6 @@
 module.exports = {
     Object: require( './object' ),
-    Local: require( './local' ),
+    LocalStorage: require( './local-storage' ),
     Array: require( './array' ),
     Token: require( './token' ),
     Profile: require( './profile' ),
