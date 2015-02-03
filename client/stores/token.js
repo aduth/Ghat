@@ -97,17 +97,12 @@ TokenStore.prototype.isConnected = function() {
  * @return {string} The first available token for any chat provider
  */
 TokenStore.prototype.getConnectedChatToken = function() {
-    var connections = this.getAll(),
-        chatTokens;
+    var connections = this.getAll();
 
     if ( connections ) {
-        chatTokens = intersection(
+        return intersection(
             Object.keys( connections ),
             helpers.integrations.getChatIntegrations()
-        );
-
-        if ( chatTokens.length ) {
-            return chatTokens[0];
-        }
+        )[0];
     }
 };
