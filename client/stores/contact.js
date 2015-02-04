@@ -23,8 +23,8 @@ ContactStore.prototype = Object.create( EventEmitter.prototype );
  */
 ContactStore.prototype.get = function( provider, token ) {
     if ( ! this.contacts[ provider ] ) {
-        this.contacts[ provider ] = [];
         this.fetch( provider, token );
+        return [];
     }
 
     return this.contacts[ provider ];
