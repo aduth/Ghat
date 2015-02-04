@@ -12,7 +12,7 @@ module.exports = 'undefined' === typeof window || ! window.localStorage ? Object
 LocalStorageStore = module.exports = function( name, initial ) {
     var store;
     try {
-        this.store = JSON.parse( window.localStorage.getItem( name ) );
+        store = JSON.parse( window.localStorage.getItem( name ) );
     } catch ( e ) {}
 
     ObjectStore.call( this, store || initial );
