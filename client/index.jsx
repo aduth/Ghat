@@ -1,13 +1,21 @@
 var React = require( 'react' ),
     App = require( './components/app' ),
     constants = require( '../shared/constants/' ),
-    storesInstances = require( '../shared/helpers/stores' ).getInstances(),
+    stores = require( './stores/' ),
     app;
 
 /**
  * Generate base application element
  */
-app = module.exports = <App { ...storesInstances } />;
+app = module.exports = (
+    <App
+        tokens={ new stores.Token() }
+        profiles={ new stores.Profile() }
+        contacts={ new stores.Contact() }
+        repositories={ new stores.Repository() }
+        hooks={ new stores.Hook() }
+        integrations={ new stores.Integration() } />
+);
 
 /**
  * Render element when in the context of a browser
