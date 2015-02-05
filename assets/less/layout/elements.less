@@ -17,3 +17,12 @@ h1 {
     text-align: center;
     text-transform: uppercase;
 }
+
+a {
+    color: @color-salmon;
+    text-decoration: none;
+
+    &:hover {
+        color: lighten( @color-salmon, 8% );
+    }
+}
