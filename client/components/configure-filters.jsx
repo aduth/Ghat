@@ -62,7 +62,11 @@ module.exports = React.createClass({
         return (
             <li className="configure-filters">
                 <label className="form-option">
-                    <p className="form-option__description">If you want to choose which events to relay, add one or more filters.</p>
+                    <p className="form-option__description">
+                        If you want to selectively choose the events to relay, add one or more filters. When creating a custom filter,
+                        you may find it helpful to refer to <a href="https://developer.github.com/v3/activity/events/types/">GitHub's
+                        Event Payload documentation</a>.
+                    </p>
                 </label>
                 <table className="configure-filters__current">
                     <thead className="visually-hidden">
