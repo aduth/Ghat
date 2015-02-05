@@ -80,24 +80,16 @@ gulp.task( 'watchify', function() {
  * React app rendered as a string.
  */
 var template = require( 'gulp-template' ),
-    React = require( 'react' ),
-    getAppContent;
-
-getAppContent = function() {
-    require( 'jsx-require-extension' );
-
-    var App = require( './client/components/app' ),
-        storesHelper = require( './shared/helpers/stores' );
-
-    return React.renderToString( React.createElement( App, storesHelper.getInstances() ) );
-};
+    React = require( 'react' );
 
 gulp.task( 'templates', function() {
+    require( 'jsx-require-extension' );
+
     gulp.src([ 'assets/index.tpl' ])
         .pipe( template({
             manifest: manifest,
             constants: require( './shared/constants/' ),
-            content: getAppContent()
+            content: React.renderToString( require( './client/' ) )
         }) )
         .pipe( rename({ extname: '.html' }) )
         .pipe( gulp.dest( 'public' ) );
