@@ -1,5 +1,6 @@
 var React = require( 'react' ),
     stores = require( '../stores/' ),
+    tokenObserver = require( '../observers/token' ),
     Header = require( './header' ),
     Description = require( './description' ),
     Steps = require( './steps' );
@@ -14,6 +15,14 @@ module.exports = React.createClass({
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+    },
+
+    componentDidMount: function() {
+        tokenObserver.listen( this.props.tokens );
+    },
+
+    componentWillUnmount: function() {
+        tokenObserver.stopListening();
     },
 
     render: function() {
