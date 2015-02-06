@@ -10,7 +10,9 @@ module.exports = React.createClass({
         filters: React.PropTypes.arrayOf( React.PropTypes.shape({
             field: React.PropTypes.string,
             description: React.PropTypes.string,
-            operators: React.PropTypes.arrayOf( React.PropTypes.string )
+            operators: React.PropTypes.arrayOf( React.PropTypes.string ),
+            options: React.PropTypes.arrayOf( React.PropTypes.string ),
+            events: React.PropTypes.arrayOf( React.PropTypes.string )
         }) ),
         value: React.PropTypes.shape({
             field: React.PropTypes.string,
@@ -85,6 +87,19 @@ module.exports = React.createClass({
         }
     },
 
+    getValueInput: function() {
+        var filter;
+        if ( this.props.value.field ) {
+            filter = find( this.props.filters, { field: this.props.value.field });
+        }
+
+        if ( filter && filter.options ) {
+            return <Select options={ filter.options } value={ this.props.value.value } onChange={ this.onChange.bind( null, 'value' ) } />;
+        } else {
+            return <input type="text" value={ this.props.value.value } disabled={ ! this.props.value.field } onChange={ this.onInputChange.bind( this, 'value' ) } className="input" />;
+        }
+    },
+
     render: function() {
         return (
             <tr className="configure-filter">
@@ -92,9 +107,7 @@ module.exports = React.createClass({
                 <td width="20%">
                     <Select options={ this.getOperatorOptions() } includeDefault={ false } disabled={ ! this.props.value.field } value={ this.props.value.operator } onChange={ this.onChange.bind( this, 'operator' ) } />
                 </td>
-                <td width="35%">
-                    <input type="text" value={ this.props.value.value } disabled={ ! this.props.value.field } onChange={ this.onInputChange.bind( this, 'value' ) } className="input" />
-                </td>
+                <td width="35%">{ this.getValueInput() }</td>
                 <td width="15%">
                     <button type="button" onClick={ this.props.onRemove } className="configure-filter__remove">
                         <span className="fa fa-remove" />
