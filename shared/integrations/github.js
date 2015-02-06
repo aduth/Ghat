@@ -167,9 +167,11 @@ module.exports.getAvailableEvents = function() {
  *
  * @return {Array} An array of predefined filters
  */
-module.exports.getPredefinedFilters = function() {
+module.exports.getPredefinedFilters = function( event ) {
     return [
-        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ] },
+        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ], events: [ 'issue_comment', 'issues' ] },
         { field: 'custom', description: 'Custom', operators: [ '=', '!=', '<', '<=', '>=', '>' ], isCustom: true }
-    ];
+    ].filter(function( filter ) {
+        return ! filter.events || -1 !== filter.events.indexOf( event );
+    });
 };
