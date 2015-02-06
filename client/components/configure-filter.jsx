@@ -23,6 +23,12 @@ module.exports = React.createClass({
         onRemove: React.PropTypes.func
     },
 
+    componentDidUpdate: function() {
+        if ( this.props.value.field && ! this.getCurrentFilter() ) {
+            this.onValueChanged({});
+        }
+    },
+
     getInitialState: function() {
         return { isCustom: false };
     },
@@ -42,21 +48,19 @@ module.exports = React.createClass({
         });
     },
 
-    getOperatorOptions: function() {
-        var field, filter;
-
-        if ( this.state.isCustom ) {
-            field = 'custom';
-        } else {
-            field = this.props.value.field;
-        }
+    getCurrentFilter: function() {
+        var field = this.state.isCustom ? 'custom' : this.props.value.field;
 
         if ( field ) {
-            filter = find( this.props.filters, { field: field });
+            return find( this.props.filters, { field: field });
+        }
+    },
 
-            if ( filter ) {
-                return filter.operators || [ '=' ];
-            }
+    getOperatorOptions: function() {
+        var filter = this.getCurrentFilter();
+
+        if ( filter ) {
+            return filter.operators || [ '=' ];
         }
     },
 
@@ -88,10 +92,7 @@ module.exports = React.createClass({
     },
 
     getValueInput: function() {
-        var filter;
-        if ( this.props.value.field ) {
-            filter = find( this.props.filters, { field: this.props.value.field });
-        }
+        var filter = this.getCurrentFilter();
 
         if ( filter && filter.options ) {
             return <Select options={ filter.options } value={ this.props.value.value } onChange={ this.onChange.bind( null, 'value' ) } />;
