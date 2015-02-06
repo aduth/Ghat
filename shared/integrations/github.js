@@ -170,6 +170,7 @@ module.exports.getAvailableEvents = function() {
 module.exports.getPredefinedFilters = function( event ) {
     return [
         { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ], events: [ 'issues', 'pull_request' ] },
         { field: 'custom', description: 'Custom', operators: [ '=', '!=', '<', '<=', '>=', '>' ], isCustom: true }
     ].filter(function( filter ) {
         return ! filter.events || -1 !== filter.events.indexOf( event );
