@@ -1,6 +1,4 @@
 module.exports = {
     slack: require( './slack/' ),
-    common: {
-        ping: require( './ping' )
-    }
+    common: require( './common/' )
 };
