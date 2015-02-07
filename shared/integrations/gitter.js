@@ -1,4 +1,5 @@
-var OAuth2 = require( 'oauth' ).OAuth2,
+var request = require( 'superagent' ),
+    OAuth2 = require( 'oauth' ).OAuth2,
     config = require( '../../config' );
 
 module.exports.oauth = {
@@ -23,7 +24,11 @@ module.exports.name = 'Gitter';
  * @param {Function} next  A callback to trigger when the request finishes
  */
 module.exports.verify = function( token, next ) {
-    next( new Error() );
+    request.get( 'https://api.gitter.im/v1/user' )
+        .set({ 'x-access-token': token })
+        .end(function( err, res ) { /* jshint ignore:line */
+            next( err );
+        });
 };
 
 /**
@@ -31,12 +36,19 @@ module.exports.verify = function( token, next ) {
  * request to Gitter to send the desired message.
  *
  * @param {string}   token   A valid Gitter OAuth2 token
- * @param {object}   message A Gitter attachment object to use for the message
- * @param {string}   channel A Gitter channel ID
+ * @param {string}   message A Gitter message
+ * @param {string}   channel A Gitter room ID
  * @param {Function} next    A callback to trigger when the request finishes
  */
 module.exports.sendMessage = function( message, channel, token, next ) {
-    next( new Error() );
+    request.post( 'https://api.gitter.im/v1/rooms/' + channel + '/chatMessages' )
+        .set({
+            'x-access-token': token,
+            text: message
+        })
+        .end(function( err, res ) {
+            next( err, res );
+        });
 };
 
 /**
@@ -47,7 +59,19 @@ module.exports.sendMessage = function( message, channel, token, next ) {
  * @param {Function} next   A callback to trigger when the request finishes
  */
 module.exports.getMyProfile = function( token, next ) {
-    next( new Error() );
+    request.get( 'https://api.gitter.im/v1/user' )
+        .set({ 'x-access-token': token })
+        .end(function( err, res ) {
+            var profile;
+            if ( ! err && Array.isArray( res.body ) && res.body.length ) {
+                profile = {
+                    username: res.body[0].username,
+                    avatar: res.body[0].avatarUrlMedium
+                };
+            }
+
+            next( err, profile );
+        });
 };
 
 /**
@@ -58,5 +82,19 @@ module.exports.getMyProfile = function( token, next ) {
  * @param {Function} next   A callback to trigger when the request finishes
  */
 module.exports.getContacts = function( token, next ) {
-    next( new Error() );
+    request.get( 'https://api.gitter.im/v1/rooms' )
+        .set({ 'x-access-token': token })
+        .end(function( err, res ) {
+            var contacts;
+            if ( ! err && Array.isArray( res.body ) ) {
+                contacts = res.body.map(function( room ) {
+                    return {
+                        id: room.id,
+                        name: room.name
+                    };
+                });
+            }
+
+            next( err, contacts );
+        });
 };
