@@ -2,6 +2,7 @@ var React = require( 'react' ),
     App = require( './components/app' ),
     constants = require( '../shared/constants/' ),
     stores = require( './stores/' ),
+    config = require( '../config' ),
     app;
 
 /**
@@ -9,6 +10,7 @@ var React = require( 'react' ),
  */
 app = module.exports = (
     <App
+        config={ config }
         tokens={ new stores.Token() }
         profiles={ new stores.Profile() }
         contacts={ new stores.Contact() }

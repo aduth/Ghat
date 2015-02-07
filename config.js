@@ -3,6 +3,7 @@ require( 'dotenv' ).load();
 module.exports = {
     origin: process.env.ORIGIN || 'http://localhost:3000',
     port: process.env.PORT || 3000,
+    homebase: process.env.HOMEBASE || false,
     github: {
         clientId: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET
