@@ -6,7 +6,7 @@ module.exports = React.createClass({
     propTypes: {
         value: React.PropTypes.oneOfType([ React.PropTypes.string, React.PropTypes.number ]),
         onChange: React.PropTypes.func,
-        includeDefault: React.PropTypes.bool,
+        includeDefault: React.PropTypes.oneOfType([ React.PropTypes.bool, React.PropTypes.string ]),
         options: React.PropTypes.array,
         disabled: React.PropTypes.bool
     },
@@ -37,10 +37,15 @@ module.exports = React.createClass({
     },
 
     getOptions: function() {
-        var options = this.props.options;
+        var options = this.props.options,
+            defaultLabel;
 
-        if ( this.props.includeDefault ) {
-            options = [{ value: '', name: '' }].concat( options );
+        // Include a default option unless explicitly disabled via a false
+        // value. A true value will default the label to an empty string,
+        // otherwise the string prop will be used.
+        if ( false !== this.props.includeDefault ) {
+            defaultLabel = true === this.props.includeDefault ? '' : this.props.includeDefault;
+            options = [{ value: '', label: defaultLabel }].concat( options );
         }
 
         return options.map(function( option ) {
