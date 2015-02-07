@@ -1,4 +1,5 @@
 module.exports = {
     github: require( './github' ),
-    slack: require( './slack' )
+    slack: require( './slack' ),
+    gitter: require( './gitter' )
 };

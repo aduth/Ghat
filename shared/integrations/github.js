@@ -16,7 +16,7 @@ oauth = module.exports.oauth = {
         'login/oauth/access_token',
         null
     ),
-    scope: [ 'repo' ]
+    query: { scope: [ 'repo' ] }
 };
 
 module.exports.name = 'GitHub';
@@ -26,7 +26,7 @@ module.exports.verify = function( token, next ) {
         .set({ Authorization: 'token ' + token })
         .end(function( err, res ) {
             var headerScopes = ( res.headers['x-oauth-scopes'] || '' ).split( ',' ),
-                isInvalid = ! err && ( 200 !== res.status || difference( oauth.scope, headerScopes ).length );
+                isInvalid = ! err && ( 200 !== res.status || difference( oauth.query.scope, headerScopes ).length );
 
             next( err || isInvalid );
         });

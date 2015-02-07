@@ -9,13 +9,14 @@ var router = module.exports = require( 'express' ).Router(),
  * Redirects a user to the OAuth authorization URL for the specified provider
  */
 router.get( '/:provider', function( req, res, next ) {
+    var query;
+
     if ( ! ( req.params.provider in integrations ) ) {
         next( new errors.UnknownProvider() );
     } else {
-        res.redirect( integrations[ req.params.provider ].oauth.client.getAuthorizeUrl({
-            redirect_uri: config.origin + '/authorize/' + req.params.provider + '/callback',
-            scope: integrations[ req.params.provider ].oauth.scope
-        }) );
+        query = integrations[ req.params.provider ].oauth.query || {};
+        query.redirect_uri = config.origin + '/authorize/' + req.params.provider + '/callback';
+        res.redirect( integrations[ req.params.provider ].oauth.client.getAuthorizeUrl( query ) );
     }
 });
 
@@ -25,7 +26,8 @@ router.get( '/:provider', function( req, res, next ) {
  */
 router.get( '/:provider/callback', function( req, res, next ) {
     integrations[ req.params.provider ].oauth.client.getOAuthAccessToken( req.query.code, {
-        redirect_uri: config.origin + '/authorize/' + req.params.provider + '/callback'
+        redirect_uri: config.origin + '/authorize/' + req.params.provider + '/callback',
+        grant_type: 'authorization_code'
     }, function ( error, accessToken, refreshToken, result ) {
         if ( error || result.error ) {
             next( new errors.Unauthorized() );

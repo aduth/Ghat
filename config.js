@@ -11,6 +11,10 @@ module.exports = {
         clientId: process.env.SLACK_CLIENT_ID,
         clientSecret: process.env.SLACK_CLIENT_SECRET
     },
+    gitter: {
+        clientId: process.env.GITTER_CLIENT_ID,
+        clientSecret: process.env.GITTER_CLIENT_SECRET
+    },
     mongodb: {
         uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://localhost/ghat'
     },

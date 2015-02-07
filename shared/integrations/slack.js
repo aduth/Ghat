@@ -14,7 +14,7 @@ module.exports.oauth = {
         'api/oauth.access',
         null
     ),
-    scope: [ 'post' ]
+    query: { scope: [ 'post' ] }
 };
 
 module.exports.name = 'Slack';
