@@ -156,13 +156,11 @@ module.exports.getAvailableEvents = function() {
  *
  * @return {Array} An array of predefined filters
  */
-module.exports.getPredefinedFilters = function( event ) {
+module.exports.getPredefinedFilters = function() {
     return [
-        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ], events: [ 'issue_comment', 'issues' ] },
-        { field: 'sender.login', description: 'Sender username', events: [ '*', 'issues', 'issue_comment', 'pull_request', 'pull_request_review_comment', 'watch' ] },
-        { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ], events: [ 'issues', 'pull_request' ] },
+        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ] },
+        { field: 'sender.login', description: 'Sender username' },
+        { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ] },
         { field: 'custom', description: 'Custom', operators: [ '=', '!=', '<', '<=', '>=', '>' ], isCustom: true }
-    ].filter(function( filter ) {
-        return ! filter.events || -1 !== filter.events.indexOf( event );
-    });
+    ];
 };

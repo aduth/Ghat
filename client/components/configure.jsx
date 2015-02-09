@@ -105,7 +105,7 @@ module.exports = React.createClass({
                         <ol className="configure__steps">
                             <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
                             <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
-                            <ConfigureFilters filters={ integrations.github.getPredefinedFilters( this.state.values.event ) } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
+                            <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
                             <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                         </ol>
                         <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
