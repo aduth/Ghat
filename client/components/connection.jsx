@@ -75,9 +75,9 @@ module.exports = React.createClass({
     getProviderSelect: function() {
         var options = this.props.providers.map(function( provider ) {
             return { value: provider, label: integrations[ provider ].name };
-        });
+        }), defaultLabel = this.props.providers.length > 1 ? 'Choose a service' : false;
 
-        return <Select options={ options } value={ this.state.provider } onChange={ this.onProviderChange } includeDefault="Choose a service" />;
+        return <Select options={ options } value={ this.state.provider } onChange={ this.onProviderChange } includeDefault={ defaultLabel } />;
     },
 
     getIcon: function() {
