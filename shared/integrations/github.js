@@ -98,11 +98,11 @@ module.exports.getRepositories = function( token, next ) {
  *
  * @param {string}   token      A valid GitHub OAuth2 token
  * @param {string}   repository A GitHub repository full name
- * @param {Array}    event      An array of event names for which the webhook
+ * @param {Array}    events     An array of event names for which the webhook
  *                              will be invoked
  * @param {Function} next       A callback to trigger when the request finishes
  */
-module.exports.createWebhook = function( token, repository, event, integration, next ) {
+module.exports.createWebhook = function( token, repository, events, integration, next ) {
     request.post( 'https://api.github.com/repos/' + repository + '/hooks' )
         .set({ Authorization: 'token ' + token })
         .send({
@@ -112,7 +112,7 @@ module.exports.createWebhook = function( token, repository, event, integration, 
                 secret: integration.secret,
                 content_type: 'json'
             },
-            events: [ event ]
+            events: events
         })
         .end(function( err, res ) {
             err = err || res.error;

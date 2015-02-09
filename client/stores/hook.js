@@ -18,11 +18,11 @@ HookStore.prototype = Object.create( ArrayStore.prototype );
  *
  * @param {string} token      A valid GitHub OAuth2 token
  * @param {string} repository A GitHub repository full name
- * @param {Array}  event      An array of event names for which the webhook
+ * @param {Array}  events     An array of event names for which the webhook
  *                            will be invoked
  */
-HookStore.prototype.create = function( token, repository, event, integration ) {
-    integrations.github.createWebhook( token, repository, event, integration, function( err, result ) {
+HookStore.prototype.create = function( token, repository, events, integration ) {
+    integrations.github.createWebhook( token, repository, events, integration, function( err, result ) {
         this.add( result );
     }.bind( this ) );
 };

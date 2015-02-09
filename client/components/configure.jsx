@@ -45,7 +45,7 @@ module.exports = React.createClass({
         this.props.hooks.create(
             githubToken,
             this.state.values.repository,
-            this.state.values.event,
+            this.state.values.events,
             this.props.integrations.create({
                 chat: {
                     provider: chatIntegration,
@@ -88,7 +88,7 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var canSubmit = ! difference([ 'event', 'repository', 'contact' ], Object.keys( this.state.values ) ).length,
+        var canSubmit = ! difference([ 'events', 'repository', 'contact' ], Object.keys( this.state.values ) ).length,
             classes = React.addons.classSet({
                 configure: true,
                 disabled: this.props.disabled,
@@ -103,7 +103,7 @@ module.exports = React.createClass({
                     </header>
                     <form onSubmit={ this.onSubmit } className="configure__form">
                         <ol className="configure__steps">
-                            <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.event } onValueChanged={ this.onValueChanged.bind( null, 'event' ) } />
+                            <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
                             <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
                             <ConfigureFilters filters={ integrations.github.getPredefinedFilters( this.state.values.event ) } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
                             <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />

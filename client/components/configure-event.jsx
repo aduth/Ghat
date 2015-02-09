@@ -1,5 +1,5 @@
 var React = require( 'react' ),
-    Select = require( './select' );
+    MultiCheckbox = require( './multi-checkbox' );
 
 module.exports = React.createClass({
     displayName: 'ConfigureEvent',
@@ -9,7 +9,7 @@ module.exports = React.createClass({
             event: React.PropTypes.string,
             description: React.PropTypes.string
         }) ),
-        value: React.PropTypes.string,
+        value: React.PropTypes.arrayOf( React.PropTypes.string ),
         onValueChanged: React.PropTypes.func
     },
 
@@ -22,7 +22,10 @@ module.exports = React.createClass({
 
     getOptions: function() {
         return this.props.events.map(function( event ) {
-            return { value: event.event, label: event.description };
+            return {
+                value: event.event,
+                label: event.description
+            };
         });
     },
 
@@ -30,9 +33,9 @@ module.exports = React.createClass({
         return (
             <li className="configure-event">
                 <label className="form-option">
-                    <p className="form-option__description">To configure an integration, you must first choose a GitHub event to monitor.</p>
-                    <span className="form-option__label">Choose an event:</span>
-                    <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } includeDefault={ false } />
+                    <p className="form-option__description">First choose the GitHub events to monitor.</p>
+                    <span className="form-option__label">Choose events:</span>
+                    <MultiCheckbox checked={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>
             </li>
         );
