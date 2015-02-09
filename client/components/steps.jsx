@@ -1,5 +1,5 @@
 var React = require( 'react' ),
-    observe = require( '../mixins/observe-store' ),
+    monitor = require( '../mixins/event-monitor' ),
     helpers = require( '../../shared/helpers/' ),
     stores = require( '../stores/' ),
     Connection = require( './connection' ),
@@ -8,7 +8,7 @@ var React = require( 'react' ),
 module.exports = React.createClass({
     displayName: 'Steps',
 
-    mixins: [ observe( 'tokens', 'contacts', 'repositories' ) ],
+    mixins: [ monitor([ 'tokens', 'contacts', 'repositories' ]) ],
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
