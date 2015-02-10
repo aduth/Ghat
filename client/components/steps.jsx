@@ -3,7 +3,10 @@ var React = require( 'react' ),
     helpers = require( '../../shared/helpers/' ),
     stores = require( '../stores/' ),
     Connection = require( './connection' ),
-    Configure = require( './configure' );
+    Integrations = require( './integrations' ),
+    Configure = require( './configure' ),
+    TabsList = require( './tabs-list' ),
+    TabsPanel = require( './tabs-panel' );
 
 module.exports = React.createClass({
     displayName: 'Steps',
@@ -21,7 +24,7 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <ol className="steps">
+            <div className="steps">
                 <Connection
                     name="github"
                     icon="github"
@@ -38,14 +41,21 @@ module.exports = React.createClass({
                     profiles={ this.props.profiles }
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
-                <Configure
-                    tokens={ this.props.tokens }
-                    contacts={ this.props.contacts }
-                    repositories={ this.props.repositories }
-                    hooks={ this.props.hooks }
-                    integrations={ this.props.integrations }
-                    disabled={ ! this.props.tokens.isConnected() } />
-            </ol>
+                <TabsList defaultActive="Integrations">
+                    <TabsPanel name="Integrations">
+                        <Integrations />
+                    </TabsPanel>
+                    <TabsPanel name="Configure">
+                        <Configure
+                            tokens={ this.props.tokens }
+                            contacts={ this.props.contacts }
+                            repositories={ this.props.repositories }
+                            hooks={ this.props.hooks }
+                            integrations={ this.props.integrations }
+                            disabled={ ! this.props.tokens.isConnected() } />
+                    </TabsPanel>
+                </TabsList>
+            </div>
         );
     }
 });

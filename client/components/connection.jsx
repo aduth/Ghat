@@ -99,7 +99,7 @@ module.exports = React.createClass({
         ].join( ' ' );
 
         return (
-            <li className={ classes }>
+            <div className={ classes }>
                 <div className="connection__content">
                     <header className="connection__heading">
                         <h1 className="connection__name">{ 'Connect ' + this.props.name }</h1>
@@ -114,7 +114,7 @@ module.exports = React.createClass({
                         { this.getAvatarImage() }
                     </aside>
                 </div>
-            </li>
+            </div>
         );
     }
 });

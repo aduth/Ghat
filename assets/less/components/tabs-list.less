@@ -1,0 +1,26 @@
+.tabs-list {
+    .full-width;
+}
+
+.tabs-list__navigation {
+    list-style-type: none;
+    background-color: white;
+    margin: 20px 0 0;
+    padding-left: 0;
+}
+
+.tabs-list__navigation-item {
+    display: inline-block;
+    padding: 14px 30px;
+    cursor: pointer;
+    background-color: #ddd;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: lighten( @text-color, 20% );
+
+    &.active {
+        background-color: #fff;
+        color: @text-color;
+    }
+}
