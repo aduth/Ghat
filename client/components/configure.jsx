@@ -27,16 +27,11 @@ module.exports = React.createClass({
     },
 
     propTypes: {
-        disabled: React.PropTypes.bool,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
-    },
-
-    getDefaultProps: function() {
-        return { disabled: true };
     },
 
     onSubmit: function( event ) {
@@ -97,31 +92,25 @@ module.exports = React.createClass({
         var canSubmit = ! difference([ 'events', 'repository', 'contact' ], Object.keys( this.state.values ) ).length,
             classes = React.addons.classSet({
                 configure: true,
-                disabled: this.props.disabled,
                 saving: this.state.saving
             });
 
         return (
             <div className={ classes }>
-                <div className="configure__content">
-                    <header className="configure__header">
-                        <h1 className="configure__heading">Configure an Integration</h1>
-                    </header>
-                    <form onSubmit={ this.onSubmit } className="configure__form">
-                        <ol className="configure__steps">
-                            <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
-                            <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
-                            <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
-                            <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
-                        </ol>
-                        <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
-                            { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
-                        </button>
-                    </form>
-                    <aside className="configure__disabled-content">
-                        You must complete the authorization steps above before creating an integration.
-                    </aside>
-                </div>
+                <header className="configure__header">
+                    <h1 className="configure__heading">Configure an Integration</h1>
+                </header>
+                <form onSubmit={ this.onSubmit } className="configure__form">
+                    <ol className="configure__steps">
+                        <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
+                        <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
+                        <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
+                        <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
+                    </ol>
+                    <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
+                        { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
+                    </button>
+                </form>
             </div>
         );
     }

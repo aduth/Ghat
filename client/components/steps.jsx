@@ -41,20 +41,24 @@ module.exports = React.createClass({
                     profiles={ this.props.profiles }
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
-                <TabsList defaultActive="Integrations">
-                    <TabsPanel name="Integrations">
-                        <Integrations />
-                    </TabsPanel>
-                    <TabsPanel name="Configure">
-                        <Configure
-                            tokens={ this.props.tokens }
-                            contacts={ this.props.contacts }
-                            repositories={ this.props.repositories }
-                            hooks={ this.props.hooks }
-                            integrations={ this.props.integrations }
-                            disabled={ ! this.props.tokens.isConnected() } />
-                    </TabsPanel>
-                </TabsList>
+                <div className={ 'steps__tabs ' + ( this.props.tokens.isConnected() ? '' : 'disabled' ) }>
+                    <TabsList defaultActive="Integrations">
+                        <TabsPanel name="Integrations">
+                            <Integrations />
+                        </TabsPanel>
+                        <TabsPanel name="Configure">
+                            <Configure
+                                tokens={ this.props.tokens }
+                                contacts={ this.props.contacts }
+                                repositories={ this.props.repositories }
+                                hooks={ this.props.hooks }
+                                integrations={ this.props.integrations } />
+                        </TabsPanel>
+                    </TabsList>
+                    <aside className="steps__tabs-disabled-content">
+                        You must complete the authorization steps above before configuring integrations.
+                    </aside>
+                </div>
             </div>
         );
     }
