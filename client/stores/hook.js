@@ -16,13 +16,18 @@ HookStore.prototype = Object.create( ArrayStore.prototype );
  * GitHub to create the desired webhook at the repository. When the request is
  * complete, the webhook is saved to the store and a `change` event is emitted.
  *
- * @param {string} token      A valid GitHub OAuth2 token
- * @param {string} repository A GitHub repository full name
- * @param {Array}  events     An array of event names for which the webhook
- *                            will be invoked
+ * @param {string}   token      A valid GitHub OAuth2 token
+ * @param {string}   repository A GitHub repository full name
+ * @param {Array}    events     An array of event names for which the webhook
+ *                              will be invoked
+ * @param {Function} next       A callback to trigger when the request finishes
  */
-HookStore.prototype.create = function( token, repository, events, integration ) {
+HookStore.prototype.create = function( token, repository, events, integration, next ) {
     integrations.github.createWebhook( token, repository, events, integration, function( err, result ) {
         this.add( result );
+
+        if ( next ) {
+            next( err, result );
+        }
     }.bind( this ) );
 };

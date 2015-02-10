@@ -1,6 +1,6 @@
 var React = require( 'react/addons' ),
-    async = require( 'async' ),
     assign = require( 'lodash/object/assign' ),
+    shortId = require( 'shortid' ),
     difference = require( 'lodash/array/difference' ),
     monitor = require( '../mixins/event-monitor' ),
     ConfigureEvent = require( './configure-event' ),
@@ -8,7 +8,9 @@ var React = require( 'react/addons' ),
     ConfigureFilters = require( './configure-filters' ),
     ConfigureContact = require( './configure-contact' ),
     stores = require( '../stores/' ),
-    integrations = require( '../../shared/integrations/' );
+    integrations = require( '../../shared/integrations/' ),
+    crypto = require( 'crypto' ),
+    config = require( '../../config' );
 
 module.exports = React.createClass({
     displayName: 'Configure',
@@ -40,34 +42,38 @@ module.exports = React.createClass({
     onSubmit: function( event ) {
         var githubToken = this.props.tokens.get( 'github' ),
             chatIntegration = this.props.tokens.getConnectedChatToken(),
-            chatToken = this.props.tokens.get( chatIntegration );
+            chatToken = this.props.tokens.get( chatIntegration ),
+            integration;
+
+        integration = {
+            _id: shortId.generate(),
+            chat: {
+                provider: chatIntegration,
+                token: chatToken,
+                contact: this.state.values.contact
+            },
+            filters: this.state.values.filters.filter( Boolean ),
+            secret: crypto.randomBytes( config.security.secretLength ).toString( 'hex' )
+        };
 
         this.props.hooks.create(
             githubToken,
             this.state.values.repository,
             this.state.values.events,
-            this.props.integrations.create({
-                chat: {
-                    provider: chatIntegration,
-                    token: chatToken,
-                    contact: this.state.values.contact
-                },
-                filters: this.state.values.filters.filter( Boolean )
-            })
+            integration,
+            function( err, hook ) {
+                if ( ! err ) {
+                    integration.github = { hookUrl: hook.url };
+                    this.props.integrations.create( integration );
+                }
+            }.bind( this )
         );
 
-        async.parallel([
-            function( next ) {
-                this.props.integrations.once( 'change', next );
-            }.bind( this ),
-            function( next ) {
-                this.props.hooks.once( 'change', next );
-            }.bind( this )
-        ], function() {
+        this.setState({ saving: true });
+        this.props.integrations.once( 'change', function() {
             this.setState({ saving: false });
         }.bind( this ) );
 
-        this.setState({ saving: true });
         event.preventDefault();
     },
 
