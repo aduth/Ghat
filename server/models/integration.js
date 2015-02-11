@@ -15,7 +15,9 @@ schema = new mongoose.Schema({
         contact: String
     },
     github: {
-        hookUrl: String
+        hookId: Number,
+        repository: String,
+        events: [ String ]
     },
     secret: {
         type: String,
