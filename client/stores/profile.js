@@ -37,7 +37,7 @@ ProfileStore.prototype.get = function( provider, token ) {
  * complete, the profile saved to the store and a `change` event is emitted.
  *
  * @param {string} provider A provider name
- * @param {string} token A valid OAuth2 token
+ * @param {string} token    A valid OAuth2 token
  */
 ProfileStore.prototype.fetch = function( provider, token ) {
     if ( this.fetching[ provider ] || ! token || ! ( provider in integrations ) ||

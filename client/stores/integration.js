@@ -13,6 +13,52 @@ IntegrationStore = module.exports = function( initial ) {
 IntegrationStore.prototype = Object.create( ArrayStore.prototype );
 
 /**
+ * Returns the integrations associated with the specified provider and token.
+ * If the integrations have not yet been fetched, a network request will be
+ * invoked and an empty array returned.
+ *
+ * @param  {string} provider A provider name
+ * @param  {string} token    A valid provider OAuth2 token
+ * @return {Array}           A set of integrations
+ */
+IntegrationStore.prototype.get = function( chatProvider, chatToken ) {
+    if ( ! this.data || this.chatToken !== chatToken ) {
+        this.fetch( chatProvider, chatToken );
+        return [];
+    }
+
+    return this.data;
+};
+
+/**
+ * Given a provider name and OAuth token, invokes a network request to request
+ * the user's integrations configured. When the request is complete, the
+ * integrations are saved to the store and a `change` event is emitted.
+ *
+ * @param {string} provider A provider name
+ * @param {string} token    A valid OAuth2 token
+ */
+IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
+    if ( this.fetching || ! chatToken ) {
+        return;
+    }
+    this.fetching = true;
+    this.chatToken = chatToken;
+
+    request.get( config.origin + '/integration' )
+        .query({
+            'chat.provider': chatProvider,
+            'chat.token': chatToken
+        })
+        .end(function( err, res ) {
+            if ( ! err && res.ok ) {
+                this.data = res.body;
+                this.emit( 'change' );
+            }
+        }.bind( this ) );
+};
+
+/**
  * Given an integration object, invokes a network request to the Ghat app to
  * save the desired integration. When the request is complete, the integration
  * is saved to the store and a `change` event is emitted.

@@ -26,3 +26,18 @@ a {
         color: lighten( @color-salmon, 8% );
     }
 }
+
+th,
+td {
+    padding: 4px;
+}
+
+th {
+    padding-bottom: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+thead + tbody > tr:first-child td {
+    padding-top: 8px;
+}

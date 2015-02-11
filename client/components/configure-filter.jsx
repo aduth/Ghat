@@ -110,7 +110,7 @@ module.exports = React.createClass({
                 </td>
                 <td width="35%">{ this.getValueInput() }</td>
                 <td width="15%">
-                    <button type="button" onClick={ this.props.onRemove } className="configure-filter__remove">
+                    <button type="button" onClick={ this.props.onRemove } className="icon-button">
                         <span className="fa fa-remove" />
                         <span className="visually-hidden">Remove</span>
                     </button>

@@ -44,7 +44,9 @@ module.exports = React.createClass({
                 <div className={ 'steps__tabs ' + ( this.props.tokens.isConnected() ? '' : 'disabled' ) }>
                     <TabsList defaultActive="Integrations">
                         <TabsPanel name="Integrations">
-                            <Integrations />
+                            <Integrations
+                                tokens={ this.props.tokens }
+                                integrations={ this.props.integrations } />
                         </TabsPanel>
                         <TabsPanel name="Configure">
                             <Configure

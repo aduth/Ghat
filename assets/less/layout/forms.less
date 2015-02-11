@@ -53,3 +53,28 @@
         cursor: not-allowed;
     }
 }
+
+.icon-button {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    margin: 3px 0;
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    outline: none;
+    text-align: center;
+    line-height: 28px;
+    color: @text-color;
+
+    &:hover {
+        background-color: @color-salmon;
+        color: #fff;
+    }
+
+    .fa-remove {
+        position: relative;
+        top: -2px;
+    }
+}
