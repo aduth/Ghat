@@ -39,3 +39,27 @@ router.post( '/', function( req, res, next ) {
         }
     });
 }, responses.json.success, responses.json.failure );
+
+/**
+ * DELETE /integration/:id
+ * Deletes an integration
+ */
+router.delete( '/:id', function( req, res, next ) {
+    if ( ! req.query['chat.provider'] || ! req.query['chat.token'] ) {
+        return next( new errors.InvalidRequest() );
+    }
+
+    Integration.findOneAndRemove({
+        _id: req.params.id,
+        'chat.provider': req.query['chat.provider'],
+        'chat.token': req.query['chat.token']
+    }, function( err, integration ) {
+        if ( err ) {
+            next( err );
+        } else if ( ! integration ) {
+            next( new errors.NotFound() );
+        } else {
+            next();
+        }
+    });
+}, responses.statusCode.success, responses.statusCode.failure );
