@@ -22,12 +22,12 @@ IntegrationStore.prototype = Object.create( ArrayStore.prototype );
  * @return {Array}           A set of integrations
  */
 IntegrationStore.prototype.get = function( chatProvider, chatToken ) {
-    if ( ! this.data || this.chatToken !== chatToken ) {
+    if ( this.chatToken !== chatToken ) {
         this.fetch( chatProvider, chatToken );
         return [];
     }
 
-    return this.data;
+    return this.store;
 };
 
 /**
@@ -52,7 +52,7 @@ IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
         })
         .end(function( err, res ) {
             if ( ! err && res.ok ) {
-                this.data = res.body;
+                this.store = res.body;
                 this.emit( 'change' );
             }
         }.bind( this ) );
