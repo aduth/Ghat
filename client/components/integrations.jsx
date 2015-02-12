@@ -62,6 +62,7 @@ module.exports = React.createClass({
                         { this.getIntegrationsElement() }
                     </tbody>
                 </table>
+                <a href="/" className="button integrations__add-new">Add New Integration</a>
             </div>
         );
     }
