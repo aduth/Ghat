@@ -42,13 +42,13 @@ module.exports = React.createClass({
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
                 <div className={ 'steps__tabs ' + ( this.props.tokens.isConnected() ? '' : 'disabled' ) }>
-                    <TabsList defaultActive="Integrations">
-                        <TabsPanel name="Integrations">
+                    <TabsList defaultActive="My Integrations">
+                        <TabsPanel name="My Integrations">
                             <Integrations
                                 tokens={ this.props.tokens }
                                 integrations={ this.props.integrations } />
                         </TabsPanel>
-                        <TabsPanel name="Configure">
+                        <TabsPanel name="Create New Integration">
                             <Configure
                                 tokens={ this.props.tokens }
                                 contacts={ this.props.contacts }
