@@ -14,14 +14,21 @@ module.exports = React.createClass({
 
     getIntegrationsElement: function() {
         var chatProvider = this.props.tokens.getConnectedChatToken(),
-            chatToken = this.props.tokens.get( chatProvider );
+            chatToken = this.props.tokens.get( chatProvider ),
+            integrations = this.props.integrations.get( chatProvider, chatToken );
 
-        return this.props.integrations.get( chatProvider, chatToken ).map(function( integration ) {
+        if ( ! integrations.length || true ) {
+            return (
+                <tr><td colSpan="5" className="integrations__no-results">You haven't configured any integrations yet!</td></tr>
+            );
+        }
+
+        return integrations.map(function( integration ) {
             return (
                 <tr>
                     <td>{ integration.github.repository }</td>
                     <td>{ integration.github.events.join( ', ' ) }</td>
-                    <td><span className="status is-ok fa fa-check" /></td>
+                    <td><span className="integrations__status is-ok fa fa-check" /></td>
                     <td>
                         <a href={ '/configure/' + integration._id } className="icon-button">
                             <span className="visually-hidden">Edit</span>
