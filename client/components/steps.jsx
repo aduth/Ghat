@@ -2,11 +2,7 @@ var React = require( 'react' ),
     monitor = require( '../mixins/event-monitor' ),
     helpers = require( '../../shared/helpers/' ),
     stores = require( '../stores/' ),
-    Connection = require( './connection' ),
-    Integrations = require( './integrations' ),
-    Configure = require( './configure' ),
-    TabsList = require( './tabs-list' ),
-    TabsPanel = require( './tabs-panel' );
+    Connection = require( './connection' );
 
 module.exports = React.createClass({
     displayName: 'Steps',
@@ -42,21 +38,7 @@ module.exports = React.createClass({
                     title="Connect to Chat"
                     description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
                 <div className={ 'steps__tabs ' + ( this.props.tokens.isConnected() ? '' : 'disabled' ) }>
-                    <TabsList defaultActive="My Integrations">
-                        <TabsPanel name="My Integrations">
-                            <Integrations
-                                tokens={ this.props.tokens }
-                                integrations={ this.props.integrations } />
-                        </TabsPanel>
-                        <TabsPanel name="Create New Integration">
-                            <Configure
-                                tokens={ this.props.tokens }
-                                contacts={ this.props.contacts }
-                                repositories={ this.props.repositories }
-                                hooks={ this.props.hooks }
-                                integrations={ this.props.integrations } />
-                        </TabsPanel>
-                    </TabsList>
+                    <div id="content" />
                     <aside className="steps__tabs-disabled-content">
                         You must complete the authorization steps above before configuring integrations.
                     </aside>
