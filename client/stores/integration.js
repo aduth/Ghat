@@ -46,7 +46,7 @@ IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
     this.fetching = true;
     this.chatToken = chatToken;
 
-    request.get( config.origin + '/integration' )
+    request.get( config.origin + '/api/integration' )
         .query({
             'chat.provider': chatProvider,
             'chat.token': chatToken
@@ -68,7 +68,7 @@ IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
  * @param {Function} next        A callback to trigger when the request finishes
  */
 IntegrationStore.prototype.create = function( integration, next ) {
-    request.post( config.origin + '/integration' )
+    request.post( config.origin + '/api/integration' )
         .send( integration )
         .end(function( err, res ) {
             if ( ! err && res.ok ) {

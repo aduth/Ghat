@@ -1,4 +1,5 @@
-var app = module.exports = require( 'express' )();
+var app = module.exports = require( 'express' )(),
+    responses = require( './responses/' );
 
 /**
  * Configure server
@@ -9,7 +10,8 @@ require( './start/express' )( app );
 /**
  * Mount sub-modules
  */
-app.use( '/authorize', require( './modules/authorize' ) );
-app.use( '/integration', require( './modules/integration' ) );
-app.use( '/event', require( './modules/event' ) );
-app.use( '*', require( './responses/' ).notFound.failure );
+app.use( '/api/authorize', require( './modules/authorize' ) );
+app.use( '/api/integration', require( './modules/integration' ) );
+app.use( '/api/event', require( './modules/event' ) );
+app.use( '/api/*', responses.notFound.failure );
+app.use( '*', responses.file( 'index.html' ).success );

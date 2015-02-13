@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
     authenticate: function( provider ) {
         this.setState({ provider: provider });
-        window.open( '/authorize/' + provider );
+        window.open( '/api/authorize/' + provider );
     },
 
     disconnect: function() {

@@ -108,7 +108,7 @@ module.exports.createWebhook = function( token, repository, events, integration,
         .send({
             name: 'web',
             config: {
-                url: config.origin + '/event/?integration_id=' + integration._id,
+                url: config.origin + '/api/event/?integration_id=' + integration._id,
                 secret: integration.secret,
                 content_type: 'json'
             },
