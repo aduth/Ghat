@@ -1,4 +1,5 @@
 var request = require( 'superagent' ),
+    findIndex = require( 'lodash/array/findIndex' ),
     ArrayStore = require( './array' ),
     config = require( '../../config' ),
     IntegrationStore;
@@ -80,4 +81,42 @@ IntegrationStore.prototype.create = function( integration, next ) {
         }.bind( this ) );
 
     return integration;
+};
+
+/**
+ * Removes an integration given an ID, chat provider, and chat token. Removes
+ * the integration immediately, restoring it if the request fails. In both
+ * cases, a `change` event is emitted.
+ *
+ * @param {string}   id           The ID of the integration to remove
+ * @param {string}   chatProvider The integration's chat provider
+ * @param {string}   chatToken    A valid OAuth2 token for the chat provider
+ * @param {Function} next         A callback to trigger when the request finishes
+ */
+IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, next ) {
+    var index = findIndex( this.store, { _id: id }),
+        integration = this.store[ index ];
+
+    // Abandon early if the integration doesn't exist in the store
+    if ( -1 === index ) {
+        return;
+    }
+
+    this.remove( index );
+
+    request.del( config.origin + '/integration/' + id )
+        .query({
+            'chat.provider': chatProvider,
+            'chat.token': chatToken
+        })
+        .end(function( err, res ) { /* jshint ignore:line */
+            if ( err ) {
+                this.store.splice( index, 0, integration );
+                this.trigger( 'change' );
+            }
+
+            if ( next ) {
+                next( err );
+            }
+        });
 };

@@ -12,12 +12,19 @@ module.exports = React.createClass({
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
     },
 
+    deleteIntegration: function( integration ) {
+        var chatProvider = this.props.tokens.getConnectedChatToken(),
+            chatToken = this.props.tokens.get( chatProvider );
+
+        this.props.integrations.removeById( integration._id, chatProvider, chatToken );
+    },
+
     getIntegrationsElement: function() {
         var chatProvider = this.props.tokens.getConnectedChatToken(),
             chatToken = this.props.tokens.get( chatProvider ),
             integrations = this.props.integrations.get( chatProvider, chatToken );
 
-        if ( ! integrations.length || true ) {
+        if ( ! integrations.length ) {
             return (
                 <tr><td colSpan="5" className="integrations__no-results">You haven't configured any integrations yet!</td></tr>
             );
@@ -25,7 +32,7 @@ module.exports = React.createClass({
 
         return integrations.map(function( integration ) {
             return (
-                <tr>
+                <tr key={ integration._id }>
                     <td>{ integration.github.repository }</td>
                     <td>{ integration.github.events.join( ', ' ) }</td>
                     <td><span className="integrations__status is-ok fa fa-check" /></td>
@@ -36,14 +43,14 @@ module.exports = React.createClass({
                         </a>
                     </td>
                     <td>
-                        <button type="button" className="icon-button">
+                        <button type="button" className="icon-button" onClick={ this.deleteIntegration.bind( null, integration ) }>
                             <span className="visually-hidden">Delete</span>
                             <span className="fa fa-remove" />
                         </button>
                     </td>
                 </tr>
             );
-        });
+        }, this );
     },
 
     render: function() {
