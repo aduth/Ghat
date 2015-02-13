@@ -5,7 +5,7 @@ var React = require( 'react/addons' ),
 module.exports = React.createClass({
     displayName: 'Integrations',
 
-    mixins: [ monitor( 'integrations' ) ],
+    mixins: [ monitor([ 'tokens', 'integrations' ]) ],
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
