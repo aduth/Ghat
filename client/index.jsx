@@ -4,6 +4,7 @@ var React = require( 'react' ),
     helpers = require( './helpers/' ),
     config = require( '../config' ),
     Router = require( './router' ),
+    routes = require( './routes' ),
     app, router;
 
 /**
@@ -29,7 +30,7 @@ if ( 'undefined' !== typeof document ) {
     /**
      * Bind path routing
      */
-    router = new Router();
+    router = new Router( routes );
     router.attach( document.body );
     router.start();
 }

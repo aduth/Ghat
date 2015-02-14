@@ -1,5 +1,9 @@
 var app = module.exports = require( 'express' )(),
-    responses = require( './responses/' );
+    responses = require( './responses/' ),
+    routes;
+
+require( 'jsx-require-extension' );
+routes = require( '../client/routes' );
 
 /**
  * Configure server
@@ -13,5 +17,5 @@ require( './start/express' )( app );
 app.use( '/api/authorize', require( './modules/authorize' ) );
 app.use( '/api/integration', require( './modules/integration' ) );
 app.use( '/api/event', require( './modules/event' ) );
-app.use( '/api/*', responses.notFound.failure );
-app.use( '*', responses.file( 'index.html' ).success );
+app.get( Object.keys( routes ), responses.file( 'index.html' ).success );
+app.use( '*', responses.notFound.failure );
