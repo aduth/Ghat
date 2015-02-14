@@ -16,7 +16,7 @@ module.exports.closest = function( el, selector ) {
             el = el.parentNode;
         }
 
-        if ( el && el.matches( selector ) ) {
+        if ( el && el instanceof Element && el.matches( selector ) ) {
             return el;
         }
     }
