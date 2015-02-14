@@ -33,7 +33,7 @@ module.exports = React.createClass({
         this.setState({ provider: this.getConnectedProvider() });
     },
 
-    authenticate: function( provider ) {
+    authorize: function( provider ) {
         this.setState({ provider: provider });
         window.open( '/api/authorize/' + provider );
     },
@@ -108,7 +108,7 @@ module.exports = React.createClass({
                     <p className="connection__description">{ this.props.description }</p>
                     <div className="connection__actions">
                         { this.getProviderSelect() }
-                        <button onClick={ this.authenticate.bind( null, this.state.provider ) } className="button" disabled={ ! this.state.provider }>Authenticate</button>
+                        <button onClick={ this.authorize.bind( null, this.state.provider ) } className="button" disabled={ ! this.state.provider }>Authorize</button>
                     </div>
                     <aside className="connection__authorized-account">
                         { this.getAvatarImage() }
