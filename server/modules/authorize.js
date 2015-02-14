@@ -15,7 +15,7 @@ router.get( '/:provider', function( req, res, next ) {
         next( new errors.UnknownProvider() );
     } else {
         query = integrations[ req.params.provider ].oauth.query || {};
-        query.redirect_uri = config.origin + '/authorize/' + req.params.provider + '/callback';
+        query.redirect_uri = config.origin + '/api/authorize/' + req.params.provider + '/callback';
         res.redirect( integrations[ req.params.provider ].oauth.client.getAuthorizeUrl( query ) );
     }
 });
@@ -26,7 +26,7 @@ router.get( '/:provider', function( req, res, next ) {
  */
 router.get( '/:provider/callback', function( req, res, next ) {
     integrations[ req.params.provider ].oauth.client.getOAuthAccessToken( req.query.code, {
-        redirect_uri: config.origin + '/authorize/' + req.params.provider + '/callback',
+        redirect_uri: config.origin + '/api/authorize/' + req.params.provider + '/callback',
         grant_type: 'authorization_code'
     }, function ( error, accessToken, refreshToken, result ) {
         if ( error || result.error ) {
