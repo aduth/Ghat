@@ -1,4 +1,5 @@
 var EventEmitter = require( 'events' ).EventEmitter,
+    helpers = require( './helpers/' ),
     Router;
 
 Router = module.exports = function() {
@@ -41,9 +42,11 @@ Router.prototype.detach = function( container ) {
 };
 
 Router.prototype.onClick = function( event ) {
-    if ( 'A' === event.target.nodeName ) {
+    var anchor = helpers.DOM.closest( event.target, 'a' );
+
+    if ( anchor ) {
         event.preventDefault();
-        this.setRoute( event.target.href );
+        this.setRoute( anchor.getAttribute( 'href' ) );
         this.emit( 'route' );
     }
 };
