@@ -1,3 +1,4 @@
 module.exports = {
-    stores: require( './stores' )
+    stores: require( './stores' ),
+    DOM: require( './dom' )
 };
