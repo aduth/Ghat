@@ -3,6 +3,10 @@ var React = require( 'react/addons' );
 module.exports = React.createClass({
     displayName: 'TabsList',
 
+    propTypes: {
+        defaultActive: React.PropTypes.string
+    },
+
     getNavigationElements: function() {
         return React.Children.map( this.props.children, function( child ) {
             var classes = React.addons.classSet({
@@ -21,10 +25,16 @@ module.exports = React.createClass({
     },
 
     getChildContentElements: function() {
+        var isActiveSet;
+
+        React.Children.forEach( this.props.children, function( child ) {
+            isActiveSet = isActiveSet || child.props.active;
+        });
+
         return React.Children.map( this.props.children, function( child ) {
             var classes = React.addons.classSet({
                 'tabs-list__child-content': true,
-                'is-active': child.props.active
+                'is-active': isActiveSet ? child.props.active : this.props.defaultActive === child.props.name
             });
 
             return <div className={ classes }>{ child }</div>;
