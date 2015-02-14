@@ -23,7 +23,15 @@
     }
 }
 
-.tabs-list__navigation-item.active .tabs-list__navigation-link {
+.tabs-list__navigation-item.is-active .tabs-list__navigation-link {
     background-color: #fff;
     color: @text-color;
+}
+
+.tabs-list__child-content {
+    display: none;
+
+    &.is-active {
+        display: block;
+    }
 }

@@ -7,7 +7,7 @@ module.exports = React.createClass({
         return React.Children.map( this.props.children, function( child ) {
             var classes = React.addons.classSet({
                 'tabs-list__navigation-item': true,
-                active: child.props.active
+                'is-active': child.props.active
             }), style = { width: ( 100 / this.props.children.length ) + '%' };
 
             return (
@@ -20,16 +20,15 @@ module.exports = React.createClass({
         }, this );
     },
 
-    getActiveContentElement: function() {
-        var content;
+    getChildContentElements: function() {
+        return React.Children.map( this.props.children, function( child ) {
+            var classes = React.addons.classSet({
+                'tabs-list__child-content': true,
+                'is-active': child.props.active
+            });
 
-        React.Children.forEach( this.props.children, function( child ) {
-            if ( child.props.active ) {
-                content = child.props.children;
-            }
+            return <div className={ classes }>{ child }</div>;
         }, this );
-
-        return content;
     },
 
     render: function() {
@@ -38,8 +37,8 @@ module.exports = React.createClass({
                 <ul className="tabs-list__navigation">
                     { this.getNavigationElements() }
                 </ul>
-                <div key="content" className="tabs-list__content">
-                    { this.getActiveContentElement() }
+                <div className="tabs-list__content">
+                    { this.getChildContentElements() }
                 </div>
             </div>
         );
