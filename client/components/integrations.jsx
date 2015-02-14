@@ -1,11 +1,13 @@
 var React = require( 'react/addons' ),
     stores = require( '../stores/' ),
-    monitor = require( '../mixins/event-monitor' );
+    mixins = require( '../mixins/' );
 
 module.exports = React.createClass({
     displayName: 'Integrations',
 
-    mixins: [ monitor([ 'tokens', 'integrations' ]) ],
+    mixins: [
+        mixins.observeStore([ 'tokens', 'integrations' ])
+    ],
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,

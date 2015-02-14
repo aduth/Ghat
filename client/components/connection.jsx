@@ -1,6 +1,6 @@
 var React = require( 'react/addons' ),
     find = require( 'lodash/collection/find' ),
-    monitor = require( '../mixins/event-monitor' ),
+    mixins = require( '../mixins/' ),
     integrations = require( '../../shared/integrations/' ),
     stores = require( '../stores/' ),
     Select = require( './select' );
@@ -9,8 +9,8 @@ module.exports = React.createClass({
     displayName: 'Connection',
 
     mixins: [
-        monitor([ 'tokens', 'profiles' ]),
-        monitor( 'tokens', 'verify', 'setProvider' )
+        mixins.observeStore([ 'tokens', 'profiles' ]),
+        mixins.eventMonitor( 'tokens', 'verify', 'setProvider' )
     ],
 
     propTypes: {

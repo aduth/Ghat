@@ -4,12 +4,6 @@ module.exports = function( props, event, handler ) {
         props = [ props ];
     }
 
-    // Default event to `change`
-    event = event || 'change';
-
-    // Default handler to `forceUpdate`
-    handler = handler || 'forceUpdate';
-
     return {
         componentDidMount: function() {
             props.forEach(function( prop ) {

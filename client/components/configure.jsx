@@ -2,7 +2,7 @@ var React = require( 'react/addons' ),
     assign = require( 'lodash/object/assign' ),
     shortId = require( 'shortid' ),
     difference = require( 'lodash/array/difference' ),
-    monitor = require( '../mixins/event-monitor' ),
+    mixins = require( '../mixins/' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
     ConfigureFilters = require( './configure-filters' ),
@@ -15,7 +15,7 @@ var React = require( 'react/addons' ),
 module.exports = React.createClass({
     displayName: 'Configure',
 
-    mixins: [ monitor([ 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ]) ],
+    mixins: [ mixins.observeStore([ 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ]) ],
 
     getInitialState: function() {
         return {
