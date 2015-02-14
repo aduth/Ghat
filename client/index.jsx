@@ -3,8 +3,8 @@ var React = require( 'react' ),
     constants = require( '../shared/constants/' ),
     helpers = require( './helpers/' ),
     config = require( '../config' ),
-    router = require( './router' ),
-    app;
+    Router = require( './router' ),
+    app, router;
 
 /**
  * Generate base application element
@@ -29,5 +29,7 @@ if ( 'undefined' !== typeof document ) {
     /**
      * Bind path routing
      */
+    router = new Router();
+    router.attach( document.body );
     router.start();
 }
