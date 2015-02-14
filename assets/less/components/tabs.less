@@ -1,0 +1,36 @@
+.tabs {
+    .full-width;
+    position: relative;
+    margin-top: 20px;
+}
+
+.tabs.disabled .tabs-list {
+    position: relative;
+}
+
+.tabs.disabled .tabs-list:before {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba( 0, 0, 0, 0.8 );
+}
+
+.tabs__disabled-content {
+    display: none;
+}
+
+.tabs.disabled .tabs__disabled-content {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY( -50% );
+    display: block;
+    text-align: center;
+    color: #fff;
+}
