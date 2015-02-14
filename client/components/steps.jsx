@@ -57,7 +57,7 @@ module.exports = React.createClass({
                     </TabsPanel>
                     <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
-                            integration={ integrationStore.get( this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 ) ) }
+                            integration={ integrationStore.getById( this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 ) ) }
                             tokens={ clientHelpers.stores.getSingletonInstance( 'Token' ) }
                             contacts={ clientHelpers.stores.getSingletonInstance( 'Contact' ) }
                             repositories={ clientHelpers.stores.getSingletonInstance( 'Repository' ) }
