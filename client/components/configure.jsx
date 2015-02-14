@@ -27,6 +27,7 @@ module.exports = React.createClass({
     },
 
     propTypes: {
+        new: React.PropTypes.bool,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
         integration: React.PropTypes.object,
@@ -37,6 +38,7 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
+            new: true,
             integration: {}
         };
     },

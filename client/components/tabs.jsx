@@ -30,10 +30,12 @@ module.exports = React.createClass({
         };
     },
 
+    getCurrentIntegrationId: function() {
+        return this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 );
+    },
+
     getIntegration: function() {
-        return this.props.integrations.getById(
-            this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 )
-        ) || this.props.integrations.generate();
+        return this.props.integrations.getById( this.getCurrentIntegrationId() ) || this.props.integrations.generate();
     },
 
     render: function() {
@@ -52,6 +54,7 @@ module.exports = React.createClass({
                     </TabsPanel>
                     <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
+                            new={ ! this.getCurrentIntegrationId() }
                             tokens={ this.props.tokens }
                             integrations={ this.props.integrations }
                             integration={ this.getIntegration() }
