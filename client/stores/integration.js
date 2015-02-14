@@ -2,6 +2,8 @@ var request = require( 'superagent' ),
     findIndex = require( 'lodash/array/findIndex' ),
     ArrayStore = require( './array' ),
     config = require( '../../config' ),
+    shortId = require( 'shortid' ),
+    crypto = require( 'crypto' ),
     IntegrationStore;
 
 /**
@@ -57,6 +59,19 @@ IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
                 this.emit( 'change' );
             }
         }.bind( this ) );
+};
+
+/**
+ * Generates a new integration with auto-generated ID and secret values, to be
+ * extended with other integration properties before stored using `create`.
+ *
+ * @return {Object} A new integration object
+ */
+IntegrationStore.prototype.generate = function() {
+    return {
+        _id: shortId.generate(),
+        secret: crypto.randomBytes( config.security.secretLength ).toString( 'hex' )
+    };
 };
 
 /**

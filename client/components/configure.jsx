@@ -1,6 +1,5 @@
 var React = require( 'react/addons' ),
     assign = require( 'lodash/object/assign' ),
-    shortId = require( 'shortid' ),
     difference = require( 'lodash/array/difference' ),
     mixins = require( '../mixins/' ),
     ConfigureEvent = require( './configure-event' ),
@@ -8,14 +7,14 @@ var React = require( 'react/addons' ),
     ConfigureFilters = require( './configure-filters' ),
     ConfigureContact = require( './configure-contact' ),
     stores = require( '../stores/' ),
-    integrations = require( '../../shared/integrations/' ),
-    crypto = require( 'crypto' ),
-    config = require( '../../config' );
+    integrations = require( '../../shared/integrations/' );
 
 module.exports = React.createClass({
     displayName: 'Configure',
 
-    mixins: [ mixins.observeStore([ 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ]) ],
+    mixins: [
+        mixins.observeStore([ 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ])
+    ],
 
     getInitialState: function() {
         return {
@@ -40,16 +39,14 @@ module.exports = React.createClass({
             chatToken = this.props.tokens.get( chatIntegration ),
             integration;
 
-        integration = {
-            _id: shortId.generate(),
+        integration = assign( this.props.integrations.generate(), {
             chat: {
                 provider: chatIntegration,
                 token: chatToken,
                 contact: this.state.values.contact
             },
-            filters: this.state.values.filters.filter( Boolean ),
-            secret: crypto.randomBytes( config.security.secretLength ).toString( 'hex' )
-        };
+            filters: this.state.values.filters.filter( Boolean )
+        });
 
         this.props.hooks.create(
             githubToken,
