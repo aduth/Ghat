@@ -4,8 +4,8 @@ var React = require( 'react' ),
     helpers = require( './helpers/' ),
     config = require( '../config' ),
     Router = require( './router' ),
-    routes = require( './routes' ),
-    app, router;
+    router = new Router(),
+    app;
 
 /**
  * Generate base application element
@@ -13,6 +13,7 @@ var React = require( 'react' ),
 app = module.exports = (
     <App
         config={ config }
+        router={ router }
         tokens={ new helpers.stores.getSingletonInstance( 'Token' ) }
         profiles={ new helpers.stores.getSingletonInstance( 'Profile' ) }
         contacts={ new helpers.stores.getSingletonInstance( 'Contact' ) }
@@ -30,7 +31,6 @@ if ( 'undefined' !== typeof document ) {
     /**
      * Bind path routing
      */
-    router = new Router( routes );
     router.attach( document.body );
     router.start();
 }

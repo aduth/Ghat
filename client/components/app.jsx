@@ -10,7 +10,8 @@ module.exports = React.createClass({
     displayName: 'App',
 
     propTypes: {
-        config: React.PropTypes.object,
+        config: React.PropTypes.object.isRequired,
+        router: React.PropTypes.object.isRequired,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
