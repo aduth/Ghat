@@ -7,13 +7,13 @@ var React = require( 'react' ),
 
 module.exports.index = function() {
     React.render(
-        <TabsList defaultActive="My Integrations">
-            <TabsPanel name="My Integrations">
+        <TabsList>
+            <TabsPanel name="My Integrations" href="/" active={ true }>
                 <Integrations
                     tokens={ helpers.stores.getSingletonInstance( 'Token' ) }
                     integrations={ helpers.stores.getSingletonInstance( 'Integration' ) } />
             </TabsPanel>
-            <TabsPanel name="Create New Integration"></TabsPanel>
+            <TabsPanel name="Create New Integration" href="/configure"></TabsPanel>
         </TabsList>,
         document.getElementById( constants.elements.CONTENT )
     );

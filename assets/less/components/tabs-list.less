@@ -7,16 +7,23 @@
 
 .tabs-list__navigation-item {
     display: inline-block;
+}
+
+.tabs-list__navigation-link {
+    display: block;
     padding: 14px 30px;
-    cursor: pointer;
     background-color: #ddd;
     font-weight: bold;
     text-align: center;
     text-transform: uppercase;
     color: lighten( @text-color, 20% );
 
-    &.active {
-        background-color: #fff;
+    &:hover {
         color: @text-color;
     }
+}
+
+.tabs-list__navigation-item.active .tabs-list__navigation-link {
+    background-color: #fff;
+    color: @text-color;
 }

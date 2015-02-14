@@ -8,8 +8,8 @@ var React = require( 'react' ),
 module.exports.create = function() {
     React.render(
         <TabsList defaultActive="My Integrations">
-            <TabsPanel name="My Integrations"></TabsPanel>
-            <TabsPanel name="Create New Integration">
+            <TabsPanel name="My Integrations" href="/"></TabsPanel>
+            <TabsPanel name="Create New Integration" href="/configure" active={ true }>
                 <Configure
                     tokens={ helpers.stores.getSingletonInstance( 'Token' ) }
                     contacts={ helpers.stores.getSingletonInstance( 'Contact' ) }
@@ -24,9 +24,9 @@ module.exports.create = function() {
 
 module.exports.edit = function() {
     React.render(
-        <TabsList defaultActive="My Integrations">
-            <TabsPanel name="My Integrations"></TabsPanel>
-            <TabsPanel name="Create New Integration">
+        <TabsList>
+            <TabsPanel name="My Integrations" href="/"></TabsPanel>
+            <TabsPanel name="Create New Integration" href="/configure" active={ true }>
                 <Configure
                     tokens={ helpers.stores.getSingletonInstance( 'Token' ) }
                     contacts={ helpers.stores.getSingletonInstance( 'Contact' ) }

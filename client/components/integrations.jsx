@@ -76,7 +76,7 @@ module.exports = React.createClass({
                         { this.getIntegrationsElement() }
                     </tbody>
                 </table>
-                <a href="/" className="button integrations__add-new">Add New Integration</a>
+                <a href="/configure" className="button integrations__add-new">Add New Integration</a>
             </div>
         );
     }
