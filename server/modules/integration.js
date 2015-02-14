@@ -15,7 +15,7 @@ router.get( '/', function( req, res, next ) {
     Integration.find({
         'chat.provider': req.query['chat.provider'],
         'chat.token': req.query['chat.token']
-    }, '_id github', function( err, integrations ) {
+    }, '-secret', function( err, integrations ) {
         if ( err ) {
             next( err );
         } else {

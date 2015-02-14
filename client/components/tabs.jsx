@@ -10,6 +10,7 @@ module.exports = React.createClass({
     displayName: 'Tabs',
 
     mixins: [
+        mixins.observeStore([ 'integrations' ]),
         mixins.updateOnRoute
     ],
 
@@ -27,6 +28,12 @@ module.exports = React.createClass({
         return {
             disabled: true
         };
+    },
+
+    getIntegration: function() {
+        return this.props.integrations.getById(
+            this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 )
+        ) || this.props.integrations.generate();
     },
 
     render: function() {
@@ -47,7 +54,7 @@ module.exports = React.createClass({
                         <Configure
                             tokens={ this.props.tokens }
                             integrations={ this.props.integrations }
-                            integration={ this.props.integrations.getById( this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 ) ) }
+                            integration={ this.getIntegration() }
                             contacts={ this.props.contacts }
                             repositories={ this.props.repositories }
                             hooks={ this.props.hooks } />

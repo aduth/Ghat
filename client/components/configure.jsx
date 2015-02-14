@@ -1,6 +1,5 @@
 var React = require( 'react/addons' ),
-    assign = require( 'lodash/object/assign' ),
-    difference = require( 'lodash/array/difference' ),
+    merge = require( 'lodash/object/merge' ),
     mixins = require( '../mixins/' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
@@ -19,6 +18,8 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             values: {
+                chat: {},
+                github: {},
                 filters: []
             },
             saving: false
@@ -27,35 +28,38 @@ module.exports = React.createClass({
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
+        integration: React.PropTypes.object,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
-        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
-        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired
+    },
+
+    getDefaultProps: function() {
+        return {
+            integration: {}
+        };
+    },
+
+    getIntegrationValue: function() {
+        return merge({}, this.props.integration, this.state.values );
     },
 
     onSubmit: function( event ) {
-        var githubToken = this.props.tokens.get( 'github' ),
-            chatIntegration = this.props.tokens.getConnectedChatToken(),
-            chatToken = this.props.tokens.get( chatIntegration ),
-            integration;
+        var integration = this.getIntegrationValue(),
+            githubToken = this.props.tokens.get( 'github' );
 
-        integration = assign( this.props.integrations.generate(), {
-            chat: {
-                provider: chatIntegration,
-                token: chatToken,
-                contact: this.state.values.contact
-            },
-            filters: this.state.values.filters.filter( Boolean )
-        });
+        integration.chat.provider = this.props.tokens.getConnectedChatToken();
+        integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         this.props.hooks.create(
             githubToken,
-            this.state.values.repository,
-            this.state.values.events,
+            integration.github.repository,
+            integration.github.events,
             integration,
             function( err, hook ) {
                 if ( ! err ) {
-                    integration.github = { hookUrl: hook.url };
+                    integration.github.hookUrl = hook.url;
                     this.props.integrations.create( integration );
                 }
             }.bind( this )
@@ -70,12 +74,17 @@ module.exports = React.createClass({
     },
 
     onValueChanged: function( name, value ) {
-        var pair = {};
-        pair[ name ] = value;
+        var integration = this.getIntegrationValue();
 
-        this.setState({
-            values: assign( {}, this.state.values, pair )
-        });
+        switch ( name ) {
+            case 'events': integration.github.events = value; break;
+            case 'repository': integration.github.repository = value; break;
+            case 'filters': integration.filters = value; break;
+            case 'contact': integration.chat.contact = value; break;
+            default: break;
+        }
+
+        this.setState({ values: integration });
     },
 
     getContacts: function() {
@@ -86,7 +95,8 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var canSubmit = ! difference([ 'events', 'repository', 'contact' ], Object.keys( this.state.values ) ).length,
+        var integration = this.getIntegrationValue(),
+            canSubmit = integration.github.events && integration.github.repository && integration.chat.contact,
             classes = React.addons.classSet({
                 configure: true,
                 saving: this.state.saving
@@ -99,10 +109,10 @@ module.exports = React.createClass({
                 </header>
                 <form onSubmit={ this.onSubmit } className="configure__form">
                     <ol className="configure__steps">
-                        <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ this.state.values.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
-                        <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ this.state.values.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
-                        <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ this.state.values.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
-                        <ConfigureContact contacts={ this.getContacts() } value={ this.state.values.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
+                        <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ integration.github.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
+                        <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ integration.github.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
+                        <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ integration.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
+                        <ConfigureContact contacts={ this.getContacts() } value={ integration.chat.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                     </ol>
                     <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
                         { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
