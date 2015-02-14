@@ -37,7 +37,7 @@ module.exports = React.createClass({
                 'is-active': isActiveSet ? child.props.active : this.props.defaultActive === child.props.name
             });
 
-            return <div className={ classes }>{ child }</div>;
+            return <div key={ child.props.name } className={ classes }>{ child }</div>;
         }, this );
     },
 
