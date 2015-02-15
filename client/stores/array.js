@@ -14,9 +14,11 @@ ArrayStore = module.exports = function( initial ) {
 ArrayStore.prototype = Object.create( EventEmitter.prototype );
 
 /**
- * Returns all values saved to the store.
+ * Returns all values saved to the store, or a single value if an index is
+ * specified.
  *
- * @return {Object} The store values
+ * @param  {number} index Optional array index to return single value
+ * @return {Object}       The store values or single store value
  */
 ArrayStore.prototype.get = function( index ) {
     if ( index >= 0 ) {
