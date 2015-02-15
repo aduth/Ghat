@@ -1,5 +1,6 @@
 var React = require( 'react/addons' ),
     merge = require( 'lodash/object/merge' ),
+    async = require( 'async' ),
     mixins = require( '../mixins/' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
@@ -55,25 +56,24 @@ module.exports = React.createClass({
         integration.chat.provider = this.props.tokens.getConnectedChatToken();
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
-        this.props.hooks.create(
-            integration.github.token,
-            integration.github.repository,
-            integration.github.events,
-            integration,
-            function( err, hook ) {
-                if ( ! err ) {
-                    integration.github.hookUrl = hook.url;
-                    this.props.integrations.create( integration );
-                }
+        async.waterfall([
+            this.props.hooks.create.bind(
+                this.props.hooks,
+                integration.github.token,
+                integration.github.repository,
+                integration.github.events,
+                integration
+            ),
+            function( hook, next ) {
+                integration.github.hookUrl = hook.url;
+                this.props.integrations.create( integration, next );
             }.bind( this )
-        );
-
-        this.setState({ saving: true });
-        this.props.integrations.once( 'change', function() {
+        ], function() {
             this.setState({ saving: false });
             this.props.router.setRoute( '/' );
         }.bind( this ) );
 
+        this.setState({ saving: true });
         event.preventDefault();
     },
 
