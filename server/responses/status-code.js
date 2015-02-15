@@ -2,7 +2,7 @@ var errors = require( '../errors' ),
     helpers = require( '../helpers/' );
 
 module.exports.success = function( req, res, next ) {
-    res.sendStatus( 200 );
+    res.sendStatus( res.code || 200 );
 };
 
 module.exports.failure = function( err, req, res, next ) {

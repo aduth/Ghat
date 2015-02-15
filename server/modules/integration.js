@@ -35,15 +35,15 @@ router.get( '/', function( req, res, next ) {
  * Creates a new integration
  */
 router.post( '/', function( req, res, next ) {
-    new Integration( req.body ).save(function( err, integration ) {
+    new Integration( req.body ).save(function( err ) {
         if ( err ) {
             next( new errors.InvalidRequest() );
         } else {
-            res.data = integration;
+            res.code = 201;
             next();
         }
     });
-}, responses.json.success, responses.json.failure );
+}, responses.statusCode.success, responses.statusCode.failure );
 
 /**
  * DELETE /integration/:id
