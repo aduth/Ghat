@@ -29,6 +29,14 @@ describe( 'ArrayStore', function() {
         });
     });
 
+    describe( '#set()', function() {
+        it( 'should replace all values in the store', function() {
+            store.add( 1 );
+            store.set([ 2 ]);
+            expect( store.get() ).to.eql([ 2 ]);
+        });
+    });
+
     describe( '#remove()', function() {
         it( 'should remove a value by index', function() {
             store.add( 1 );

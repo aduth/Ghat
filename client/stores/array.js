@@ -33,6 +33,16 @@ ArrayStore.prototype.add = function( value ) {
 };
 
 /**
+ * Replaces the current store with the given values. Emits a `change` event.
+ *
+ * @param {Array} values A new store array
+ */
+ArrayStore.prototype.set = function( values ) {
+    this.store = values;
+    this.emit( 'change' );
+};
+
+/**
  * Removes a value saved to the store by index. Emits a `change` event.
  *
  * @param {number} index The index of the value to be removed
