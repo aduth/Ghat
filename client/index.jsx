@@ -14,12 +14,12 @@ app = module.exports = (
     <App
         config={ config }
         router={ router }
-        tokens={ new helpers.stores.getSingletonInstance( 'Token' ) }
-        profiles={ new helpers.stores.getSingletonInstance( 'Profile' ) }
-        contacts={ new helpers.stores.getSingletonInstance( 'Contact' ) }
-        repositories={ new helpers.stores.getSingletonInstance( 'Repository' ) }
-        hooks={ new helpers.stores.getSingletonInstance( 'Hook' ) }
-        integrations={ new helpers.stores.getSingletonInstance( 'Integration' ) } />
+        tokens={ helpers.stores.getSingletonInstance( 'Token' ) }
+        profiles={ helpers.stores.getSingletonInstance( 'Profile' ) }
+        contacts={ helpers.stores.getSingletonInstance( 'Contact' ) }
+        repositories={ helpers.stores.getSingletonInstance( 'Repository' ) }
+        hooks={ helpers.stores.getSingletonInstance( 'Hook' ) }
+        integrations={ helpers.stores.getSingletonInstance( 'Integration' ) } />
 );
 
 if ( 'undefined' !== typeof document ) {
