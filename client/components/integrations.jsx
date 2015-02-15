@@ -55,7 +55,7 @@ module.exports = React.createClass({
                         </ul>
                     </td>
                     <td>
-                        <a href={ '/configure/' + integration._id } className="icon-button">
+                        <a href={ '/configure/' + integration._id } className="icon-button is-green">
                             <span className="visually-hidden">Edit</span>
                             <span className="fa fa-pencil" />
                         </a>
