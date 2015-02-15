@@ -28,6 +28,7 @@ module.exports = React.createClass({
 
     propTypes: {
         new: React.PropTypes.bool,
+        router: React.PropTypes.object.isRequired,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
         integration: React.PropTypes.object,
@@ -70,6 +71,7 @@ module.exports = React.createClass({
         this.setState({ saving: true });
         this.props.integrations.once( 'change', function() {
             this.setState({ saving: false });
+            this.props.router.setRoute( '/' );
         }.bind( this ) );
 
         event.preventDefault();

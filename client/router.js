@@ -17,6 +17,7 @@ Router.prototype.getRoute = function() {
 Router.prototype.setRoute = function( route ) {
     if ( 'undefined' !== typeof window ) {
         window.history.pushState( null, null, route );
+        this.emit( 'route' );
     }
 };
 
@@ -47,6 +48,5 @@ Router.prototype.onClick = function( event ) {
     if ( anchor ) {
         event.preventDefault();
         this.setRoute( anchor.getAttribute( 'href' ) );
-        this.emit( 'route' );
     }
 };

@@ -55,6 +55,7 @@ module.exports = React.createClass({
                     <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
                             new={ ! this.getCurrentIntegrationId() }
+                            router={ this.props.router }
                             tokens={ this.props.tokens }
                             integrations={ this.props.integrations }
                             integration={ this.getIntegration() }
