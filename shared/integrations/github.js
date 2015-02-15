@@ -149,19 +149,19 @@ module.exports.removeWebhook = function( token, integration, next ) {
  * @return {Array} An array of available GitHub events
  */
 module.exports.getAvailableEvents = function() {
-    return [
-        { event: 'commit_comment', description: 'Commit commented on' },
-        { event: 'create', description: 'Branch or tag created' },
-        { event: 'delete', description: 'Branch or tag deleted' },
-        { event: 'fork', description: 'Repository forked' },
-        { event: 'gollum', description: 'Wiki page updated' },
-        { event: 'issue_comment', description: 'Issue commented on' },
-        { event: 'issues', description: 'Issue changed' },
-        { event: 'pull_request_review_comment', description: 'Pull Request commented on' },
-        { event: 'pull_request', description: 'Pull Request changed' },
-        { event: 'push', description: 'Commits pushed' },
-        { event: 'watch', description: 'User watches repository' },
-    ];
+    return {
+        commit_comment: 'Commit commented on',
+        create: 'Branch or tag created',
+        delete: 'Branch or tag deleted',
+        fork: 'Repository forked',
+        gollum: 'Wiki page updated',
+        issue_comment: 'Issue commented on',
+        issues: 'Issue changed',
+        pull_request_review_comment: 'Pull Request commented on',
+        pull_request: 'Pull Request changed',
+        push: 'Commits pushed',
+        watch: 'User watches repository'
+    };
 };
 
 /**

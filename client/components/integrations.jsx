@@ -1,6 +1,7 @@
 var React = require( 'react/addons' ),
     stores = require( '../stores/' ),
-    mixins = require( '../mixins/' );
+    mixins = require( '../mixins/' ),
+    integrations = require( '../../shared/integrations/' );
 
 module.exports = React.createClass({
     displayName: 'Integrations',
@@ -24,6 +25,14 @@ module.exports = React.createClass({
         this.props.integrations.removeById( integration._id, chatProvider, chatToken, githubToken );
     },
 
+    getEventListElements: function( integration ) {
+        var events = integrations.github.getAvailableEvents();
+
+        return integration.github.events.map(function( event ) {
+            return <li key={ event }>{ events[ event ] }</li>;
+        });
+    },
+
     getIntegrationsElement: function() {
         var chatProvider = this.props.tokens.getConnectedChatToken(),
             chatToken = this.props.tokens.get( chatProvider ),
@@ -39,8 +48,12 @@ module.exports = React.createClass({
         return integrations.map(function( integration ) {
             return (
                 <tr key={ integration._id }>
-                    <td>{ integration.github.repository }</td>
-                    <td>{ integration.github.events.join( ', ' ) }</td>
+                    <td valign="top">{ integration.github.repository }</td>
+                    <td>
+                        <ul className="integrations__events">
+                            { this.getEventListElements( integration ) }
+                        </ul>
+                    </td>
                     <td>
                         <a href={ '/configure/' + integration._id } className="icon-button">
                             <span className="visually-hidden">Edit</span>
@@ -64,8 +77,8 @@ module.exports = React.createClass({
                 <table className="integrations__current">
                     <thead>
                         <tr>
-                            <th width="40%">Repository</th>
-                            <th width="50%">Events</th>
+                            <th width="45%">Repository</th>
+                            <th width="45%">Events</th>
                             <th width="5%">
                                 <span className="visually-hidden">Edit</span>
                             </th>

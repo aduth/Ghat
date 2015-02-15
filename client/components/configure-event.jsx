@@ -5,28 +5,25 @@ module.exports = React.createClass({
     displayName: 'ConfigureEvent',
 
     propTypes: {
-        events: React.PropTypes.arrayOf( React.PropTypes.shape({
-            event: React.PropTypes.string,
-            description: React.PropTypes.string
-        }) ),
+        events: React.PropTypes.object,
         value: React.PropTypes.arrayOf( React.PropTypes.string ),
         onValueChanged: React.PropTypes.func
     },
 
     getDefaultProps: function() {
         return {
-            events: Object.freeze([]),
+            events: Object.freeze({}),
             onValueChanged: function() {}
         };
     },
 
     getOptions: function() {
-        return this.props.events.map(function( event ) {
+        return Object.keys( this.props.events ).map(function( event ) {
             return {
-                value: event.event,
-                label: event.description
+                value: event,
+                label: this.props.events[ event ]
             };
-        });
+        }, this );
     },
 
     render: function() {
