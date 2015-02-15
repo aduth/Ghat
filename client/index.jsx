@@ -2,7 +2,7 @@ var React = require( 'react' ),
     App = require( './components/app' ),
     constants = require( '../shared/constants/' ),
     helpers = require( './helpers/' ),
-    config = require( '../config' ),
+    config = require( '../shared/config' ),
     Router = require( './router' ),
     router = new Router(),
     app;

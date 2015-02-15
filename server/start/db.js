@@ -1,5 +1,5 @@
 var mongoose = require( 'mongoose' ),
-    config = require( '../../config' );
+    config = require( '../../shared/config' );
 
 module.exports = function() {
     mongoose.connect( config.mongodb.uri );

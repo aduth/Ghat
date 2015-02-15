@@ -1,4 +1,4 @@
-var config = require( '../../config' ),
+var config = require( '../../shared/config' ),
     _store;
 
 /**

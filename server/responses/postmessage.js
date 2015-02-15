@@ -1,5 +1,5 @@
 var format = require( 'util' ).format,
-    config = require( '../../config' ),
+    config = require( '../../shared/config' ),
     errors = require( '../errors/' ),
     helpers = require( '../helpers/' ),
     buildResponse;

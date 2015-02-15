@@ -1,6 +1,6 @@
 var mongoose = require( 'mongoose' ),
     crypto = require( 'crypto' ),
-    config = require( '../../config' ),
+    config = require( '../../shared/config' ),
     helpers = require( '../../shared/helpers/' ),
     schema;
 

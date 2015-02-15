@@ -4,7 +4,7 @@ var request = require( 'superagent' ),
     flatten = require( 'lodash/array/flatten' ),
     difference = require( 'lodash/array/difference' ),
     sortBy = require( 'lodash/collection/sortBy' ),
-    config = require( '../../config' ),
+    config = require( '../config' ),
     oauth;
 
 oauth = module.exports.oauth = {

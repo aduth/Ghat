@@ -19,7 +19,7 @@ var browserify = require( 'browserify' ),
     uglify = require( 'gulp-uglify' ),
     sourcemaps = require( 'gulp-sourcemaps' ),
     assign = require( 'lodash/object/assign' ),
-    config = require( './config' ),
+    config = require( './shared/config' ),
     bundler, rebundle;
 
 rebundle = function() {

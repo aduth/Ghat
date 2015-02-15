@@ -1,5 +1,5 @@
 var router = module.exports = require( 'express' ).Router(),
-    config = require( '../../config' ),
+    config = require( '../../shared/config' ),
     errors = require( '../errors/' ),
     responses = require( '../responses/' ),
     integrations = require( '../../shared/integrations/' );

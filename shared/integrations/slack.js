@@ -2,7 +2,7 @@ var request = require( 'superagent' ),
     async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
     flatten = require( 'lodash/array/flatten' ),
-    config = require( '../../config' ),
+    config = require( '../config' ),
     getUserProfile;
 
 module.exports.oauth = {

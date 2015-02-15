@@ -2,7 +2,7 @@ var request = require( 'superagent' ),
     find = require( 'lodash/collection/find' ),
     findIndex = require( 'lodash/array/findIndex' ),
     ArrayStore = require( './array' ),
-    config = require( '../../config' ),
+    config = require( '../../shared/config' ),
     shortId = require( 'shortid' ),
     crypto = require( 'crypto' ),
     IntegrationStore;

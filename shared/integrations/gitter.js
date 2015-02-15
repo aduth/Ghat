@@ -1,6 +1,6 @@
 var request = require( 'superagent' ),
     OAuth2 = require( 'oauth' ).OAuth2,
-    config = require( '../../config' );
+    config = require( '../config' );
 
 module.exports.oauth = {
     client: new OAuth2(
