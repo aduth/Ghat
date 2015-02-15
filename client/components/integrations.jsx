@@ -20,7 +20,7 @@ module.exports = React.createClass({
             chatToken = this.props.tokens.get( chatProvider ),
             githubToken = this.props.tokens.get( 'github' );
 
-        this.props.hooks.removeById( githubToken, integration.github.hookId, integration.github.repository );
+        this.props.hooks.remove( githubToken, integration );
         this.props.integrations.removeById( integration._id, chatProvider, chatToken, githubToken );
     },
 

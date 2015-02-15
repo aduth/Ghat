@@ -16,14 +16,13 @@ HookStore.prototype = Object.create( ArrayStore.prototype );
  * GitHub to create the desired webhook at the repository. When the request is
  * complete, the webhook is saved to the store and a `change` event is emitted.
  *
- * @param {string}   token      A valid GitHub OAuth2 token
- * @param {string}   repository A GitHub repository full name
- * @param {Array}    events     An array of event names for which the webhook
- *                              will be invoked
- * @param {Function} next       A callback to trigger when the request finishes
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to base the
+ *                               GitHub webhook
+ * @param {Function} next        A callback to trigger when the request finishes
  */
-HookStore.prototype.create = function( token, repository, events, integration, next ) {
-    integrations.github.createWebhook( token, repository, events, integration, function( err, result ) {
+HookStore.prototype.create = function( token, integration, next ) {
+    integrations.github.createWebhook( token, integration, function( err, result ) {
         this.add( result );
 
         if ( next ) {
@@ -37,14 +36,14 @@ HookStore.prototype.create = function( token, repository, events, integration, n
  * GitHub to remove the specified webhook at the repository. When the request
  * is complete, the webhook is removed the store and a `change` event emitted.
  *
- * @param {string}   token      A valid GitHub OAuth2 token
- * @param {number}   hookId     A GitHub repository hook ID
- * @param {string}   repository A GitHub repository full name
- * @param {Function} next       A callback to trigger when the request finishes
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to derive the
+ *                               GitHub webhook to remove
+ * @param {Function} next        A callback to trigger when the request finishes
  */
-HookStore.prototype.removeById = function( token, hookId, repository, next ) {
-    integrations.github.removeWebhook( token, hookId, repository, function( err ) {
-        this.findAndRemove({ id: hookId });
+HookStore.prototype.remove = function( token, integration, next ) {
+    integrations.github.removeWebhook( token, integration, function( err ) {
+        this.findAndRemove({ id: integration.github.hookId });
 
         if ( next ) {
             next( err );

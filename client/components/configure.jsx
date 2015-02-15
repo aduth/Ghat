@@ -57,13 +57,7 @@ module.exports = React.createClass({
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         async.waterfall([
-            this.props.hooks.create.bind(
-                this.props.hooks,
-                integration.github.token,
-                integration.github.repository,
-                integration.github.events,
-                integration
-            ),
+            this.props.hooks.create.bind( this.props.hooks, integration.github.token, integration ),
             function( hook, next ) {
                 integration.github.hookId = hook.id;
                 this.props.integrations.create( integration, next );

@@ -96,14 +96,13 @@ module.exports.getRepositories = function( token, next ) {
  * Given an OAuth token, webhook details, and callback, invokes a network
  * request to GitHub to create the desired webhook at the repository.
  *
- * @param {string}   token      A valid GitHub OAuth2 token
- * @param {string}   repository A GitHub repository full name
- * @param {Array}    events     An array of event names for which the webhook
- *                              will be invoked
- * @param {Function} next       A callback to trigger when the request finishes
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to base the
+ *                               GitHub webhook
+ * @param {Function} next        A callback to trigger when the request finishes
  */
-module.exports.createWebhook = function( token, repository, events, integration, next ) {
-    request.post( 'https://api.github.com/repos/' + repository + '/hooks' )
+module.exports.createWebhook = function( token, integration, next ) {
+    request.post( 'https://api.github.com/repos/' + integration.github.repository + '/hooks' )
         .set({ Authorization: 'token ' + token })
         .send({
             name: 'web',
@@ -112,7 +111,7 @@ module.exports.createWebhook = function( token, repository, events, integration,
                 secret: integration.secret,
                 content_type: 'json'
             },
-            events: events
+            events: integration.github.events
         })
         .end(function( err, res ) {
             err = err || res.error;
@@ -130,13 +129,13 @@ module.exports.createWebhook = function( token, repository, events, integration,
  * Given an OAuth token, webhook details, and callback, invokes a network
  * request to GitHub to create the desired webhook at the repository.
  *
- * @param {string}   token      A valid GitHub OAuth2 token
- * @param {number}   hookId     A GitHub repository hook ID
- * @param {string}   repository A GitHub repository full name
- * @param {Function} next       A callback to trigger when the request finishes
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to derive the
+ *                               GitHub webhook to remove
+ * @param {Function} next        A callback to trigger when the request finishes
  */
-module.exports.removeWebhook = function( token, hookId, repository, next ) {
-    request.del( 'https://api.github.com/repos/' + repository + '/hooks/' + hookId )
+module.exports.removeWebhook = function( token, integration, next ) {
+    request.del( 'https://api.github.com/repos/' + integration.github.repository + '/hooks/' + integration.github.hookId )
         .set({ Authorization: 'token ' + token })
         .end(function( err, res ) {
             next( err || res.error );
