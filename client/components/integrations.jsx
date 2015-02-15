@@ -41,7 +41,6 @@ module.exports = React.createClass({
                 <tr key={ integration._id }>
                     <td>{ integration.github.repository }</td>
                     <td>{ integration.github.events.join( ', ' ) }</td>
-                    <td><span className="integrations__status is-ok fa fa-check" /></td>
                     <td>
                         <a href={ '/configure/' + integration._id } className="icon-button">
                             <span className="visually-hidden">Edit</span>
@@ -65,11 +64,8 @@ module.exports = React.createClass({
                 <table className="integrations__current">
                     <thead>
                         <tr>
-                            <th width="35%">Repository</th>
+                            <th width="40%">Repository</th>
                             <th width="50%">Events</th>
-                            <th width="5%">
-                                <span className="visually-hidden">Status</span>
-                            </th>
                             <th width="5%">
                                 <span className="visually-hidden">Edit</span>
                             </th>
