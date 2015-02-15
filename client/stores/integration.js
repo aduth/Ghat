@@ -130,7 +130,7 @@ IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, n
 
     this.remove( index );
 
-    request.del( config.origin + '/integration/' + id )
+    request.del( config.origin + '/api/integration/' + id )
         .query({
             'chat.provider': chatProvider,
             'chat.token': chatToken
@@ -138,11 +138,11 @@ IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, n
         .end(function( err, res ) { /* jshint ignore:line */
             if ( err ) {
                 this.store.splice( index, 0, integration );
-                this.trigger( 'change' );
+                this.emit( 'change' );
             }
 
             if ( next ) {
                 next( err );
             }
-        });
+        }.bind( this ) );
 };
