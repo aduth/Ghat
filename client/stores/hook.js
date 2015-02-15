@@ -31,3 +31,23 @@ HookStore.prototype.create = function( token, repository, events, integration, n
         }
     }.bind( this ) );
 };
+
+/**
+ * Given an OAuth token and webhook details, invokes a network request to
+ * GitHub to remove the specified webhook at the repository. When the request
+ * is complete, the webhook is removed the store and a `change` event emitted.
+ *
+ * @param {string}   token      A valid GitHub OAuth2 token
+ * @param {number}   hookId     A GitHub repository hook ID
+ * @param {string}   repository A GitHub repository full name
+ * @param {Function} next       A callback to trigger when the request finishes
+ */
+HookStore.prototype.removeById = function( token, hookId, repository, next ) {
+    integrations.github.removeWebhook( token, hookId, repository, function( err ) {
+        this.findAndRemove({ id: hookId });
+
+        if ( next ) {
+            next( err );
+        }
+    }.bind( this ) );
+};

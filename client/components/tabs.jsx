@@ -50,6 +50,7 @@ module.exports = React.createClass({
                     <TabsPanel name="My Integrations" href="/" active={ '/' === this.props.router.getRoute() }>
                         <Integrations
                             tokens={ this.props.tokens }
+                            hooks={ this.props.hooks }
                             integrations={ this.props.integrations } />
                     </TabsPanel>
                     <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>

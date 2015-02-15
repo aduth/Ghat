@@ -1,4 +1,5 @@
 var EventEmitter = require( 'events' ).EventEmitter,
+    findIndex = require( 'lodash/array/findIndex' ),
     ArrayStore;
 
 /**
@@ -48,6 +49,20 @@ ArrayStore.prototype.remove = function( index ) {
  */
 ArrayStore.prototype.removeValue = function( value ) {
     var index = this.store.indexOf( value );
+
+    if ( -1 !== index ) {
+        this.remove( index );
+    }
+};
+
+/**
+ * Removes an object value saved to the store by matching property query. Emits
+ * a `change` event.
+ *
+ * @param  {Object} query A set of object properties to match
+ */
+ArrayStore.prototype.findAndRemove = function( query ) {
+    var index = findIndex( this.store, query );
 
     if ( -1 !== index ) {
         this.remove( index );

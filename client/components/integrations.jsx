@@ -11,6 +11,7 @@ module.exports = React.createClass({
 
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
     },
 
@@ -19,6 +20,7 @@ module.exports = React.createClass({
             chatToken = this.props.tokens.get( chatProvider ),
             githubToken = this.props.tokens.get( 'github' );
 
+        this.props.hooks.removeById( githubToken, integration.github.hookId, integration.github.repository );
         this.props.integrations.removeById( integration._id, chatProvider, chatToken, githubToken );
     },
 

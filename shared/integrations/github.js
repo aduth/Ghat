@@ -127,6 +127,23 @@ module.exports.createWebhook = function( token, repository, events, integration,
 };
 
 /**
+ * Given an OAuth token, webhook details, and callback, invokes a network
+ * request to GitHub to create the desired webhook at the repository.
+ *
+ * @param {string}   token      A valid GitHub OAuth2 token
+ * @param {number}   hookId     A GitHub repository hook ID
+ * @param {string}   repository A GitHub repository full name
+ * @param {Function} next       A callback to trigger when the request finishes
+ */
+module.exports.removeWebhook = function( token, hookId, repository, next ) {
+    request.del( 'https://api.github.com/repos/' + repository + '/hooks/' + hookId )
+        .set({ Authorization: 'token ' + token })
+        .end(function( err, res ) {
+            next( err || res.error );
+        });
+};
+
+/**
  * Returns an array of all GitHub webhook events. Each element in the array is
  * an object containing the `event` name and a human-readable `description`.
  *
