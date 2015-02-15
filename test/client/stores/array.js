@@ -59,4 +59,19 @@ describe( 'ArrayStore', function() {
             expect( store.get() ).to.eql([]);
         });
     });
+
+    describe( '#findAndRemove()', function() {
+        it( 'should remove a value by query', function() {
+            store.add({
+                a: 1,
+                b: 2
+            });
+
+            store.findAndRemove({
+                a: 1
+            });
+
+            expect( store.get() ).to.be.empty;
+        });
+    });
 });
