@@ -98,15 +98,17 @@ IntegrationStore.prototype.generate = function() {
  * @param {Function} next        A callback to trigger when the request finishes
  */
 IntegrationStore.prototype.create = function( integration, next ) {
+    this.add( integration );
+
     request.post( config.origin + '/api/integration' )
         .send( integration )
         .end(function( err, res ) {
-            if ( ! err && res.ok ) {
-                this.add( res.body );
+            if ( err || ! res.ok ) {
+                this.store.pop();
             }
 
             if ( next ) {
-                next( err, (res || {}).body );
+                next( err, integration );
             }
         }.bind( this ) );
 
