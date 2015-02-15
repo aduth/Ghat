@@ -1,4 +1,4 @@
-var EventEmitter = require( 'events' ).EventEmitter,
+var ArrayStore = require( './array' ),
     integrations = require( '../../shared/integrations/' ),
     ContactStore;
 
@@ -6,11 +6,10 @@ var EventEmitter = require( 'events' ).EventEmitter,
  * The store constructor, which invokes the inherited store's constructor.
  */
 ContactStore = module.exports = function() {
-    this.contacts = {};
-    this.fetching = {};
+    this.fetching = false;
 };
 
-ContactStore.prototype = Object.create( EventEmitter.prototype );
+ContactStore.prototype = Object.create( ArrayStore.prototype );
 
 /**
  * Returns the available contacts associated with the specified chat provider
@@ -22,12 +21,12 @@ ContactStore.prototype = Object.create( EventEmitter.prototype );
  * @return {Array}           An array of available contacts
  */
 ContactStore.prototype.get = function( provider, token ) {
-    if ( ! this.contacts[ provider ] ) {
+    if ( this.token !== token ) {
         this.fetch( provider, token );
         return [];
     }
 
-    return this.contacts[ provider ];
+    return ArrayStore.prototype.get.call( this );
 };
 
 /**
@@ -45,14 +44,14 @@ ContactStore.prototype.fetch = function( provider, token ) {
         return;
     }
 
-    this.fetching[ provider ] = true;
+    this.token = token;
+    this.fetching = true;
 
     integrations[ provider ].getContacts( token, function( err, contacts ) {
         if ( ! err ) {
-            this.contacts[ provider ] = contacts;
-            this.emit( 'change' );
+            this.set( contacts );
         }
 
-        this.fetching[ provider ] = false;
+        this.fetching = false;
     }.bind( this ) );
 };

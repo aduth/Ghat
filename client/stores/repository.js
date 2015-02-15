@@ -1,4 +1,4 @@
-var EventEmitter = require( 'events' ).EventEmitter,
+var ArrayStore = require( './array' ),
     integrations = require( '../../shared/integrations/' ),
     RepositoryStore;
 
@@ -9,7 +9,7 @@ RepositoryStore = module.exports = function() {
     this.fetching = false;
 };
 
-RepositoryStore.prototype = Object.create( EventEmitter.prototype );
+RepositoryStore.prototype = Object.create( ArrayStore.prototype );
 
 /**
  * Returns the available repositories associated with the specified token. If
@@ -20,13 +20,12 @@ RepositoryStore.prototype = Object.create( EventEmitter.prototype );
  * @return {Array}        An array of available repositories
  */
 RepositoryStore.prototype.get = function( token ) {
-    if ( ! this.repositories || this.token !== token ) {
-        this.repositories = [];
-        this.token = token;
+    if ( this.token !== token ) {
         this.fetch( token );
+        return [];
     }
 
-    return this.repositories;
+    return ArrayStore.prototype.get.call( this );
 };
 
 /**
@@ -42,12 +41,12 @@ RepositoryStore.prototype.fetch = function( token ) {
         return;
     }
 
+    this.token = token;
     this.fetching = true;
 
     integrations.github.getRepositories( token, function( err, repositories ) {
         if ( ! err ) {
-            this.repositories = repositories;
-            this.emit( 'change' );
+            this.set( repositories );
         }
 
         this.fetching = false;
