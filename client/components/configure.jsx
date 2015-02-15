@@ -65,7 +65,7 @@ module.exports = React.createClass({
                 integration
             ),
             function( hook, next ) {
-                integration.github.hookUrl = hook.url;
+                integration.github.hookId = hook.id;
                 this.props.integrations.create( integration, next );
             }.bind( this )
         ], function() {
