@@ -27,6 +27,14 @@ describe( 'ArrayStore', function() {
         });
     });
 
+    describe( '#find()', function() {
+        it( 'should return a value by matching query', function() {
+            var value = { a: 1, b: 2 };
+            store.add( value );
+            expect( store.find({ a: 1 }) ).to.equal( value );
+        });
+    });
+
     describe( '#add()', function() {
         it( 'should add a value for future retrieval', function() {
             store.add( 1 );

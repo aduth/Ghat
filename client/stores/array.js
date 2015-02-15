@@ -27,6 +27,20 @@ ArrayStore.prototype.get = function( index ) {
 };
 
 /**
+ * Returns a single value by matching property query.
+ *
+ * @param  {Object} query A set of object properties to match
+ * @return {Object}       A single store value matching the query
+ */
+ArrayStore.prototype.find = function( query ) {
+    var index = findIndex( this.store, query );
+
+    if ( -1 !== index ) {
+        return this.store[ index ];
+    }
+};
+
+/**
  * Adds a value to the store. Emits a `change` event.
  *
  * @param {mixed} value A value to save to the store
