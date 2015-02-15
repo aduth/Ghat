@@ -40,6 +40,13 @@ describe( 'ArrayStore', function() {
             store.add( 1 );
             expect( store.get() ).to.eql([ 1 ]);
         });
+
+        it( 'should accept an optional index for insertion', function() {
+            store.add( 1 );
+            store.add( 3 );
+            store.add( 2, 1 );
+            expect( store.get( 1 ) ).to.equal( 2 );
+        });
     });
 
     describe( '#set()', function() {

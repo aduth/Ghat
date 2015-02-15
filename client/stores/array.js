@@ -43,12 +43,19 @@ ArrayStore.prototype.find = function( query ) {
 };
 
 /**
- * Adds a value to the store. Emits a `change` event.
+ * Adds a value to the store, at an optional index position. Emits a `change`
+ * event.
  *
- * @param {mixed} value A value to save to the store
+ * @param {mixed}  value A value to save to the store
+ * @param {number} index Optional index at which to insert value
  */
-ArrayStore.prototype.add = function( value ) {
-    this.store.push( value );
+ArrayStore.prototype.add = function( value, index ) {
+    if ( index >= 0 ) {
+        this.store.splice( index, 0, value );
+    } else {
+        this.store.push( value );
+    }
+
     this.emit( 'change' );
 };
 
