@@ -16,15 +16,17 @@ module.exports = React.createClass({
 
     deleteIntegration: function( integration ) {
         var chatProvider = this.props.tokens.getConnectedChatToken(),
-            chatToken = this.props.tokens.get( chatProvider );
+            chatToken = this.props.tokens.get( chatProvider ),
+            githubToken = this.props.tokens.get( 'github' );
 
-        this.props.integrations.removeById( integration._id, chatProvider, chatToken );
+        this.props.integrations.removeById( integration._id, chatProvider, chatToken, githubToken );
     },
 
     getIntegrationsElement: function() {
         var chatProvider = this.props.tokens.getConnectedChatToken(),
             chatToken = this.props.tokens.get( chatProvider ),
-            integrations = this.props.integrations.get( chatProvider, chatToken );
+            githubToken = this.props.tokens.get( 'github' ),
+            integrations = this.props.integrations.get( chatProvider, chatToken, githubToken );
 
         if ( ! integrations.length ) {
             return (

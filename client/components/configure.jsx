@@ -48,14 +48,14 @@ module.exports = React.createClass({
     },
 
     onSubmit: function( event ) {
-        var integration = this.getIntegrationValue(),
-            githubToken = this.props.tokens.get( 'github' );
+        var integration = this.getIntegrationValue();
 
+        integration.github.token = this.props.tokens.get( 'github' );
         integration.chat.provider = this.props.tokens.getConnectedChatToken();
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         this.props.hooks.create(
-            githubToken,
+            integration.github.token,
             integration.github.repository,
             integration.github.events,
             integration,

@@ -20,6 +20,7 @@ module.exports = {
         uri: process.env.MONGOLAB_URI || process.env.MONGODB_URI || 'mongodb://localhost/ghat'
     },
     security: {
+        bcryptWorkFactor: process.env.BCRYPT_WORK_FACTOR || 10,
         secretLength: process.env.SECRET_LENGTH || 32
     },
     chat: {

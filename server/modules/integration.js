@@ -8,20 +8,25 @@ var router = module.exports = require( 'express' ).Router(),
  * Retrieves a list of integrations
  */
 router.get( '/', function( req, res, next ) {
-    if ( ! req.query['chat.provider'] || ! req.query['chat.token'] ) {
+    if ( ! req.query['chat.provider'] || ! req.query['chat.token'] || ! req.query['github.token'] ) {
         return next( new errors.InvalidRequest() );
     }
 
-    Integration.find({
+    Integration.findFilteredByGitHubToken({
         'chat.provider': req.query['chat.provider'],
         'chat.token': req.query['chat.token']
-    }, '-secret', function( err, integrations ) {
+    }, req.query['github.token'], function( err, integrations ) {
         if ( err ) {
-            next( err );
-        } else {
-            res.data = integrations;
-            next();
+            return next( err );
         }
+
+        res.data = integrations.map(function( integration ) {
+            integration.secret = null;
+            integration.github.token = null;
+            return integration;
+        });
+
+        next();
     });
 }, responses.json.success, responses.json.failure );
 
@@ -45,15 +50,15 @@ router.post( '/', function( req, res, next ) {
  * Deletes an integration
  */
 router.delete( '/:id', function( req, res, next ) {
-    if ( ! req.query['chat.provider'] || ! req.query['chat.token'] ) {
+    if ( ! req.query['chat.provider'] || ! req.query['chat.token'] || ! req.query['github.token'] ) {
         return next( new errors.InvalidRequest() );
     }
 
-    Integration.findOneAndRemove({
+    Integration.findOneAndRemoveFilteredByGitHubToken({
         _id: req.params.id,
         'chat.provider': req.query['chat.provider'],
         'chat.token': req.query['chat.token']
-    }, function( err, integration ) {
+    }, req.query['github.token'], function( err, integration ) {
         if ( err ) {
             next( err );
         } else if ( ! integration ) {

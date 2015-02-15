@@ -31,13 +31,14 @@ IntegrationStore.prototype.getById = function( id ) {
  * If the integrations have not yet been fetched, a network request will be
  * invoked and an empty array returned.
  *
- * @param  {string} provider A provider name
- * @param  {string} token    A valid provider OAuth2 token
- * @return {Array}           A set of integrations
+ * @param  {string} provider    A provider name
+ * @param  {string} chatToken   A valid chat provider OAuth2 token
+ * @param  {string} githubToken A valid GitHub OAuth2 token
+ * @return {Array}              A set of integrations
  */
-IntegrationStore.prototype.get = function( chatProvider, chatToken ) {
-    if ( this.chatToken !== chatToken ) {
-        this.fetch( chatProvider, chatToken );
+IntegrationStore.prototype.get = function( chatProvider, chatToken, githubToken ) {
+    if ( this.chatToken !== chatToken || this.githubToken !== githubToken ) {
+        this.fetch( chatProvider, chatToken, githubToken );
         return [];
     }
 
@@ -49,20 +50,23 @@ IntegrationStore.prototype.get = function( chatProvider, chatToken ) {
  * the user's integrations configured. When the request is complete, the
  * integrations are saved to the store and a `change` event is emitted.
  *
- * @param {string} provider A provider name
- * @param {string} token    A valid OAuth2 token
+ * @param  {string} provider    A provider name
+ * @param  {string} chatToken   A valid chat provider OAuth2 token
+ * @param  {string} githubToken A valid GitHub OAuth2 token
  */
-IntegrationStore.prototype.fetch = function( chatProvider, chatToken ) {
-    if ( this.fetching || ! chatToken ) {
+IntegrationStore.prototype.fetch = function( chatProvider, chatToken, githubToken ) {
+    if ( this.fetching || ! chatToken || ! githubToken ) {
         return;
     }
     this.fetching = true;
     this.chatToken = chatToken;
+    this.githubToken = githubToken;
 
     request.get( config.origin + '/api/integration' )
         .query({
             'chat.provider': chatProvider,
-            'chat.token': chatToken
+            'chat.token': chatToken,
+            'github.token': githubToken
         })
         .end(function( err, res ) {
             if ( ! err && res.ok ) {
@@ -117,9 +121,10 @@ IntegrationStore.prototype.create = function( integration, next ) {
  * @param {string}   id           The ID of the integration to remove
  * @param {string}   chatProvider The integration's chat provider
  * @param {string}   chatToken    A valid OAuth2 token for the chat provider
+ * @param {string}   githubToken  A valid GitHub OAuth2 token
  * @param {Function} next         A callback to trigger when the request finishes
  */
-IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, next ) {
+IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, githubToken, next ) {
     var index = findIndex( this.store, { _id: id }),
         integration = this.store[ index ];
 
@@ -133,7 +138,8 @@ IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, n
     request.del( config.origin + '/api/integration/' + id )
         .query({
             'chat.provider': chatProvider,
-            'chat.token': chatToken
+            'chat.token': chatToken,
+            'github.token': githubToken
         })
         .end(function( err, res ) { /* jshint ignore:line */
             if ( err ) {
