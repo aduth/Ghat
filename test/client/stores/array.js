@@ -20,6 +20,11 @@ describe( 'ArrayStore', function() {
             store.add( 1 );
             expect( store.get() ).to.eql([ 1 ]);
         });
+
+        it( 'should return a single value if index specified', function() {
+            store.add( 1 );
+            expect( store.get( 0 ) ).to.equal( 1 );
+        });
     });
 
     describe( '#add()', function() {

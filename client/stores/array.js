@@ -18,8 +18,12 @@ ArrayStore.prototype = Object.create( EventEmitter.prototype );
  *
  * @return {Object} The store values
  */
-ArrayStore.prototype.get = function() {
-    return this.store;
+ArrayStore.prototype.get = function( index ) {
+    if ( index >= 0 ) {
+        return this.store[ index ];
+    } else {
+        return this.store;
+    }
 };
 
 /**
