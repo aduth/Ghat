@@ -1,5 +1,4 @@
 var request = require( 'superagent' ),
-    find = require( 'lodash/collection/find' ),
     findIndex = require( 'lodash/array/findIndex' ),
     ArrayStore = require( './array' ),
     config = require( '../../shared/config' ),
@@ -23,7 +22,7 @@ IntegrationStore.prototype = Object.create( ArrayStore.prototype );
  * @return {Object}    The integration with the specified ID
  */
 IntegrationStore.prototype.getById = function( id ) {
-    return find( this.store, { _id: id });
+    return this.find({ _id: id });
 };
 
 /**
@@ -42,7 +41,7 @@ IntegrationStore.prototype.get = function( chatProvider, chatToken, githubToken 
         return [];
     }
 
-    return this.store;
+    return ArrayStore.prototype.get.call( this );
 };
 
 /**
@@ -70,8 +69,7 @@ IntegrationStore.prototype.fetch = function( chatProvider, chatToken, githubToke
         })
         .end(function( err, res ) {
             if ( ! err && res.ok ) {
-                this.store = res.body;
-                this.emit( 'change' );
+                this.set( res.body );
             }
         }.bind( this ) );
 };
@@ -128,7 +126,7 @@ IntegrationStore.prototype.create = function( integration, next ) {
  */
 IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, githubToken, next ) {
     var index = findIndex( this.store, { _id: id }),
-        integration = this.store[ index ];
+        integration = ArrayStore.prototype.get.call( this, index );
 
     // Abandon early if the integration doesn't exist in the store
     if ( -1 === index ) {
@@ -145,8 +143,7 @@ IntegrationStore.prototype.removeById = function( id, chatProvider, chatToken, g
         })
         .end(function( err, res ) { /* jshint ignore:line */
             if ( err ) {
-                this.store.splice( index, 0, integration );
-                this.emit( 'change' );
+                ArrayStore.prototype.add.call( this, integration, index );
             }
 
             if ( next ) {
