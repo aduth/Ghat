@@ -51,22 +51,23 @@ module.exports = React.createClass({
     },
 
     onSubmit: function( event ) {
-        var integration = this.getIntegrationValue();
+        var integration = this.getIntegrationValue(),
+            action = this.props.new ? 'create' : 'update';
 
         integration.github.token = this.props.tokens.get( 'github' );
         integration.chat.provider = this.props.tokens.getConnectedChatToken();
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         async.waterfall([
-            this.props.hooks.create.bind( this.props.hooks, integration.github.token, integration ),
+            this.props.hooks[ action ].bind( this.props.hooks, integration.github.token, integration ),
             function( hook, next ) {
                 integration.github.hookId = hook.id;
-                this.props.integrations.create( integration, next );
+                this.props.integrations[ action ]( integration, next );
             }.bind( this )
         ], function() {
             this.setState({ saving: false });
             this.props.router.setRoute( '/' );
-            this.props.notices.add( 'Successfully created an integration' );
+            this.props.notices.add( 'Successfully ' + action + 'd an integration' );
         }.bind( this ) );
 
         this.setState({ saving: true });
@@ -112,7 +113,7 @@ module.exports = React.createClass({
                         <ConfigureContact contacts={ this.getContacts() } value={ integration.chat.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                     </ol>
                     <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
-                        { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : 'Create' }
+                        { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : this.props.new ? 'Create' : 'Update' }
                     </button>
                 </form>
             </div>

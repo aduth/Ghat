@@ -114,6 +114,36 @@ IntegrationStore.prototype.create = function( integration, next ) {
 };
 
 /**
+ * Given an integration object, invokes a network request to the Ghat app to
+ * save the desired integration. When the request is complete, the integration
+ * is saved to the store and a `change` event is emitted.
+ *
+ * @param {string}   integration An object describing the desired integration
+ * @param {Function} next        A callback to trigger when the request finishes
+ */
+IntegrationStore.prototype.update = function( integration, next ) {
+    var index = this.store.indexOf( integration );
+
+    request.put( config.origin + '/api/integration/' + integration._id )
+        .send( integration )
+        .end(function( err, res ) {
+            if ( ! err && res.ok ) {
+                if ( index >= 0 ) {
+                    this.set( integration, index );
+                } else {
+                    this.add( integration );
+                }
+            }
+
+            if ( next ) {
+                next( err, integration );
+            }
+        }.bind( this ) );
+
+    return integration;
+};
+
+/**
  * Removes an integration given an ID, chat provider, and chat token. Removes
  * the integration immediately, restoring it if the request fails. In both
  * cases, a `change` event is emitted.

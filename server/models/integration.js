@@ -2,6 +2,7 @@ var mongoose = require( 'mongoose' ),
     crypto = require( 'crypto' ),
     bcrypt = require( 'bcrypt' ),
     async = require( 'async' ),
+    merge = require( 'lodash/object/merge' ),
     config = require( '../../shared/config' ),
     helpers = require( '../../shared/helpers/' ),
     schema, filterByGitHubToken;
@@ -80,6 +81,17 @@ schema.statics.findOneAndRemoveFilteredByGitHubToken = function( query, githubTo
     }.bind( this ) );
 };
 
+schema.statics.findOneAndUpdateFilteredByGitHubToken = function( query, doc, githubToken, next ) {
+    this.findOneFilteredByGitHubToken( query, githubToken, function( err, integration ) {
+        if ( err || ! integration ) {
+            return next( err );
+        }
+
+        merge( integration, doc );
+        integration.save( next );
+    }.bind( this ) );
+};
+
 schema.statics.findFilteredByGitHubToken = function( query, githubToken, next ) {
     this.find( query, function( err, integrations ) {
         if ( err ) {
@@ -91,10 +103,6 @@ schema.statics.findFilteredByGitHubToken = function( query, githubToken, next ) 
 };
 
 schema.pre( 'save', function( next ) {
-    if ( ! this.isModified( 'github.token' ) ) {
-        return next();
-    }
-
     bcrypt.hash( this.github.token, config.security.bcryptWorkFactor, function( err, hash ) {
         this.github.token = hash;
         next( err );

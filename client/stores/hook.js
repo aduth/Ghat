@@ -34,6 +34,34 @@ HookStore.prototype.create = function( token, integration, next ) {
 
 /**
  * Given an OAuth token and webhook details, invokes a network request to
+ * GitHub to update the desired webhook at the repository. When the request is
+ * complete, the webhook is saved to the store and a `change` event is emitted.
+ *
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to base the
+ *                               GitHub webhook
+ * @param {Function} next        A callback to trigger when the request finishes
+ */
+HookStore.prototype.update = function( token, integration, next ) {
+    var index = findIndex( this.store, { id: integration.github.hookId });
+
+    integrations.github.updateWebhook( token, integration, function( err, result ) {
+        if ( ! err ) {
+            if ( index >= 0 ) {
+                this.set( integration, index );
+            } else {
+                this.add( integration );
+            }
+        }
+
+        if ( next ) {
+            next( err, result );
+        }
+    }.bind( this ) );
+};
+
+/**
+ * Given an OAuth token and webhook details, invokes a network request to
  * GitHub to remove the specified webhook at the repository. When the request
  * is complete, the webhook is removed the store and a `change` event emitted.
  *
@@ -52,7 +80,7 @@ HookStore.prototype.remove = function( token, integration, next ) {
 
     integrations.github.removeWebhook( token, integration, function( err ) {
         if ( err ) {
-            ArrayStore.prototype.add.call( integration, index );
+            this.add( integration, index );
         }
 
         if ( next ) {

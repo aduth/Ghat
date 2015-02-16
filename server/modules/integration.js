@@ -46,6 +46,31 @@ router.post( '/', function( req, res, next ) {
 }, responses.statusCode.success, responses.statusCode.failure );
 
 /**
+ * PUT /integration/:id
+ * Updates an existing integration
+ */
+router.put( '/:id', function( req, res, next ) {
+    if ( ! req.body.chat.provider || ! req.body.chat.token || ! req.body.github.token ) {
+        return next( new errors.InvalidRequest() );
+    }
+
+    Integration.findOneAndUpdateFilteredByGitHubToken({
+        _id: req.params.id,
+        'chat.provider': req.body.chat.provider,
+        'chat.token': req.body.chat.token
+    }, req.body, req.body.github.token, function( err, integration ) {
+        if ( err ) {
+            next( err );
+        } else if ( ! integration ) {
+            next( new errors.NotFound() );
+        } else {
+            res.code = 204;
+            next();
+        }
+    });
+}, responses.statusCode.success, responses.statusCode.failure );
+
+/**
  * DELETE /integration/:id
  * Deletes an integration
  */

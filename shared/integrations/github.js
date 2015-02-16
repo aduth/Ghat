@@ -127,6 +127,31 @@ module.exports.createWebhook = function( token, integration, next ) {
 
 /**
  * Given an OAuth token, webhook details, and callback, invokes a network
+ * request to GitHub to update the desired webhook at the repository.
+ *
+ * @param {string}   token       A valid GitHub OAuth2 token
+ * @param {Object}   integration An integration object from which to base the
+ *                               GitHub webhook
+ * @param {Function} next        A callback to trigger when the request finishes
+ */
+module.exports.updateWebhook = function( token, integration, next ) {
+    request.patch( 'https://api.github.com/repos/' + integration.github.repository + '/hooks/' + integration.github.hookId )
+        .set({ Authorization: 'token ' + token })
+        .send({ events: integration.github.events })
+        .end(function( err, res ) {
+            err = err || res.error;
+
+            var hook;
+            if ( ! err ) {
+                hook = res.body;
+            }
+
+            next( err, hook );
+        });
+};
+
+/**
+ * Given an OAuth token, webhook details, and callback, invokes a network
  * request to GitHub to create the desired webhook at the repository.
  *
  * @param {string}   token       A valid GitHub OAuth2 token
