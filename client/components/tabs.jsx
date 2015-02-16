@@ -35,6 +35,10 @@ module.exports = React.createClass({
         return this.props.router.getRouteParameter( /^\/configure(\/([\w-]+))?$/, 2 );
     },
 
+    getConfigureTabLabel: function() {
+        return this.getCurrentIntegrationId() ? 'Modify an Integration' : 'Create New Integration';
+    },
+
     getIntegration: function() {
         return this.props.integrations.getById( this.getCurrentIntegrationId() ) || this.props.integrations.generate();
     },
@@ -55,7 +59,7 @@ module.exports = React.createClass({
                             integrations={ this.props.integrations }
                             notices={ this.props.notices } />
                     </TabsPanel>
-                    <TabsPanel key="configure" name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
+                    <TabsPanel key="configure" name={ this.getConfigureTabLabel() } href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
                             new={ ! this.getCurrentIntegrationId() }
                             router={ this.props.router }
