@@ -7,5 +7,6 @@ module.exports = {
     Contact: require( './contact' ),
     Repository: require( './repository' ),
     Hook: require( './hook' ),
-    Integration: require( './integration' )
+    Integration: require( './integration' ),
+    Notice: require( './notice' )
 };

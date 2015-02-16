@@ -19,7 +19,8 @@ app = module.exports = (
         contacts={ helpers.stores.getSingletonInstance( 'Contact' ) }
         repositories={ helpers.stores.getSingletonInstance( 'Repository' ) }
         hooks={ helpers.stores.getSingletonInstance( 'Hook' ) }
-        integrations={ helpers.stores.getSingletonInstance( 'Integration' ) } />
+        integrations={ helpers.stores.getSingletonInstance( 'Integration' ) }
+        notices={ helpers.stores.getSingletonInstance( 'Notice' ) } />
 );
 
 if ( 'undefined' !== typeof document ) {

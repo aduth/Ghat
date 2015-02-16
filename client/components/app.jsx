@@ -4,7 +4,8 @@ var React = require( 'react' ),
     GitHubRibbon = require( './github-ribbon' ),
     Header = require( './header' ),
     Description = require( './description' ),
-    Steps = require( './steps' );
+    Steps = require( './steps' ),
+    Notices = require( './notices' );
 
 module.exports = React.createClass({
     displayName: 'App',
@@ -17,7 +18,8 @@ module.exports = React.createClass({
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
-        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
+        notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
     componentDidMount: function() {
@@ -37,6 +39,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="app__container">
+                <Notices notices={ this.props.notices } />
                 <Header />
                 { this.getGitHubRibbonElement() }
                 <main className="app__content">
