@@ -22,8 +22,7 @@ module.exports = React.createClass({
                 chat: {},
                 github: {},
                 filters: []
-            },
-            saving: false
+            }
         };
     },
 
@@ -65,12 +64,10 @@ module.exports = React.createClass({
                 this.props.integrations[ action ]( integration, next );
             }.bind( this )
         ], function() {
-            this.setState({ saving: false });
-            this.props.router.setRoute( '/' );
             this.props.notices.add( 'Successfully ' + action + 'd an integration' );
         }.bind( this ) );
 
-        this.setState({ saving: true });
+        this.props.router.setRoute( '/' );
         event.preventDefault();
     },
 
@@ -99,8 +96,7 @@ module.exports = React.createClass({
         var integration = this.getIntegrationValue(),
             canSubmit = integration.github.events && integration.github.repository && integration.chat.contact,
             classes = React.addons.classSet({
-                configure: true,
-                saving: this.state.saving
+                configure: true
             });
 
         return (
@@ -112,8 +108,8 @@ module.exports = React.createClass({
                         <ConfigureFilters filters={ integrations.github.getPredefinedFilters() } value={ integration.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
                         <ConfigureContact contacts={ this.getContacts() } value={ integration.chat.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                     </ol>
-                    <button type="submit" className="button configure__submit" disabled={ ! canSubmit || this.state.saving }>
-                        { this.state.saving ? <span className="configure__pending fa fa-spinner fa-spin" /> : this.props.new ? 'Create' : 'Update' }
+                    <button type="submit" className="button configure__submit" disabled={ ! canSubmit }>
+                        { this.props.new ? 'Create' : 'Update' }
                     </button>
                 </form>
             </div>
