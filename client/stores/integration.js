@@ -122,7 +122,7 @@ IntegrationStore.prototype.create = function( integration, next ) {
  * @param {Function} next        A callback to trigger when the request finishes
  */
 IntegrationStore.prototype.update = function( integration, next ) {
-    var index = this.store.indexOf( integration );
+    var index = findIndex( this.store, { _id: integration._id });
 
     request.put( config.origin + '/api/integration/' + integration._id )
         .send( integration )
