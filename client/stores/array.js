@@ -60,12 +60,19 @@ ArrayStore.prototype.add = function( value, index ) {
 };
 
 /**
- * Replaces the current store with the given values. Emits a `change` event.
+ * Replaces the current store with the given values, or a single value at an
+ * optional index position. Emits a `change` event.
  *
- * @param {Array} values A new store array
+ * @param {Array}  value A new store array
+ * @param {number} index Optional index at which to insert value
  */
-ArrayStore.prototype.set = function( values ) {
-    this.store = values;
+ArrayStore.prototype.set = function( value, index ) {
+    if ( index >= 0 ) {
+        this.store.splice( index, 1, value );
+    } else {
+        this.store = value;
+    }
+
     this.emit( 'change' );
 };
 

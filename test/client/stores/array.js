@@ -50,9 +50,15 @@ describe( 'ArrayStore', function() {
     });
 
     describe( '#set()', function() {
-        it( 'should replace all values in the store', function() {
+        it( 'should replace all values in the store if no index given', function() {
             store.add( 1 );
             store.set([ 2 ]);
+            expect( store.get() ).to.eql([ 2 ]);
+        });
+
+        it( 'should replace a single value if an index given', function() {
+            store.add( 1 );
+            store.set( 2, 0 );
             expect( store.get() ).to.eql([ 2 ]);
         });
     });
