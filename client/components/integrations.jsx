@@ -1,4 +1,5 @@
 var React = require( 'react/addons' ),
+    async = require( 'async' ),
     stores = require( '../stores/' ),
     mixins = require( '../mixins/' ),
     integrations = require( '../../shared/integrations/' );
@@ -13,7 +14,8 @@ module.exports = React.createClass({
     propTypes: {
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
-        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
+        notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
     deleteIntegration: function( integration ) {
@@ -21,8 +23,16 @@ module.exports = React.createClass({
             chatToken = this.props.tokens.get( chatProvider ),
             githubToken = this.props.tokens.get( 'github' );
 
-        this.props.hooks.remove( githubToken, integration );
-        this.props.integrations.removeById( integration._id, chatProvider, chatToken, githubToken );
+        async.parallel([
+            this.props.integrations.removeById.bind( this.props.integrations, integration._id, chatProvider, chatToken, githubToken ),
+            this.props.hooks.remove.bind( this.props.hooks, githubToken, integration )
+        ], function( err ) {
+            if ( err ) {
+                this.props.notices.add( 'An error occurred while trying to remove an integration', 'error' );
+            } else {
+                this.props.notices.add( 'Successfully removed an integration' );
+            }
+        }.bind( this ) );
     },
 
     getEventListElements: function( integration ) {

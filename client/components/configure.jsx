@@ -35,7 +35,8 @@ module.exports = React.createClass({
         integration: React.PropTypes.object,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
-        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired
+        hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
+        notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
     getDefaultProps: function() {
@@ -65,6 +66,7 @@ module.exports = React.createClass({
         ], function() {
             this.setState({ saving: false });
             this.props.router.setRoute( '/' );
+            this.props.notices.add( 'Successfully created an integration' );
         }.bind( this ) );
 
         this.setState({ saving: true });

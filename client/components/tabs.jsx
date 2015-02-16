@@ -21,7 +21,8 @@ module.exports = React.createClass({
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
-        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
+        notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
     getDefaultProps: function() {
@@ -51,7 +52,8 @@ module.exports = React.createClass({
                         <Integrations
                             tokens={ this.props.tokens }
                             hooks={ this.props.hooks }
-                            integrations={ this.props.integrations } />
+                            integrations={ this.props.integrations }
+                            notices={ this.props.notices } />
                     </TabsPanel>
                     <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
@@ -62,7 +64,8 @@ module.exports = React.createClass({
                             integration={ this.getIntegration() }
                             contacts={ this.props.contacts }
                             repositories={ this.props.repositories }
-                            hooks={ this.props.hooks } />
+                            hooks={ this.props.hooks }
+                            notices={ this.props.notices } />
                     </TabsPanel>
                 </TabsList>
                 <aside className="tabs__disabled-content">

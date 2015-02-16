@@ -19,7 +19,8 @@ module.exports = React.createClass({
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
         repositories: React.PropTypes.instanceOf( stores.Repository ).isRequired,
         hooks: React.PropTypes.instanceOf( stores.Hook ).isRequired,
-        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired
+        integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
+        notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
     render: function() {
@@ -48,7 +49,8 @@ module.exports = React.createClass({
                     integrations={ this.props.integrations }
                     contacts={ this.props.contacts }
                     repositories={ this.props.repositories }
-                    hooks={ this.props.hooks } />
+                    hooks={ this.props.hooks }
+                    notices={ this.props.notices } />
             </div>
         );
     }
