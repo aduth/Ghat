@@ -28,8 +28,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <li className="configure-repository">
+                <p className="form-option__description">
+                    Next, choose the GitHub repository to monitor.
+                </p>
                 <label className="form-option">
-                    <p className="form-option__description">Next, choose the GitHub repository to monitor.</p>
                     <span className="form-option__label">Choose a repository:</span>
                     <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>

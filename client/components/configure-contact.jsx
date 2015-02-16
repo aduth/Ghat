@@ -30,10 +30,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <li className="configure-contact">
+                <p className="form-option__description">
+                    Finally, choose who is to be notified from the list of available contacts for your chat provider.
+                </p>
                 <label className="form-option">
-                    <p className="form-option__description">
-                        Finally, choose who is to be notified from the list of available contacts for your chat provider.
-                    </p>
                     <span className="form-option__label">Choose a contact:</span>
                     <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>
