@@ -11,22 +11,6 @@ module.exports = React.createClass({
         disabled: React.PropTypes.bool
     },
 
-    componentDidMount: function() {
-        if ( ! this.props.includeDefault && this.props.options.length && ! this.props.value ) {
-            this.setDefaultValue( this.props );
-        }
-    },
-
-    componentWillUpdate: function( nextProps ) {
-        if ( ! nextProps.includeDefault && nextProps.options.length && ! nextProps.value ) {
-            this.setDefaultValue( nextProps );
-        }
-    },
-
-    setDefaultValue: function( props ) {
-        props.onChange( 'object' === typeof props.options[0] ? props.options[0].value : props.options[0] );
-    },
-
     getDefaultProps: function() {
         return {
             onChange: function() {},
@@ -34,6 +18,10 @@ module.exports = React.createClass({
             options: Object.freeze([]),
             disabled: false
         };
+    },
+
+    getOptionValue: function( option ) {
+        return 'object' === typeof option ? option.value : option;
     },
 
     getOptions: function() {
@@ -48,7 +36,11 @@ module.exports = React.createClass({
             options = [{ value: '', label: defaultLabel }].concat( options );
         }
 
-        return options.map(function( option ) {
+        return options;
+    },
+
+    getOptionElements: function() {
+        return this.getOptions().map(function( option ) {
             if ( 'object' === typeof option ) {
                 return <option key={ option.value } value={ option.value }>{ option.label }</option>;
             } else {
@@ -62,10 +54,12 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        var value = this.props.value || this.getOptionValue( this.getOptions()[0] );
+
         return (
             <div className="select">
-                <select className="select__input" value={ this.props.value } onChange={ this.onSelectedValueChanged } disabled={ this.props.disabled }>
-                    { this.getOptions() }
+                <select className="select__input" value={ value } onChange={ this.onSelectedValueChanged } disabled={ this.props.disabled }>
+                    { this.getOptionElements() }
                 </select>
                 <span className="fa fa-caret-down select__expand" />
             </div>
