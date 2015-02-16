@@ -1,4 +1,5 @@
 var ArrayStore = require( './array' ),
+    findIndex = require( 'lodash/array/findIndex' ),
     integrations = require( '../../shared/integrations/' ),
     HookStore;
 
@@ -42,8 +43,17 @@ HookStore.prototype.create = function( token, integration, next ) {
  * @param {Function} next        A callback to trigger when the request finishes
  */
 HookStore.prototype.remove = function( token, integration, next ) {
+    var index = findIndex( this.store, { id: integration.github.hookId });
+    if ( -1 === index ) {
+        return;
+    }
+
+    ArrayStore.prototype.remove.call( this, index );
+
     integrations.github.removeWebhook( token, integration, function( err ) {
-        this.findAndRemove({ id: integration.github.hookId });
+        if ( err ) {
+            ArrayStore.prototype.add.call( integration, index );
+        }
 
         if ( next ) {
             next( err );
