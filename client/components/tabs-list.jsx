@@ -15,7 +15,7 @@ module.exports = React.createClass({
             }), style = { width: ( 100 / this.props.children.length ) + '%' };
 
             return (
-                <li key={ child.props.name } className={ classes } style={ style }>
+                <li key={ child.key } className={ classes } style={ style }>
                     <a className="tabs-list__navigation-link" href={ child.props.href }>
                         { child.props.name }
                     </a>
@@ -34,10 +34,10 @@ module.exports = React.createClass({
         return React.Children.map( this.props.children, function( child ) {
             var classes = React.addons.classSet({
                 'tabs-list__child-content': true,
-                'is-active': isActiveSet ? child.props.active : this.props.defaultActive === child.props.name
+                'is-active': isActiveSet ? child.props.active : this.props.defaultActive === child.key
             });
 
-            return <div key={ child.props.name } className={ classes }>{ child }</div>;
+            return <div key={ child.key } className={ classes }>{ child }</div>;
         }, this );
     },
 

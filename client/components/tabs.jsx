@@ -47,15 +47,15 @@ module.exports = React.createClass({
 
         return (
             <div className={ classes }>
-                <TabsList defaultActive="My Integrations">
-                    <TabsPanel name="My Integrations" href="/" active={ '/' === this.props.router.getRoute() }>
+                <TabsList defaultActive="integrations">
+                    <TabsPanel key="integrations" name="My Integrations" href="/" active={ '/' === this.props.router.getRoute() }>
                         <Integrations
                             tokens={ this.props.tokens }
                             hooks={ this.props.hooks }
                             integrations={ this.props.integrations }
                             notices={ this.props.notices } />
                     </TabsPanel>
-                    <TabsPanel name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
+                    <TabsPanel key="configure" name="Create New Integration" href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
                         <Configure
                             new={ ! this.getCurrentIntegrationId() }
                             router={ this.props.router }
