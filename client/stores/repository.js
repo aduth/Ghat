@@ -4,8 +4,12 @@ var ArrayStore = require( './array' ),
 
 /**
  * The store constructor, which invokes the inherited store's constructor.
+ * Accepts an optional initial value.
+ *
+ * @param {Array} initial An optional initial value
  */
-RepositoryStore = module.exports = function() {
+RepositoryStore = module.exports = function( initial ) {
+    ArrayStore.call( this, initial );
     this.fetching = false;
 };
 
