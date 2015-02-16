@@ -17,6 +17,10 @@ module.exports = React.createClass({
         };
     },
 
+    selectAll: function() {
+        this.props.onValueChanged( Object.keys( this.props.events ) );
+    },
+
     getOptions: function() {
         return Object.keys( this.props.events ).map(function( event ) {
             return {
@@ -31,7 +35,10 @@ module.exports = React.createClass({
             <li className="configure-event">
                 <label className="form-option">
                     <p className="form-option__description">First choose the GitHub events to monitor.</p>
-                    <span className="form-option__label">Choose events:</span>
+                    <span className="form-option__label">
+                        Choose events:
+                        <button type="button" className="configure-event__select-all button is-plain" onClick={ this.selectAll }>(Select All)</button>
+                    </span>
                     <MultiCheckbox checked={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
                 </label>
             </li>
