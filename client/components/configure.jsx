@@ -104,9 +104,6 @@ module.exports = React.createClass({
 
         return (
             <div className={ classes }>
-                <header className="configure__header">
-                    <h1 className="configure__heading">Configure an Integration</h1>
-                </header>
                 <form onSubmit={ this.onSubmit } className="configure__form">
                     <ol className="configure__steps">
                         <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ integration.github.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
