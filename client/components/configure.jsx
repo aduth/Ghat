@@ -18,11 +18,7 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            values: {
-                chat: {},
-                github: {},
-                filters: []
-            }
+            values: this.getInitialIntegrationValue()
         };
     },
 
@@ -42,6 +38,14 @@ module.exports = React.createClass({
         return {
             new: true,
             integration: {}
+        };
+    },
+
+    getInitialIntegrationValue: function() {
+        return {
+            chat: {},
+            github: {},
+            filters: []
         };
     },
 
@@ -67,6 +71,9 @@ module.exports = React.createClass({
             this.props.notices.add( 'Successfully ' + action + 'd an integration' );
         }.bind( this ) );
 
+        this.setState({
+            values: this.getInitialIntegrationValue()
+        });
         this.props.router.setRoute( '/' );
         event.preventDefault();
     },
