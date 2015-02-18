@@ -50,7 +50,12 @@ module.exports = React.createClass({
     },
 
     getIntegrationValue: function() {
-        return merge({}, this.props.integration, this.state.values );
+        // Merge to capture nested chat and GitHub settings, allowing saved
+        // integration settings to be overwritten by form state. Overrides
+        // array values instead of default merge via concatenation.
+        return merge({}, this.props.integration, this.state.values, function( target, source ) {
+            return Array.isArray( source ) ? source : undefined;
+        });
     },
 
     onSubmit: function( event ) {
