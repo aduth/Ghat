@@ -199,9 +199,19 @@ module.exports.getAvailableEvents = function() {
  */
 module.exports.getPredefinedFilters = function() {
     return [
-        { field: 'issue.labels.name', description: 'Labels assigned', operators: [ 'contains' ] },
-        { field: 'sender.login', description: 'Sender username' },
+        { field: 'sender.login', description: 'Sender username', operators: [ '=', '!=' ] },
         { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ] },
+        { field: 'issue.labels.name', description: 'Issue labels', operators: [ 'contains' ] },
+        { field: 'issue.number', description: 'Issue number', operators: [ '=', '!=', '<', '<=', '>=', '>' ] },
+        { field: 'issue.state', description: 'Issue status', options: [ 'open', 'closed' ] },
+        { field: 'issue.assignee.login', description: 'Issue assignee', operators: [ '=', '!=' ] },
+        { field: 'issue.milestone.title', description: 'Issue milestone', operators: [ '=', '!=', 'matches' ] },
+        { field: 'pull_request.labels.name', description: 'Pull request labels', operators: [ 'contains' ] },
+        { field: 'pull_request.number', description: 'Pull request number', operators: [ '=', '!=', '<', '<=', '>=', '>' ] },
+        { field: 'pull_request.state', description: 'Pull request status', options: [ 'open', 'closed' ] },
+        { field: 'pull_request.milestone.title', description: 'Pull request milestone', operators: [ '=', '!=', 'matches' ] },
+        { field: 'pull_request.assignee.login', description: 'Pull request assignee', operators: [ '=', '!=' ] },
+        { field: 'comment.body', description: 'Comment text', operators: [ 'matches' ] },
         { field: 'custom', description: 'Custom', operators: [ '=', '!=', '<', '<=', '>=', '>' ], isCustom: true }
     ];
 };
