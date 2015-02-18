@@ -195,23 +195,29 @@ module.exports.getAvailableEvents = function() {
  * available `operators`, and a boolean `isCustom` if the filter is used to
  * enable custom user input.
  *
- * @return {Array} An array of predefined filters
+ * @param  {Array} events An optional array of events from which revelant
+ *                        filters should be shown
+ * @return {Array}        An array of predefined filters
  */
-module.exports.getPredefinedFilters = function() {
+module.exports.getPredefinedFilters = function( events ) {
     return [
         { field: 'sender.login', description: 'Sender username', operators: [ '=', '!=' ] },
-        { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ] },
-        { field: 'issue.labels.name', description: 'Issue labels', operators: [ 'contains' ] },
-        { field: 'issue.number', description: 'Issue number', operators: [ '=', '!=', '<', '<=', '>=', '>' ] },
-        { field: 'issue.state', description: 'Issue status', options: [ 'open', 'closed' ] },
-        { field: 'issue.assignee.login', description: 'Issue assignee', operators: [ '=', '!=' ] },
-        { field: 'issue.milestone.title', description: 'Issue milestone', operators: [ '=', '!=', 'matches' ] },
-        { field: 'pull_request.labels.name', description: 'Pull request labels', operators: [ 'contains' ] },
-        { field: 'pull_request.number', description: 'Pull request number', operators: [ '=', '!=', '<', '<=', '>=', '>' ] },
-        { field: 'pull_request.state', description: 'Pull request status', options: [ 'open', 'closed' ] },
-        { field: 'pull_request.milestone.title', description: 'Pull request milestone', operators: [ '=', '!=', 'matches' ] },
-        { field: 'pull_request.assignee.login', description: 'Pull request assignee', operators: [ '=', '!=' ] },
-        { field: 'comment.body', description: 'Comment text', operators: [ 'matches' ] },
+        { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ], events: [ 'issue_comment', 'issues', 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'issue.labels.name', description: 'Issue labels', operators: [ 'contains' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'issue.number', description: 'Issue number', operators: [ '=', '!=', '<', '<=', '>=', '>' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'issue.state', description: 'Issue status', options: [ 'open', 'closed' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'issue.assignee.login', description: 'Issue assignee', operators: [ '=', '!=' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'issue.milestone.title', description: 'Issue milestone', operators: [ '=', '!=', 'matches' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'pull_request.labels.name', description: 'Pull request labels', operators: [ 'contains' ], events: [ 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'pull_request.number', description: 'Pull request number', operators: [ '=', '!=', '<', '<=', '>=', '>' ], events: [ 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'pull_request.state', description: 'Pull request status', options: [ 'open', 'closed' ], events: [ 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'pull_request.milestone.title', description: 'Pull request milestone', operators: [ '=', '!=', 'matches' ], events: [ 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'pull_request.assignee.login', description: 'Pull request assignee', operators: [ '=', '!=' ], events: [ 'pull_request', 'pull_request_review_comment' ] },
+        { field: 'comment.body', description: 'Comment text', operators: [ 'matches' ], events: [ 'commit_comment', 'issue_comment', 'pull_request_review_comment' ] },
         { field: 'custom', description: 'Custom', operators: [ '=', '!=', '<', '<=', '>=', '>' ], isCustom: true }
-    ];
+    ].filter(function( filter ) {
+        return ! events || ! filter.events || events.some(function( event ) {
+            return -1 !== filter.events.indexOf( event );
+        });
+    });
 };
