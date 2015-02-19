@@ -42,7 +42,7 @@ module.exports = React.createClass({
     },
 
     disconnect: function() {
-        if ( this.state.provider ) {
+        if ( this.isConnected() ) {
             this.props.tokens.remove( this.state.provider );
             this.props.profiles.remove( this.state.provider );
         }
@@ -64,17 +64,19 @@ module.exports = React.createClass({
 
     getAvatarImage: function() {
         var profile;
-        if ( this.state.provider ) {
-            profile = this.props.profiles.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
-            if ( profile ) {
-                return (
-                    <button className="connection__disconnect" onClick={ this.disconnect }>
-                        <span className="fa fa-remove connection__disconnect-icon"></span>
-                        <span className="visually-hidden">Disconnect</span>
-                        <img width="100" height="100" src={ profile.avatar } alt="User avatar" className="connection__user-avatar" />
-                    </button>
-                );
-            }
+        if ( ! this.isConnected() ) {
+            return;
+        }
+
+        profile = this.props.profiles.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
+        if ( profile ) {
+            return (
+                <button className="connection__disconnect" onClick={ this.disconnect }>
+                    <span className="fa fa-remove connection__disconnect-icon"></span>
+                    <span className="visually-hidden">Disconnect</span>
+                    <img width="100" height="100" src={ profile.avatar } alt="User avatar" className="connection__user-avatar" />
+                </button>
+            );
         }
     },
 
