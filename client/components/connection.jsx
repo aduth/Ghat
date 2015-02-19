@@ -33,8 +33,11 @@ module.exports = React.createClass({
         this.setState({ provider: this.getConnectedProvider() });
     },
 
-    authorize: function( provider ) {
+    authorize: function() {
+        var provider = this.getSelectedProvider();
+
         this.setState({ provider: provider });
+
         window.open( '/api/authorize/' + provider );
     },
 
@@ -55,6 +58,10 @@ module.exports = React.createClass({
         }.bind( this ) );
     },
 
+    getSelectedProvider: function() {
+        return this.props.providers.length > 1 ? this.state.provider : this.props.providers[0];
+    },
+
     getAvatarImage: function() {
         var profile;
         if ( this.state.provider ) {
@@ -72,11 +79,14 @@ module.exports = React.createClass({
     },
 
     getProviderSelect: function() {
-        var options = this.props.providers.map(function( provider ) {
-            return { value: provider, label: integrations[ provider ].name };
-        }), defaultLabel = this.props.providers.length > 1 ? 'Choose a service' : false;
+        var defaultLabel = this.props.providers.length > 1 ? 'Choose a service' : false,
+            options;
 
-        return <Select options={ options } value={ this.state.provider } onChange={ this.onProviderChange } includeDefault={ defaultLabel } />;
+        options = this.props.providers.map(function( provider ) {
+            return { value: provider, label: integrations[ provider ].name };
+        });
+
+        return <Select options={ options } value={ this.getSelectedProvider() } onChange={ this.onProviderChange } includeDefault={ defaultLabel } />;
     },
 
     getIcon: function() {
@@ -108,7 +118,9 @@ module.exports = React.createClass({
                     <p className="connection__description">{ this.props.description }</p>
                     <div className="connection__actions">
                         { this.getProviderSelect() }
-                        <button onClick={ this.authorize.bind( null, this.state.provider ) } className="button" disabled={ ! this.state.provider }>Authorize</button>
+                        <button type="button" onClick={ this.authorize } className="button" disabled={ ! this.getSelectedProvider() }>
+                            Authorize
+                        </button>
                     </div>
                     <aside className="connection__authorized-account">
                         { this.getAvatarImage() }
