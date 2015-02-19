@@ -1,6 +1,6 @@
 var expect = require( 'chai' ).expect,
     jsdom = require( 'jsdom' ),
-    DOM = require( '../../../client/helpers/dom' );
+    DOM = require( '../../../../client/helpers/dom' );
 
 describe( 'DOM', function() {
     var anchor, icon;

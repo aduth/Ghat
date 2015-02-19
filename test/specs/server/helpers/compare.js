@@ -1,5 +1,5 @@
 var expect = require( 'chai' ).expect,
-    compare = require( '../../../server/helpers/compare' );
+    compare = require( '../../../../server/helpers/compare' );
 
 describe( 'compare', function() {
     describe( '#isMatch()', function() {

@@ -1,5 +1,5 @@
 var expect = require( 'chai' ).expect,
-    ArrayStore = require( '../../../client/stores/array' );
+    ArrayStore = require( '../../../../client/stores/array' );
 
 describe( 'ArrayStore', function() {
     var store;

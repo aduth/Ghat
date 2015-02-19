@@ -1,5 +1,5 @@
 var expect = require( 'chai' ).expect,
-    field = require( '../../../server/helpers/field' );
+    field = require( '../../../../server/helpers/field' );
 
 describe( 'field', function() {
     describe( '#getValue()', function() {
