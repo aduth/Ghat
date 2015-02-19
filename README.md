@@ -6,6 +6,8 @@ Relay GitHub events to your favorite chat client
 
 # Try it now!
 
+[![Join the chat at https://gitter.im/aduth/Ghat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aduth/Ghat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Deploy an instance on your Heroku account using the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aduth/ghat)
