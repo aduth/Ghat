@@ -204,6 +204,8 @@ module.exports.getPredefinedFilters = function( events ) {
         { field: 'sender.login', description: 'Sender username', operators: [ '=', '!=' ] },
         { field: 'action', description: 'Action', options: [ 'assigned', 'unassigned', 'labeled', 'unlabeled', 'opened', 'closed', 'reopened' ], events: [ 'issue_comment', 'issues', 'pull_request', 'pull_request_review_comment' ] },
         { field: 'issue.labels.name', description: 'Issue labels', operators: [ 'contains' ], events: [ 'issue_comment', 'issues' ] },
+        { field: 'ref_type', description: 'Created type', options: [ 'tag', 'branch' ], events: [ 'create' ] },
+        { field: 'ref_type', description: 'Deleted type', options: [ 'tag', 'branch' ], events: [ 'delete' ] },
         { field: 'issue.number', description: 'Issue number', operators: [ '=', '!=', '<', '<=', '>=', '>' ], events: [ 'issue_comment', 'issues' ] },
         { field: 'issue.state', description: 'Issue status', options: [ 'open', 'closed' ], events: [ 'issue_comment', 'issues' ] },
         { field: 'issue.assignee.login', description: 'Issue assignee', operators: [ '=', '!=' ], events: [ 'issue_comment', 'issues' ] },
