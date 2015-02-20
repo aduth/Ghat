@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "homepage": "https://github.com/aduth/Ghat",
   "authors": [
-    "Andrew Duthie <aduthie7@gmail.com>"
+    "Andrew Duthie <andrew@andrewduthie.com>"
   ],
   "description": "Relay GitHub events to your favorite chat client",
   "license": "MIT",
