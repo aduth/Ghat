@@ -1,5 +1,6 @@
 module.exports = {
     commit_comment: require( './commit-comment' ),
+    create: require( './create' ),
     fork: require( './fork' ),
     gollum: require( './gollum' ),
     issue_comment: require( './issue-comment' ),
