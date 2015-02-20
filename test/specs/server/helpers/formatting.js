@@ -12,4 +12,10 @@ describe( 'formatting', function() {
             expect( formatting.ucfirst( 'ghat' ) ).to.equal( 'Ghat' );
         });
     });
+
+    describe( '#shortCommitSha', function() {
+        it( 'should return a shortened git SHA', function() {
+            expect( formatting.shortCommitSha( '7700ca29dd050d9adacc0803f866d9b539513535' ) ).to.equal( '7700ca2' );
+        });
+    });
 });

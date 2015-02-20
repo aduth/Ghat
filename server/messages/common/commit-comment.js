@@ -1,5 +1,6 @@
-var format = require( 'util' ).format;
+var format = require( 'util' ).format,
+    helpers = require( '../../helpers/' );
 
 module.exports = function( body ) {
-    return format( '[%s] New comment on commit %s by %s', body.repository.full_name, body.comment.commit_id.substr( 0, 7 ), body.comment.user.login );
+    return format( '[%s] New comment on commit %s by %s', body.repository.full_name, helpers.formatting.shortCommitSha( body.comment.commit_id ), body.comment.user.login );
 };
