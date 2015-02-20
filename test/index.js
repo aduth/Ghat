@@ -8,4 +8,5 @@ describe( 'ghat', function() {
     require( './specs/server/messages/common/fork' );
     require( './specs/server/messages/slack/commit-comment' );
     require( './specs/server/messages/slack/fork' );
+    require( './specs/server/messages/slack/push' );
 });
