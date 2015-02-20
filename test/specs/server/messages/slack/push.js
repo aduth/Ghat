@@ -25,4 +25,14 @@ describe( 'messages/slack/push', function() {
             '<https://github.com/baxterthehacker/public-repo/commit/7700ca29dd050d9adacc0803f866d9b539513535|7700ca2>: Trigger pages build'
         );
     });
+
+    it( 'should not generate a message if no commits exist', function() {
+        var copy = JSON.parse( JSON.stringify( payload ) ),
+            message;
+
+        copy.commits = [];
+        message = generateMessage( copy );
+
+        expect( message ).to.be.undefined;
+    });
 });
