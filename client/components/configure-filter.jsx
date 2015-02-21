@@ -44,7 +44,10 @@ module.exports = React.createClass({
 
     getFieldOptions: function() {
         return this.props.filters.map(function( filter ) {
-            return { value: filter.field, label: filter.description };
+            return {
+                value: filter.field,
+                label: filter.description
+            };
         });
     },
 

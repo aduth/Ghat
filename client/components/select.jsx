@@ -42,7 +42,7 @@ module.exports = React.createClass({
     getOptionElements: function() {
         return this.getOptions().map(function( option ) {
             if ( 'object' === typeof option ) {
-                return <option key={ option.value } value={ option.value }>{ option.label }</option>;
+                return <option key={ option.value + option.label } value={ option.value }>{ option.label }</option>;
             } else {
                 return <option key={ option } value={ option }>{ option }</option>;
             }
