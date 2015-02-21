@@ -1,15 +1,10 @@
-module.exports = {
-    componentDidMount: function() {
-        this.props.router.on( 'route', this.forceUpdateOnRoute );
-    },
+var assign = require( 'lodash/object/assign' ),
+    eventMonitor = require( './event-monitor' );
 
-    componentWillUnmount: function() {
-        this.props.router.removeEventListener( 'route', this.forceUpdateOnRoute );
-    },
-
+module.exports = assign({}, eventMonitor( 'route', 'route', 'forceUpdateOnRoute' ), {
     forceUpdateOnRoute: function() {
         if ( this.isMounted() ) {
             this.forceUpdate();
         }
     }
-};
+});
