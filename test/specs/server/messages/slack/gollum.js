@@ -11,4 +11,14 @@ describe( 'gollum', function() {
         expect( message.title ).to.equal( 'Home' );
         expect( message.title_link ).to.equal( 'https://github.com/baxterthehacker/public-repo/wiki/Home' );
     });
+
+    it( 'should not generate a message if no pages exist', function() {
+        var copy = JSON.parse( JSON.stringify( payload ) ),
+            message;
+
+        copy.pages = [];
+        message = generateMessage( copy );
+
+        expect( message ).to.be.undefined;
+    });
 });
