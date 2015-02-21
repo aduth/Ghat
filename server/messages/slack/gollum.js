@@ -7,7 +7,7 @@ module.exports = function( body ) {
     return {
         fallback: format( '[%s] Wiki page %s - %s', body.repository.full_name, page.action, page.title ),
         pretext: format( '[%s] Wiki page %s', body.repository.full_name, page.action ),
-        title: format( '%s: %s', body.repository.name, page.title ),
+        title: format( '%s', page.title ),
         title_link: page.html_url,
         color: constants.app.COLOR_SECONDARY
     };

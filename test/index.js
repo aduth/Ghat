@@ -30,7 +30,13 @@ describe( 'ghat', function() {
                 require( './specs/server/messages/slack/create' );
                 require( './specs/server/messages/slack/delete' );
                 require( './specs/server/messages/slack/fork' );
+                require( './specs/server/messages/slack/gollum' );
+                require( './specs/server/messages/slack/issue-comment' );
+                require( './specs/server/messages/slack/issues' );
+                require( './specs/server/messages/slack/pull-request-review-comment' );
+                require( './specs/server/messages/slack/pull-request' );
                 require( './specs/server/messages/slack/push' );
+                require( './specs/server/messages/slack/watch' );
             });
         });
     });
