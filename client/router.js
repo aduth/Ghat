@@ -15,7 +15,7 @@ Router.prototype.getRoute = function() {
 };
 
 Router.prototype.setRoute = function( route ) {
-    if ( 'undefined' !== typeof window && route !== this.getRoute() ) {
+    if ( this.isStarted && 'undefined' !== typeof window && route !== this.getRoute() ) {
         window.history.pushState( null, null, route );
         this.emit( 'route' );
     }
