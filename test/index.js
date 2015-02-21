@@ -23,6 +23,13 @@ describe( 'ghat', function() {
                 require( './specs/server/messages/common/create' );
                 require( './specs/server/messages/common/delete' );
                 require( './specs/server/messages/common/fork' );
+                require( './specs/server/messages/common/gollum' );
+                require( './specs/server/messages/common/issue-comment' );
+                require( './specs/server/messages/common/issues' );
+                require( './specs/server/messages/common/pull-request-review-comment' );
+                require( './specs/server/messages/common/pull-request' );
+                require( './specs/server/messages/common/push' );
+                require( './specs/server/messages/common/watch' );
             });
 
             describe( 'slack', function() {
