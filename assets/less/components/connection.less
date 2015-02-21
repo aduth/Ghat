@@ -6,10 +6,7 @@
 .connection__content {
     .panel;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 320px;
+    height: 340px;
     text-align: center;
 }
 
@@ -22,16 +19,53 @@
 }
 
 .connection__description {
-    margin: 0;
+    margin: 14px 0;
 }
 
 .connection.github .select {
     display: none;
 }
 
+.connection__actions {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+}
+
+.connection__actions .select__input {
+    margin: 4px 0;
+}
+
 .connection__actions .button {
     width: 100%;
-    margin-top: 6px;
+    margin: 6px 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.connection__manual-entry-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    &:before,
+    &:after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid @color-purple;
+        opacity: 0.2;
+    }
+
+    &:before {
+        margin-right: 12px;
+    }
+
+    &:after {
+        margin-left: 12px;
+    }
 }
 
 .connection__authorized-account {
@@ -45,41 +79,5 @@
 }
 
 .connection.connected .connection__authorized-account {
-    display: block;
-}
-
-.connection__disconnect {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate( -50%, -50% );
-    display: block;
-    width: 100px;
-    height: 100px;
-    padding: 0;
-    outline: none;
-    -webkit-appearance: none;
-    background: none;
-    border-width: 0;
-    border-radius: 50%;
-    text-align: center;
-}
-
-.connection__disconnect-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: none;
-    border-radius: 50%;
-    background-color: #D2616B;
-    opacity: 0.85;
-    font-size: 50px;
-    line-height: 100px;
-    color: #fff;
-}
-
-.connection__disconnect:hover .connection__disconnect-icon {
     display: block;
 }

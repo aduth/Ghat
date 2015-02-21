@@ -1,0 +1,44 @@
+.connection-avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    display: block;
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    outline: none;
+    -webkit-appearance: none;
+    background: none;
+    border-width: 0;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.connection-avatar__disconnect-icon,
+.connection-avatar__mystery-user {
+    font-size: 50px;
+    line-height: 100px;
+    color: #fff;
+}
+
+.connection-avatar__disconnect-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    border-radius: 50%;
+    background-color: @color-salmon;
+    opacity: 0.85;
+}
+
+.connection-avatar__mystery-user {
+    display: block;
+    background-color: @color-green;
+}
+
+.connection-avatar:hover .connection-avatar__disconnect-icon {
+    display: block;
+}

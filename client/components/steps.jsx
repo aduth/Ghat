@@ -9,7 +9,8 @@ module.exports = React.createClass({
     displayName: 'Steps',
 
     mixins: [
-        mixins.observeStore([ 'tokens' ])
+        mixins.observeStore([ 'tokens' ]),
+        mixins.eventMonitor( 'router', 'route', 'resetManualEntry' )
     ],
 
     propTypes: {
@@ -23,28 +24,57 @@ module.exports = React.createClass({
         notices: React.PropTypes.instanceOf( stores.Notice ).isRequired
     },
 
+    getInitialState: function() {
+        return {
+            isManualEntry: false
+        };
+    },
+
+    resetManualEntry: function() {
+        if ( this.state.isManualEntry && '/configure' !== this.props.router.getRoute() ) {
+            this.setState({ isManualEntry: false });
+        }
+    },
+
+    setManualEntry: function( isManual ) {
+        this.setState({ isManualEntry: isManual });
+
+        if ( isManual ) {
+            this.props.router.setRoute( '/configure' );
+        }
+    },
+
+    isConnected: function() {
+        return this.props.tokens.isConnectedToChat() && ( this.state.isManualEntry || this.props.tokens.isConnectedToGitHub() );
+    },
+
     render: function() {
         return (
             <div className="steps">
                 <Connection
                     name="github"
                     icon="github"
+                    connected={ this.state.isManualEntry || this.props.tokens.isConnectedToGitHub() }
+                    manual={ this.state.isManualEntry }
+                    onManualEntryChange={ this.setManualEntry }
                     providers={ [ 'github' ] }
                     tokens={ this.props.tokens }
                     profiles={ this.props.profiles }
                     title="Connect to GitHub"
-                    description="To create the webhooks necessary to relay events to your chat client, you must authorize Ghat to access your GitHub account. GitHub tokens are never saved to Ghat's servers." />
+                    description="To automate the creation of webhooks, authorize Ghat to access your GitHub webhook settings." />
                 <Connection
                     name="chat"
                     icon="comments"
+                    connected={ this.props.tokens.isConnectedToChat() }
                     providers={ helpers.integrations.getChatIntegrations() }
                     tokens={ this.props.tokens }
                     profiles={ this.props.profiles }
                     title="Connect to Chat"
-                    description="To allow Ghat to send messages to your chat client, you must authorize access to your account." />
+                    description="To allow Ghat to deliver messages to your preferred chat client, choose a supported service and authorize access to your account."  />
                 <Tabs
                     router={ this.props.router }
-                    disabled={ ! this.props.tokens.isConnected() }
+                    manual={ this.state.isManualEntry }
+                    disabled={ ! this.isConnected() }
                     tokens={ this.props.tokens }
                     integrations={ this.props.integrations }
                     contacts={ this.props.contacts }

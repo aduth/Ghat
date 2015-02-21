@@ -1,11 +1,12 @@
 @grid-gutter: @grid-gutter-width * 0.5;
 @grid-padding: @grid-gutter-width * 0.5;
 
-.column( @x, @padding: @grid-padding, @columns: @grid-columns ) {
+.column( @x, @columns: @grid-columns, @padding: @grid-padding ) {
     display: inline;
     float: left;
     width: 100% * ( @x / @columns );
-    padding: 0 @padding;
+    padding-left: @padding;
+    padding-right: @padding;
     min-height: 1px;
 }
 

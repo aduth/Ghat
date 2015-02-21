@@ -1,26 +1,20 @@
 var React = require( 'react/addons' ),
-    merge = require( 'lodash/object/merge' ),
     async = require( 'async' ),
     mixins = require( '../mixins/' ),
+    stores = require( '../stores/' ),
     ConfigureEvent = require( './configure-event' ),
     ConfigureRepository = require( './configure-repository' ),
     ConfigureFilters = require( './configure-filters' ),
     ConfigureContact = require( './configure-contact' ),
-    stores = require( '../stores/' ),
     integrations = require( '../../shared/integrations/' );
 
 module.exports = React.createClass({
-    displayName: 'Configure',
+    displayName: 'ConfigureAuthenticated',
 
     mixins: [
+        mixins.configure,
         mixins.observeStore([ 'tokens', 'contacts', 'repositories', 'hooks', 'integrations' ])
     ],
-
-    getInitialState: function() {
-        return {
-            values: this.getInitialIntegrationValue()
-        };
-    },
 
     propTypes: {
         new: React.PropTypes.bool,
@@ -36,26 +30,8 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            new: true,
-            integration: {}
+            new: true
         };
-    },
-
-    getInitialIntegrationValue: function() {
-        return {
-            chat: {},
-            github: {},
-            filters: []
-        };
-    },
-
-    getIntegrationValue: function() {
-        // Merge to capture nested chat and GitHub settings, allowing saved
-        // integration settings to be overwritten by form state. Overrides
-        // array values instead of default merge via concatenation.
-        return merge({}, this.props.integration, this.state.values, function( target, source ) {
-            return Array.isArray( source ) ? source : undefined;
-        });
     },
 
     onSubmit: function( event ) {
@@ -83,42 +59,34 @@ module.exports = React.createClass({
         event.preventDefault();
     },
 
-    onValueChanged: function( name, value ) {
-        var integration = this.getIntegrationValue();
-
-        switch ( name ) {
-            case 'events': integration.github.events = value; break;
-            case 'repository': integration.github.repository = value; break;
-            case 'filters': integration.filters = value; break;
-            case 'contact': integration.chat.contact = value; break;
-            default: break;
-        }
-
-        this.setState({ values: integration });
-    },
-
-    getContacts: function() {
-        var chatIntegration = this.props.tokens.getConnectedChatToken(),
-            chatToken = this.props.tokens.get( chatIntegration );
-
-        return this.props.contacts.get( chatIntegration, chatToken );
-    },
-
     render: function() {
         var integration = this.getIntegrationValue(),
-            canSubmit = integration.github.events && integration.github.repository && integration.chat.contact,
-            classes = React.addons.classSet({
-                configure: true
-            });
+            canSubmit = integration.github.events && integration.github.repository && integration.chat.contact;
 
         return (
-            <div className={ classes }>
+            <div className="configure">
                 <form onSubmit={ this.onSubmit } className="configure__form">
                     <ol className="configure__steps">
-                        <ConfigureEvent events={ integrations.github.getAvailableEvents() } value={ integration.github.events } onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
-                        <ConfigureRepository repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) } value={ integration.github.repository } onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
-                        <ConfigureFilters filters={ integrations.github.getPredefinedFilters( integration.github.events ) } value={ integration.filters } onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
-                        <ConfigureContact contacts={ this.getContacts() } value={ integration.chat.contact } onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
+                        <ConfigureEvent
+                            key="event"
+                            events={ integrations.github.getAvailableEvents() }
+                            value={ integration.github.events }
+                            onValueChanged={ this.onValueChanged.bind( null, 'events' ) } />
+                        <ConfigureRepository
+                            key="repository"
+                            repositories={ this.props.repositories.get( this.props.tokens.get( 'github' ) ) }
+                            value={ integration.github.repository }
+                            onValueChanged={ this.onValueChanged.bind( null, 'repository' ) } />
+                        <ConfigureFilters
+                            key="filters"
+                            filters={ integrations.github.getPredefinedFilters( integration.github.events ) }
+                            value={ integration.filters }
+                            onValueChanged={ this.onValueChanged.bind( null, 'filters' ) } />
+                        <ConfigureContact
+                            key="contact"
+                            contacts={ this.getContacts() }
+                            value={ integration.chat.contact }
+                            onValueChanged={ this.onValueChanged.bind( null, 'contact' ) } />
                     </ol>
                     <button type="submit" className="button configure__submit" disabled={ ! canSubmit }>
                         { this.props.new ? 'Create' : 'Update' }

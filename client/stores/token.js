@@ -81,17 +81,6 @@ TokenStore.prototype.isConnectedToChat = function() {
 };
 
 /**
- * Returns true if the store contains a valid token for both GitHub and any
- * chat provider, or false otherwise.
- *
- * @return {Boolean} True if the store contains a valid GitHub and chat
- *                   provider token
- */
-TokenStore.prototype.isConnected = function() {
-    return this.isConnectedToGitHub() && this.isConnectedToChat();
-};
-
-/**
  * Returns the first available token for any chat provider.
  *
  * @return {string} The first available token for any chat provider

@@ -31,7 +31,7 @@ module.exports = React.createClass({
         return (
             <li className="configure-contact">
                 <p className="form-option__description">
-                    Finally, choose who is to be notified from the list of available contacts for your chat provider.
+                    Choose the channel or contact to whom the messages should be delivered.
                 </p>
                 <label className="form-option">
                     <span className="form-option__label">Choose a contact:</span>

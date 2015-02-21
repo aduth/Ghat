@@ -1,5 +1,6 @@
 var React = require( 'react/addons' ),
     find = require( 'lodash/collection/find' ),
+    ConnectionAvatar = require( './connection-avatar' ),
     mixins = require( '../mixins/' ),
     integrations = require( '../../shared/integrations/' ),
     stores = require( '../stores/' ),
@@ -9,16 +10,21 @@ module.exports = React.createClass({
     displayName: 'Connection',
 
     mixins: [
-        mixins.observeStore([ 'tokens', 'profiles' ]),
+        mixins.observeStore([ 'tokens' ]),
         mixins.eventMonitor( 'tokens', 'verify', 'setProvider' )
     ],
 
     propTypes: {
         name: React.PropTypes.string.isRequired,
         icon: React.PropTypes.string,
+        connected: React.PropTypes.bool,
+        manual: React.PropTypes.bool,
+        onManualEntryChange: React.PropTypes.func,
+        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         profiles: React.PropTypes.instanceOf( stores.Profile ).isRequired,
-        providers: React.PropTypes.arrayOf( React.PropTypes.string ).isRequired
+        title: React.PropTypes.string,
+        description: React.PropTypes.string
     },
 
     getInitialState: function() {
@@ -26,7 +32,10 @@ module.exports = React.createClass({
     },
 
     getDefaultProps: function() {
-        return { showSelect: true };
+        return {
+            connected: false,
+            manual: false
+        };
     },
 
     setProvider: function() {
@@ -42,14 +51,12 @@ module.exports = React.createClass({
     },
 
     disconnect: function() {
-        if ( this.isConnected() ) {
+        if ( this.props.manual ) {
+            this.props.onManualEntryChange( false );
+        } else if ( this.props.connected ) {
             this.props.tokens.remove( this.state.provider );
             this.props.profiles.remove( this.state.provider );
         }
-    },
-
-    isConnected: function() {
-        return this.state.provider && !! this.props.tokens.get( this.state.provider );
     },
 
     getConnectedProvider: function() {
@@ -62,25 +69,13 @@ module.exports = React.createClass({
         return this.props.providers.length > 1 ? this.state.provider : this.props.providers[0];
     },
 
-    getAvatarImage: function() {
-        var profile;
-        if ( ! this.isConnected() ) {
-            return;
-        }
-
-        profile = this.props.profiles.get( this.state.provider, this.props.tokens.get( this.state.provider ) );
-        if ( profile ) {
-            return (
-                <button className="connection__disconnect" onClick={ this.disconnect }>
-                    <span className="fa fa-remove connection__disconnect-icon"></span>
-                    <span className="visually-hidden">Disconnect</span>
-                    <img width="100" height="100" src={ profile.avatar } alt="User avatar" className="connection__user-avatar" />
-                </button>
-            );
+    getIconElement: function() {
+        if ( this.props.icon ) {
+            return <span className={ 'connection__icon fa fa-' + this.props.icon } />;
         }
     },
 
-    getProviderSelect: function() {
+    getProviderSelectElement: function() {
         var options = this.props.providers.map(function( provider ) {
             return { value: provider, label: integrations[ provider ].name };
         });
@@ -88,9 +83,14 @@ module.exports = React.createClass({
         return <Select options={ options } value={ this.getSelectedProvider() } onChange={ this.onProviderChange } includeDefault={ 'Choose a service' } />;
     },
 
-    getIcon: function() {
-        if ( this.props.icon ) {
-            return <span className={ 'connection__icon fa fa-' + this.props.icon } />;
+    getManualEntryButtonElement: function() {
+        if ( this.props.onManualEntryChange ) {
+            return (
+                <div className="connection__manual-entry">
+                    <span className="connection__manual-entry-divider">or</span>
+                    <button type="button" className="button" onClick={ this.props.onManualEntryChange.bind( null, true ) }>Manual Entry</button>
+                </div>
+            );
         }
     },
 
@@ -103,7 +103,7 @@ module.exports = React.createClass({
             'connection',
             this.props.name,
             React.addons.classSet({
-                connected: this.isConnected()
+                connected: this.props.connected
             })
         ].join( ' ' );
 
@@ -112,17 +112,22 @@ module.exports = React.createClass({
                 <div className="connection__content">
                     <header className="connection__heading">
                         <h1 className="connection__name">{ 'Connect ' + this.props.name }</h1>
-                        { this.getIcon() }
+                        { this.getIconElement() }
                     </header>
                     <p className="connection__description">{ this.props.description }</p>
                     <div className="connection__actions">
-                        { this.getProviderSelect() }
+                        { this.getProviderSelectElement() }
                         <button type="button" onClick={ this.authorize } className="button" disabled={ ! this.getSelectedProvider() }>
                             Authorize
                         </button>
+                        { this.getManualEntryButtonElement() }
                     </div>
                     <aside className="connection__authorized-account">
-                        { this.getAvatarImage() }
+                        <ConnectionAvatar
+                            provider={ this.getSelectedProvider() }
+                            profiles={ this.props.profiles }
+                            tokens={ this.props.tokens }
+                            onDisconnect={ this.disconnect } />
                     </aside>
                 </div>
             </div>

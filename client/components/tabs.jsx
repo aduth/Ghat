@@ -3,7 +3,8 @@ var React = require( 'react/addons' ),
     stores = require( '../stores/' ),
     TabsList = require( './tabs-list' ),
     TabsPanel = require( './tabs-panel' ),
-    Configure = require( './configure' ),
+    ConfigureManual = require( './configure-manual' ),
+    ConfigureAuthenticated = require( './configure-authenticated' ),
     Integrations = require( './integrations' );
 
 module.exports = React.createClass({
@@ -16,6 +17,7 @@ module.exports = React.createClass({
 
     propTypes: {
         router: React.PropTypes.object.isRequired,
+        manual: React.PropTypes.bool,
         disabled: React.PropTypes.bool,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         contacts: React.PropTypes.instanceOf( stores.Contact ).isRequired,
@@ -27,7 +29,8 @@ module.exports = React.createClass({
 
     getDefaultProps: function() {
         return {
-            disabled: true
+            disabled: true,
+            manual: false
         };
     },
 
@@ -44,9 +47,13 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var classes = React.addons.classSet({
+        var Configure = this.props.manual ? ConfigureManual : ConfigureAuthenticated,
+            classes;
+
+        classes = React.addons.classSet({
             tabs: true,
-            disabled: this.props.disabled
+            'is-disabled': this.props.disabled,
+            'is-manual': this.props.manual
         });
 
         return (
@@ -60,16 +67,18 @@ module.exports = React.createClass({
                             notices={ this.props.notices } />
                     </TabsPanel>
                     <TabsPanel key="configure" name={ this.getConfigureTabLabel() } href="/configure" active={ /^\/configure(\/[\w-]+)?$/.test( this.props.router.getRoute() ) }>
-                        <Configure
-                            new={ ! this.getCurrentIntegrationId() }
-                            router={ this.props.router }
-                            tokens={ this.props.tokens }
-                            integrations={ this.props.integrations }
-                            integration={ this.getIntegration() }
-                            contacts={ this.props.contacts }
-                            repositories={ this.props.repositories }
-                            hooks={ this.props.hooks }
-                            notices={ this.props.notices } />
+                        { React.createElement( Configure, {
+                            new: ! this.getCurrentIntegrationId(),
+                            manual: this.props.manual,
+                            router: this.props.router,
+                            tokens: this.props.tokens,
+                            integrations: this.props.integrations,
+                            integration: this.getIntegration(),
+                            contacts: this.props.contacts,
+                            repositories: this.props.repositories,
+                            hooks: this.props.hooks,
+                            notices: this.props.notices
+                        }) }
                     </TabsPanel>
                 </TabsList>
                 <aside className="tabs__disabled-content">

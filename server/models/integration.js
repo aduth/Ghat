@@ -42,6 +42,10 @@ schema = new mongoose.Schema({
 
 filterByGitHubToken = function( integrations, githubToken, next ) {
     async.filter( integrations, function( integration, asyncNext ) {
+        if ( ! integration.github.token ) {
+            return asyncNext( false );
+        }
+
         bcrypt.compare( githubToken, integration.github.token, function( err, res ) {
             if ( err ) {
                 return next( err );
@@ -103,6 +107,10 @@ schema.statics.findFilteredByGitHubToken = function( query, githubToken, next ) 
 };
 
 schema.pre( 'save', function( next ) {
+    if ( ! this.github.token ) {
+        return next();
+    }
+
     bcrypt.hash( this.github.token, config.security.bcryptWorkFactor, function( err, hash ) {
         this.github.token = hash;
         next( err );
