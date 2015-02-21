@@ -50,7 +50,13 @@ rebundle = function() {
         .pipe( rename({ suffix: '-' + manifest.version }) );
 
     if ( 'production' === process.env.NODE_ENV ) {
-        bundle = bundle.pipe( uglify() );
+        bundle = bundle.pipe( uglify({
+            compress: {
+                // Keep unused function arguments since superagent relies on
+                // the function length to determine how to invoke a callback
+                keep_fargs: true
+            }
+        }) );
     } else {
         bundle = bundle
             .pipe( sourcemaps.init({ loadMaps: true }) )
