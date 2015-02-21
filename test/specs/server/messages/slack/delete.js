@@ -2,7 +2,7 @@ var expect = require( 'chai' ).expect,
     payload = require( '../../../../fixtures/payloads/delete' ),
     generateMessage = require( '../../../../../server/messages/slack/delete' );
 
-describe( 'messages/slack/delete', function() {
+describe( 'delete', function() {
     it( 'should generate the expected message', function() {
         var message = generateMessage( payload );
 

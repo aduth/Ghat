@@ -2,7 +2,7 @@ var expect = require( 'chai' ).expect,
     payload = require( '../../../../fixtures/payloads/create' ),
     generateMessage = require( '../../../../../server/messages/common/create' );
 
-describe( 'messages/common/create', function() {
+describe( 'create', function() {
     it( 'should generate the expected message', function() {
         var message = generateMessage( payload );
 

@@ -2,7 +2,7 @@ var expect = require( 'chai' ).expect,
     payload = require( '../../../../fixtures/payloads/commit-comment' ),
     generateMessage = require( '../../../../../server/messages/common/commit-comment' );
 
-describe( 'messages/common/commit-comment', function() {
+describe( 'commit-comment', function() {
     it( 'should generate the expected message', function() {
         var message = generateMessage( payload );
 

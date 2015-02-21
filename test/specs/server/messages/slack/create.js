@@ -2,7 +2,7 @@ var expect = require( 'chai' ).expect,
     payload = require( '../../../../fixtures/payloads/create' ),
     generateMessage = require( '../../../../../server/messages/slack/create' );
 
-describe( 'messages/slack/create', function() {
+describe( 'create', function() {
     it( 'should generate the expected message', function() {
         var message = generateMessage( payload );
 
