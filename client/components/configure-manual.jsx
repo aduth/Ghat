@@ -15,6 +15,7 @@ module.exports = React.createClass({
     ],
 
     propTypes: {
+        router: React.PropTypes.object.isRequired,
         tokens: React.PropTypes.instanceOf( stores.Token ).isRequired,
         integrations: React.PropTypes.instanceOf( stores.Integration ).isRequired,
         integration: React.PropTypes.object,
@@ -41,6 +42,8 @@ module.exports = React.createClass({
         this.setState({
             isComplete: true
         });
+
+        this.props.router.setRoute( '/configure/' + integration._id );
 
         event.preventDefault();
     },

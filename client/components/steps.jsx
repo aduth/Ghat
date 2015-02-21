@@ -31,7 +31,7 @@ module.exports = React.createClass({
     },
 
     resetManualEntry: function() {
-        if ( this.state.isManualEntry && '/configure' !== this.props.router.getRoute() ) {
+        if ( this.state.isManualEntry && '/' === this.props.router.getRoute() ) {
             this.setState({ isManualEntry: false });
         }
     },
