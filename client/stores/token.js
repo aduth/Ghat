@@ -77,15 +77,15 @@ TokenStore.prototype.isConnectedToGitHub = function() {
  * @return {Boolean} True if the store contains a valid chat provider token
  */
 TokenStore.prototype.isConnectedToChat = function() {
-    return !! this.getConnectedChatToken();
+    return !! this.getConnectedChatProvider();
 };
 
 /**
- * Returns the first available token for any chat provider.
+ * Returns the first available connected chat provider name.
  *
- * @return {string} The first available token for any chat provider
+ * @return {string} The first available connected chat provider name
  */
-TokenStore.prototype.getConnectedChatToken = function() {
+TokenStore.prototype.getConnectedChatProvider = function() {
     var connections = this.getAll();
 
     if ( connections ) {

@@ -39,7 +39,7 @@ module.exports = React.createClass({
             action = this.props.new ? 'create' : 'update';
 
         integration.github.token = this.props.tokens.get( 'github' );
-        integration.chat.provider = this.props.tokens.getConnectedChatToken();
+        integration.chat.provider = this.props.tokens.getConnectedChatProvider();
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         async.waterfall([

@@ -19,7 +19,7 @@ module.exports = React.createClass({
     },
 
     deleteIntegration: function( integration ) {
-        var chatProvider = this.props.tokens.getConnectedChatToken(),
+        var chatProvider = this.props.tokens.getConnectedChatProvider(),
             chatToken = this.props.tokens.get( chatProvider ),
             githubToken = this.props.tokens.get( 'github' );
 
@@ -44,7 +44,7 @@ module.exports = React.createClass({
     },
 
     getIntegrationsElement: function() {
-        var chatProvider = this.props.tokens.getConnectedChatToken(),
+        var chatProvider = this.props.tokens.getConnectedChatProvider(),
             chatToken = this.props.tokens.get( chatProvider ),
             githubToken = this.props.tokens.get( 'github' ),
             integrations = this.props.integrations.get( chatProvider, chatToken, githubToken );

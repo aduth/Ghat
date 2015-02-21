@@ -32,7 +32,7 @@ module.exports = React.createClass({
     onSubmit: function( event ) {
         var integration = this.getIntegrationValue();
 
-        integration.chat.provider = this.props.tokens.getConnectedChatToken();
+        integration.chat.provider = this.props.tokens.getConnectedChatProvider();
         integration.chat.token = this.props.tokens.get( integration.chat.provider );
 
         this.props.integrations.create( integration, function() {

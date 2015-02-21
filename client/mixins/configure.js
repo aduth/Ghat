@@ -45,7 +45,7 @@ module.exports = {
     },
 
     getContacts: function() {
-        var chatIntegration = this.props.tokens.getConnectedChatToken(),
+        var chatIntegration = this.props.tokens.getConnectedChatProvider(),
             chatToken = this.props.tokens.get( chatIntegration );
 
         return this.props.contacts.get( chatIntegration, chatToken );
