@@ -45,7 +45,7 @@ Router.prototype.detach = function( container ) {
 Router.prototype.onClick = function( event ) {
     var anchor = helpers.DOM.closest( event.target, 'a' );
 
-    if ( anchor ) {
+    if ( anchor && anchor.host === window.location.host ) {
         event.preventDefault();
         this.setRoute( anchor.getAttribute( 'href' ) );
     }
