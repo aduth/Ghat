@@ -43,8 +43,11 @@ rebundle = function() {
     }
 
     bundle = bundler.bundle()
-        .on( 'error', gutil.log )
-        .on( 'error', gutil.beep )
+        .on( 'error', function( err ) {
+            gutil.log( err );
+            gutil.beep();
+            this.end();
+        })
         .pipe( source( 'bundle.js' ) )
         .pipe( buffer() )
         .pipe( rename({ suffix: '-' + manifest.version }) );
@@ -124,7 +127,12 @@ var less = require( 'gulp-less' ),
 
 gulp.task( 'less', function() {
     var bundle = gulp.src([ 'assets/less/app.less' ])
-        .pipe( less().on( 'error', gutil.log ).on( 'error', gutil.beep ) )
+        .pipe( less() )
+        .on( 'error', function( err ) {
+            gutil.log( err );
+            gutil.beep();
+            this.end();
+        })
         .pipe( autoprefixer() );
 
     if ( 'production' === process.env.NODE_ENV ) {
