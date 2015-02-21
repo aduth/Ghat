@@ -68,10 +68,12 @@ module.exports = React.createClass({
                 </p>
                 <table className="configure-filters__current">
                     <thead className="visually-hidden">
-                        <th>Field</th>
-                        <th>Operator</th>
-                        <th>Value</th>
-                        <th>Delete</th>
+                        <tr>
+                            <th>Field</th>
+                            <th>Operator</th>
+                            <th>Value</th>
+                            <th>Delete</th>
+                        </tr>
                     </thead>
                     <tbody>{ this.getRows() }</tbody>
                 </table>
