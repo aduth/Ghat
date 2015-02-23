@@ -41,6 +41,9 @@ module.exports.verify = function( token, next ) {
  * @param {Function} next    A callback to trigger when the request finishes
  */
 module.exports.sendMessage = function( message, channel, token, next ) {
+    // Prefix message with bot username
+    message = '[' + config.chat.username + '] ' + message;
+
     request.post( 'https://api.gitter.im/v1/rooms/' + channel + '/chatMessages' )
         .set({
             'x-access-token': token,
