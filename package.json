@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "bower install && gulp build",
+    "postinstall": "bower install",
+    "build": "gulp build",
+    "dev": "gulp dev",
     "test": "gulp test"
   },
   "author": {
