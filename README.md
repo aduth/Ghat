@@ -2,13 +2,61 @@
 
 [![Build Status](https://travis-ci.org/aduth/Ghat.svg?branch=master)](https://travis-ci.org/aduth/Ghat)
 
-Relay GitHub events to your favorite chat client
+Ghat sends messages to your favorite chat service when actions are taken at a GitHub repository, helping you to keep up-to-date with the latest events. A variety of chat services are supported, and filtering options allow you to selectively choose which types of messages are sent.
 
-# Try it now!
+Currently, the following chat services are supported:
 
-Deploy an instance on your Heroku account using the button below:
+- [Slack](https://slack.com/)
+- [Gitter](https://gitter.im)
+
+## Try it now!
+
+Use Ghat now at [https://ghat.me](https://ghat.me).
+
+To host your own instance, easily deploy to your Heroku account using the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aduth/ghat)
+
+## Development
+
+Ghat requires the following to be installed and available:
+
+- [Node.js](http://nodejs.org/)
+- [MongoDB](http://www.mongodb.org/)
+
+The following environment variables are used, and can be specified in a `.env` file in the root directory.
+
+- `NODE_ENV`: The running mode of the environment: `production` or `development` (default: `development`)
+- `ORIGIN`: The root URL of your hosted application (default: `http://localhost:3000`)
+- `PORT`: The port on which the application runs (default: `3000`)
+- `HOMEBASE`: Boolean indicating whether application should display with official branding (default: `false`)
+- `MONGODB_URI`: URI to the running instance of MongoDB (default: `mongodb://localhost/ghat`)
+- `CHAT_USERNAME`: The username of the chat bot (default: `Ghat Bot`)
+- `GITHUB_CLIENT_ID`: The client ID for your registered GitHub application (required)
+- `GITHUB_CLIENT_SECRET`: The client secret for your registered GitHub application (required)
+- `SLACK_CLIENT_ID`: The client ID for your registered Slack application (required)
+- `SLACK_CLIENT_SECRET`: The client secret for your registered Slack application (required)
+- `GITTER_CLIENT_ID`: The client ID for your registered Gitter application (required)
+- `GITTER_CLIENT_SECRET`: The client secret for your registered Gitter application (required)
+
+The following npm scripts are available:
+
+- `npm run build`: Builds stylesheet and JavaScript source files and moves vendor assets to public directory
+- `npm run dev`: Executes the build task, then watches files for changes, triggering a build on change
+- `npm run start`: Starts the web server, listening on the port defined by the `PORT` environment variable
+- `npm run test`: Runs Mocha test suite
+
+More specific [Gulp](http://gulpjs.com/) build tasks are defined tasks in [gulpfile.js](./gulpfile.js).
+
+## Security
+
+Since account access is granted through Ghat, security is a very important consideration. The following decisions have been made to limit the amount of access needed by the application:
+
+- GitHub webhooks can be managed manually without granting access to your account
+- Ghat uses the more-permissive `repo` GitHub API scope instead of `write:repo_hook` because otherwise it's not possible to create webhooks for private repositories.
+- GitHub tokens are only ever available as plain-text in the client browser. When saving an integration, GitHub tokens are stored as a non-readable [bcrypt hash](http://en.wikipedia.org/wiki/Bcrypt) to be used in future verification for managing existing integrations.
+
+In addition to the items noted above, it's very easy to host your own instance of Ghat by clicking the Heroku Deploy button above.
 
 ## License
 
