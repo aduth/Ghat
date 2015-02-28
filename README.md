@@ -19,12 +19,24 @@ To host your own instance, easily deploy to your Heroku account using the button
 
 ## Development
 
-Ghat requires the following to be installed and available:
+Before starting, the following will need to be installed and available:
 
 - [Node.js](http://nodejs.org/)
 - [MongoDB](http://www.mongodb.org/)
 
-The following environment variables are used, and can be specified in a `.env` file in the root directory.
+After cloning the repository, install Node and Bower dependencies using `npm install`. Before running the web server, create the first build by running `npm build`. Finally, start the web server with `npm start`.
+
+The entire process is illustrated below:
+
+```bash
+$ git clone https://github.com/aduth/Ghat.git
+$ cd Ghat
+$ npm install
+$ npm build
+$ npm start
+```
+
+The following environment variables are used, and can be specified by creating a `.env` file in the root directory.
 
 - `NODE_ENV`: The running mode of the environment: `production` or `development` (default: `development`)
 - `ORIGIN`: The root URL of your hosted application (default: `http://localhost:3000`)
@@ -56,13 +68,13 @@ Since account access is granted through Ghat, security is a very important consi
 - Ghat uses the more-permissive `repo` GitHub API scope instead of `write:repo_hook` because otherwise it's not possible to create webhooks for private repositories.
 - GitHub tokens are only ever available as plain-text in the client browser. When saving an integration, GitHub tokens are stored as a non-readable [bcrypt hash](http://en.wikipedia.org/wiki/Bcrypt) to be used in future verification for managing existing integrations.
 
-In addition to the items noted above, it's very easy to host your own instance of Ghat by clicking the Heroku Deploy button above.
+If you still have concerns, it's very easy to host your own private instance of Ghat by clicking the Heroku Deploy button above.
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Andrew Duthie
+Copyright (c) 2015 Andrew Duthie
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
