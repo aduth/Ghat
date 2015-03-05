@@ -9,6 +9,7 @@ var mongoose = require( 'mongoose' ),
 
 schema = new mongoose.Schema({
     _id: String,
+    createdAt: Date,
     chat: {
         provider: {
             type: String,
@@ -107,6 +108,10 @@ schema.statics.findFilteredByGitHubToken = function( query, githubToken, next ) 
 };
 
 schema.pre( 'save', function( next ) {
+    if ( this.isNew ) {
+        this.createdAt = Date.now();
+    }
+
     if ( ! this.github.token ) {
         return next();
     }
