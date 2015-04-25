@@ -3,6 +3,27 @@ var expect = require( 'chai' ).expect,
     generateMessage = require( '../../../../../server/messages/slack/issues' );
 
 describe( 'issues', function() {
+    it( 'should not generate a message for non-opened action if newly created', function() {
+        var copy = JSON.parse( JSON.stringify( payload ) ),
+            message;
+
+        copy.issue.created_at = new Date();
+        message = generateMessage( copy );
+
+        expect( message ).to.be.undefined;
+    } );
+
+    it( 'should generate a message for opened action if newly created', function() {
+        var copy = JSON.parse( JSON.stringify( payload ) ),
+            message;
+
+        copy.action = 'opened';
+        copy.issue.created_at = new Date();
+        message = generateMessage( copy );
+
+        expect( message ).to.not.be.undefined;
+    } );
+
     it( 'should generate the expected message', function() {
         var message = generateMessage( payload );
 

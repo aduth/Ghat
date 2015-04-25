@@ -5,5 +5,6 @@ module.exports = {
     NAME: 'Ghat',
     GITHUB_REPO_URL: 'https://github.com/aduth/ghat',
     COLOR_PRIMARY: '#333447',
-    COLOR_SECONDARY: '#e56a74'
+    COLOR_SECONDARY: '#e56a74',
+    ISSUE_IGNORE_CREATED_WITHIN_MS: 30000
 };
