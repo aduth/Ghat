@@ -14,16 +14,16 @@ module.exports.getValue = function( object, field ) {
 
     return parts.reduce(function( memo, part ) {
         if ( 'object' === typeof memo && part in memo ) {
-        	/**
-        	 * By returning the desired nested property, we can continue the
-        	 * object traversal by updating the memo to the nested value.
-        	 */
+            /**
+             * By returning the desired nested property, we can continue the
+             * object traversal by updating the memo to the nested value.
+             */
             return memo[ part ];
         } else if ( Array.isArray( memo ) ) {
-        	/**
-        	 * If an array is encountered, pluck the desired name from each
-        	 * element in the array.
-        	 */
+            /**
+             * If an array is encountered, pluck the desired name from each
+             * element in the array.
+             */
             return pluck( memo, part );
         }
     }, object );
