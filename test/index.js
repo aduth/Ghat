@@ -51,6 +51,7 @@ describe( 'ghat', function() {
     describe( 'shared', function() {
         describe( 'integrations', function() {
             require( './specs/shared/integrations/github' );
+            require( './specs/shared/integrations/slack' );
         });
     });
 });
