@@ -1,4 +1,5 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
+    classNames = require( 'classnames' ),
     find = require( 'lodash/collection/find' ),
     ConnectionAvatar = require( './connection-avatar' ),
     mixins = require( '../mixins/' ),
@@ -99,13 +100,9 @@ module.exports = React.createClass({
     },
 
     render: function() {
-        var classes = [
-            'connection',
-            this.props.name,
-            React.addons.classSet({
-                connected: this.props.connected
-            })
-        ].join( ' ' );
+        var classes = classNames( 'connection', this.props.name, {
+            connected: this.props.connected
+        });
 
         return (
             <div className={ classes }>

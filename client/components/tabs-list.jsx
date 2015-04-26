@@ -1,4 +1,5 @@
-var React = require( 'react/addons' );
+var React = require( 'react' ),
+    classNames = require( 'classnames' );
 
 module.exports = React.createClass({
     displayName: 'TabsList',
@@ -9,8 +10,7 @@ module.exports = React.createClass({
 
     getNavigationElements: function() {
         return React.Children.map( this.props.children, function( child ) {
-            var classes = React.addons.classSet({
-                'tabs-list__navigation-item': true,
+            var classes = classNames( 'tabs-list__navigation-item', {
                 'is-active': child.props.active
             }), style = { width: ( 100 / this.props.children.length ) + '%' };
 
@@ -32,8 +32,7 @@ module.exports = React.createClass({
         });
 
         return React.Children.map( this.props.children, function( child ) {
-            var classes = React.addons.classSet({
-                'tabs-list__child-content': true,
+            var classes = classNames( 'tabs-list__child-content', {
                 'is-active': isActiveSet ? child.props.active : this.props.defaultActive === child.key
             });
 
