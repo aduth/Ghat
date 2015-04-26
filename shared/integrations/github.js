@@ -1,11 +1,9 @@
 var request = require( 'superagent' ),
     async = require( 'async' ),
     OAuth2 = require( 'oauth' ).OAuth2,
-    flatten = require( 'lodash/array/flatten' ),
     difference = require( 'lodash/array/difference' ),
-    sortBy = require( 'lodash/collection/sortBy' ),
     config = require( '../config' ),
-    oauth;
+    oauth, getNextPageFromheaders, hasMorePages;
 
 oauth = module.exports.oauth = {
     client: new OAuth2(
@@ -20,6 +18,23 @@ oauth = module.exports.oauth = {
 };
 
 module.exports.name = 'GitHub';
+
+getNextPageFromheaders = module.exports.getNextPageFromheaders = function( headers ) {
+    var matches;
+
+    if ( ! headers || ! headers.link ) {
+        return;
+    }
+
+    matches = headers.link.match( /[\?&]page=(\d+)[^>]*>;\s*rel="next"/ );
+    if ( matches ) {
+        return parseInt( matches[1], 10 );
+    }
+};
+
+hasMorePages = module.exports.hasMorePages = function( response ) {
+    return !! getNextPageFromheaders( response.headers );
+};
 
 module.exports.verify = function( token, next ) {
     request.get( 'https://api.github.com/user' )
@@ -62,34 +77,43 @@ module.exports.getMyProfile = function( token, next ) {
  * request the available repositories for the user associated with the token.
  *
  * @param {string}   token A valid GitHub OAuth2 token
- * @param {Function} next  A callback to trigger when the request finishes
+ * @param {Function} next  A callback to trigger when a request finishes which
+ *                         may be called multiple times as pages are retrieved.
+ *                         The third parameter to the callback is a boolean
+ *                         indicating whether more pages are to be retrieved.
  */
 module.exports.getRepositories = function( token, next ) {
-    var fetchArray = function( url ) {
-        return function( asyncNext ) {
-            request.get( url )
-                .set({ Accept: 'application/vnd.github.moondragon+json' })
-                .set({ Authorization: 'token ' + token })
-                .end(function( err, res ) {
-                    asyncNext( err || res.error, res.body || [] );
-                });
-        };
-    };
+    var repositories = [],
+        lastResponse;
 
-    async.parallel([
-        fetchArray( 'https://api.github.com/user/repos' ),
-        function( asyncNext ) {
-            fetchArray( 'https://api.github.com/user/teams' )(function( err, teams ) {
-                async.series( teams.map(function( team ) {
-                    return fetchArray( team.repositories_url );
-                }), asyncNext );
-            });
+    async.doWhilst(function( asyncNext ) {
+        var page, req;
+
+        if ( lastResponse ) {
+            page = getNextPageFromheaders( lastResponse.header );
         }
-    ], function( err, repositories ) {
-        var sortedRepositories = sortBy( flatten( repositories, true ), 'full_name' );
-        next( err, sortedRepositories );
 
-    });
+        req = request.get( 'https://api.github.com/user/repos' );
+
+        if ( page ) {
+            req = req.query({ page: page });
+        }
+
+        req.query({ per_page: 100 })
+            .set({ Accept: 'application/vnd.github.moondragon+json' })
+            .set({ Authorization: 'token ' + token })
+            .end(function( err, res ) {
+                if ( ! err && ! res.error ) {
+                    repositories = repositories.concat( res.body );
+                }
+                lastResponse = res;
+
+                next( err, repositories, hasMorePages( res ) );
+                asyncNext( err );
+            });
+    }, function() {
+        return hasMorePages( lastResponse );
+    }, function() {});
 };
 
 /**

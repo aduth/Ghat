@@ -48,11 +48,11 @@ RepositoryStore.prototype.fetch = function( token ) {
     this.token = token;
     this.fetching = true;
 
-    integrations.github.getRepositories( token, function( err, repositories ) {
+    integrations.github.getRepositories( token, function( err, repositories, hasMorePages ) {
         if ( ! err ) {
             this.set( repositories );
         }
 
-        this.fetching = false;
+        this.fetching = ! hasMorePages;
     }.bind( this ) );
 };
