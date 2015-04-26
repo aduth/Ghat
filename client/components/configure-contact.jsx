@@ -35,7 +35,11 @@ module.exports = React.createClass({
                 </p>
                 <label className="form-option">
                     <span className="form-option__label">Choose a contact:</span>
-                    <Select value={ this.props.value } onChange={ this.props.onValueChanged } options={ this.getOptions() } />
+                    <Select
+                        value={ this.props.value }
+                        onChange={ this.props.onValueChanged }
+                        options={ this.getOptions() }
+                        searchable={ true } />
                 </label>
             </li>
         );

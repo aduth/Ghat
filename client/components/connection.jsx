@@ -80,7 +80,7 @@ module.exports = React.createClass({
             return { value: provider, label: integrations[ provider ].name };
         });
 
-        return <Select options={ options } value={ this.getSelectedProvider() } onChange={ this.onProviderChange } includeDefault={ 'Choose a service' } />;
+        return <Select options={ options } value={ this.getSelectedProvider() } onChange={ this.onProviderChange } placeholder={ 'Choose a service' } />;
     },
 
     getManualEntryButtonElement: function() {
