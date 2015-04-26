@@ -1,0 +1,53 @@
+{
+    "ok": true,
+    "channels": [
+        {
+            "id": "C037SQDDH",
+            "name": "general",
+            "is_channel": true,
+            "created": 1419100522,
+            "creator": "U037SQDDB",
+            "is_archived": false,
+            "is_general": true,
+            "is_member": true,
+            "members": [
+                "U037SQDDB"
+            ],
+            "topic": {
+                "value": "",
+                "creator": "",
+                "last_set": 0
+            },
+            "purpose": {
+                "value": "This channel is for team-wide communication and announcements. All team members are in this channel.",
+                "creator": "",
+                "last_set": 0
+            },
+            "num_members": 1
+        },
+        {
+            "id": "C037SQDDK",
+            "name": "random",
+            "is_channel": true,
+            "created": 1419100522,
+            "creator": "U037SQDDB",
+            "is_archived": false,
+            "is_general": false,
+            "is_member": true,
+            "members": [
+                "U037SQDDB"
+            ],
+            "topic": {
+                "value": "",
+                "creator": "",
+                "last_set": 0
+            },
+            "purpose": {
+                "value": "A place for non-work banter, links, articles of interest, humor or anything else which you'd like concentrated in some place other than work-related channels.",
+                "creator": "",
+                "last_set": 0
+            },
+            "num_members": 1
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 var expect = require( 'chai' ).expect,
     nock = require( 'nock' ),
-    response = require( '../../../fixtures/responses/repos' ),
+    response = require( '../../../fixtures/responses/github/repos' ),
     github = require( '../../../../shared/integrations/github' );
 
 describe( 'github', function() {
@@ -55,6 +55,10 @@ describe( 'github', function() {
     });
 
     describe( '#getRepositories()', function() {
+        afterEach(function() {
+            nock.cleanAll();
+        });
+
         it( 'should retrieve user repositories', function( done ) {
             nock( 'https://api.github.com' )
                 .get( '/user/repos?per_page=100' )
@@ -64,7 +68,6 @@ describe( 'github', function() {
                 expect( hasMorePages ).to.be.false;
                 expect( data ).to.eql( response );
 
-                nock.cleanAll();
                 done();
             });
         });
@@ -87,7 +90,6 @@ describe( 'github', function() {
                     expect( hasMorePages ).to.be.false;
                     expect( data ).to.eql( response.concat( response ) );
 
-                    nock.cleanAll();
                     done();
                 } else {
                     expect( hasMorePages ).to.be.true;

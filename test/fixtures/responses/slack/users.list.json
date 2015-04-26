@@ -1,0 +1,36 @@
+{
+    "ok": true,
+    "members": [
+        {
+            "id": "U037SQDDB",
+            "name": "aduth",
+            "deleted": false,
+            "status": null,
+            "color": "9f69e7",
+            "real_name": "Andrew Duthie",
+            "tz": "America/Indiana/Indianapolis",
+            "tz_label": "Eastern Daylight Time",
+            "tz_offset": -14400,
+            "profile": {
+                "first_name": "Andrew",
+                "last_name": "Duthie",
+                "real_name": "Andrew Duthie",
+                "real_name_normalized": "Andrew Duthie",
+                "email": "andrew@andrewduthie.com",
+                "image_24": "https://secure.gravatar.com/avatar/b8636d6132cacb7c5cf7f09cdcaf80bc.jpg",
+                "image_32": "https://secure.gravatar.com/avatar/b8636d6132cacb7c5cf7f09cdcaf80bc.jpg",
+                "image_48": "https://secure.gravatar.com/avatar/b8636d6132cacb7c5cf7f09cdcaf80bc.jpg",
+                "image_72": "https://secure.gravatar.com/avatar/b8636d6132cacb7c5cf7f09cdcaf80bc.jpg",
+                "image_192": "https://secure.gravatar.com/avatar/b8636d6132cacb7c5cf7f09cdcaf80bc.jpg"
+            },
+            "is_admin": true,
+            "is_owner": true,
+            "is_primary_owner": true,
+            "is_restricted": false,
+            "is_ultra_restricted": false,
+            "is_bot": false,
+            "has_files": false,
+            "has_2fa": false
+        }
+    ]
+}
