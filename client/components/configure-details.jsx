@@ -1,4 +1,4 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
     config = require( '../../shared/config' );
 
 module.exports = React.createClass({

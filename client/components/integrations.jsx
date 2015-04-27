@@ -1,4 +1,4 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
     async = require( 'async' ),
     stores = require( '../stores/' ),
     mixins = require( '../mixins/' ),
