@@ -1,4 +1,5 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
+    classNames = require( 'classnames' ),
     mixins = require( '../mixins/' ),
     stores = require( '../stores/' ),
     ConfigureFilters = require( './configure-filters' ),
@@ -57,9 +58,7 @@ module.exports = React.createClass({
             canSubmit = integration.chat.contact,
             classes;
 
-        classes = React.addons.classSet({
-            configure: true,
-            'configure-manual': true,
+        classes = classNames( 'configure', 'configure-manual', {
             'is-complete': this.state.isComplete
         });
 

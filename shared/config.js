@@ -1,4 +1,6 @@
-require( 'dotenv' ).load();
+if ( ! process.browser ) {
+    require( 'dotenv' ).load();
+}
 
 module.exports = {
     origin: process.env.ORIGIN || 'http://localhost:3000',

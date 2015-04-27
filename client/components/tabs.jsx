@@ -1,4 +1,5 @@
-var React = require( 'react/addons' ),
+var React = require( 'react' ),
+    classNames = require( 'classnames' ),
     mixins = require( '../mixins/' ),
     stores = require( '../stores/' ),
     TabsList = require( './tabs-list' ),
@@ -50,8 +51,7 @@ module.exports = React.createClass({
         var Configure = this.props.manual ? ConfigureManual : ConfigureAuthenticated,
             classes;
 
-        classes = React.addons.classSet({
-            tabs: true,
+        classes = classNames( 'tabs', {
             'is-disabled': this.props.disabled,
             'is-manual': this.props.manual
         });
