@@ -109,7 +109,7 @@ module.exports = React.createClass({
             <tr className="configure-filter">
                 <td width="40%">{ this.getFieldInput() }</td>
                 <td width="20%">
-                    <Select options={ this.getOperatorOptions() } placeholder={ false } disabled={ ! this.props.value.field } value={ this.props.value.operator } onChange={ this.onChange.bind( this, 'operator' ) } />
+                    <Select options={ this.getOperatorOptions() } placeholder={ null } disabled={ ! this.props.value.field } value={ this.props.value.operator } onChange={ this.onChange.bind( this, 'operator' ) } />
                 </td>
                 <td width="35%">{ this.getValueInput() }</td>
                 <td width="15%">
