@@ -31,12 +31,22 @@ describe( 'issues', function() {
         expect( message.pretext ).to.equal( '[baxterthehacker/public-repo] Issue labeled by baxterthehacker' );
         expect( message.title ).to.equal( '#51: Spelling error in the README file' );
         expect( message.title_link ).to.equal( 'https://github.com/baxterthehacker/public-repo/issues/51' );
-        expect( message.text ).to.equal( 'It looks like you accidently spelled \'commit\' with two \'t\'s.' );
+        expect( message.text ).to.be.empty;
         expect( message.fields ).to.eql([{
             title: 'Label added',
             value: 'bug',
             short: true
         }]);
+    });
+
+    it( 'should include the text for opened action only', function() {
+        var copy = JSON.parse( JSON.stringify( payload ) ),
+            message;
+
+        copy.action = 'opened';
+        message = generateMessage( copy );
+
+        expect( message.text ).to.be.equal( 'It looks like you accidently spelled \'commit\' with two \'t\'s.' );
     });
 
     it( 'should omit fields if not assigned or labeled', function() {
@@ -61,7 +71,7 @@ describe( 'issues', function() {
         expect( message.pretext ).to.equal( '[baxterthehacker/public-repo] Issue assigned by baxterthehacker' );
         expect( message.title ).to.equal( '#51: Spelling error in the README file' );
         expect( message.title_link ).to.equal( 'https://github.com/baxterthehacker/public-repo/issues/51' );
-        expect( message.text ).to.equal( 'It looks like you accidently spelled \'commit\' with two \'t\'s.' );
+        expect( message.text ).to.be.empty;
         expect( message.fields ).to.eql([{
             title: 'User assigned',
             value: 'aduth',
