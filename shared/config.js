@@ -1,5 +1,7 @@
-if ( ! process.browser ) {
-    require( 'dotenv' ).load();
+if ( ! process.browser && 'production' !== process.env.NODE_ENV ) {
+    require( 'dotenv' ).load( {
+        silent: true
+    } );
 }
 
 module.exports = {
