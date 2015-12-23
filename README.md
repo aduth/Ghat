@@ -67,6 +67,7 @@ Since account access is granted through Ghat, security is a very important consi
 - GitHub webhooks can be managed manually without granting access to your account
 - Ghat uses the more-permissive `repo` GitHub API scope instead of `write:repo_hook` because otherwise it's not possible to create webhooks for private repositories.
 - GitHub tokens are only ever available as plain-text in the client browser. When saving an integration, GitHub tokens are stored as a non-readable [bcrypt hash](http://en.wikipedia.org/wiki/Bcrypt) to be used in future verification for managing existing integrations.
+- Slack tokens are scoped to the minimum required capabilities, which excludes the ability to read messages from your Slack channels
 
 If you still have concerns, it's very easy to host your own private instance of Ghat by clicking the Heroku Deploy button above.
 
