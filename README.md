@@ -11,8 +11,6 @@ Currently, the following chat services are supported:
 
 ## Try it now!
 
-Use Ghat now at [https://ghat.me](https://ghat.me).
-
 To host your own instance, easily deploy to your Heroku account using the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/aduth/ghat)

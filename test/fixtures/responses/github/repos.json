@@ -69,7 +69,7 @@
         "ssh_url": "git@github.com:aduth/Ghat.git",
         "clone_url": "https://github.com/aduth/Ghat.git",
         "svn_url": "https://github.com/aduth/Ghat",
-        "homepage": "https://ghat.me",
+        "homepage": "https://github.com/aduth/Ghat",
         "size": 1936,
         "stargazers_count": 3,
         "watchers_count": 3,
